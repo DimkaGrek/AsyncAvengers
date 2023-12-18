@@ -1,0 +1,13 @@
+:root {
+  /* Colors */
+  --black: #010101;
+  --black_30: rgba(1, 1, 1, 0.3);
+  --black_80: rgba(1, 1, 1, 0.8);
+  --white: #fafafa;
+  --gainsboro: #e8e8e2;
+  --gainsboro_30: rgba(232, 232, 226, 0.3)
+  --olive: #6d8434;
+  --darkgrey: #a3a3a3;
+  --darkgrey_30: rgba(163, 163, 163, 0.3);
+  --sandy: #fdc152;
+}

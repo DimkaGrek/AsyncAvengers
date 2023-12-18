@@ -1,0 +1,6 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
+
+body {
+  font-family: 'Neue Montreal', sans-serif;
+  font-style: normal;
+}
