@@ -4,6 +4,7 @@
 
 @import './layout/_header.css';
 @import './layout/_hero.css';
+@import './layout/_filter.css';
 @import './layout/_productList.css';
 @import './layout/_popular.css';
 @import './layout/_discount.css';
