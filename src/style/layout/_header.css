@@ -20,17 +20,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-right: 8px;
-  background-color: var(--olive);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%; */
-}
-@media only screen and (min-width: 768px) {
-  .header-logo-link-home-page {
-    width: 32px;
-    height: 32px;
-  }
 }
 .header-logo-icon {
   fill: var(--gainsboro);
@@ -49,12 +38,10 @@
   line-height: 1.11;
   letter-spacing: -0.02em;
   margin-right: 60px;
-  white-space: nowrap;
 }
 @media only screen and (min-width: 768px) {
   .header-text {
     font-size: 24px;
-    font-weight: 900;
     line-height: 1;
     margin-right: 262px;
   }
@@ -67,9 +54,6 @@
 .logo-container {
   color: var(--gainsboro);
   background-color: var(--olive);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.29;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,6 +61,12 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
+}
+@media only screen and (min-width: 768px) {
+  .logo-container {
+    width: 32px;
+    height: 32px;
+  }
 }
 .header-logo-link-home-page {
   text-decoration: none;
