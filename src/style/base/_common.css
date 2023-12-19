@@ -6,12 +6,3 @@ body {
   font-style: normal;
   background-color: var(--gainsboro);
 }
-
-ul,
-ol {
-  list-style: none;
-  padding: 0;
-}
-img {
-  display: block;
-}
