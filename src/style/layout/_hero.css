@@ -1,3 +1,4 @@
+/* ------------------------HERO--------------------------------- */
 .hero-container {
   padding-bottom: 74px;
 }
@@ -81,3 +82,97 @@
     right: 20px;
   }
 }
+/* =================================================================== */
+/* ---------------------------Scroll up button--------------------- */
+.scroll-up-btn {
+  background-color: var(--white);
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+@media only screen and (min-width: 768px) {
+  .scroll-up-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .scroll-up-btn {
+    width: 60px;
+    height: 60px;
+    right: 20px;
+  }
+}
+.scroll-up-btn::after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: var(--olive);
+  transition: transform 0.7s;
+  transform-origin: top;
+  transform: scaleY(0);
+}
+.scroll-up-btn:active::after {
+  transform-origin: bottom;
+  transform: scaleX(1);
+}
+@media only screen and (min-width: 1440px) {
+  .scroll-up-btn:hover::after,
+  .scroll-up-btn:focus::after {
+    transform-origin: bottom;
+    transform: scaleX(1);
+  }
+}
+.scroll-up-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.scroll-up-icon {
+  width: 18px;
+  height: 18px;
+  transition: fill 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  fill: var(--darkgrey);
+}
+@media only screen and (min-width: 768px) {
+  .scroll-up-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .scroll-up-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+.scroll-up-btn:active .scroll-up-icon {
+  fill: var(--gainsboro);
+}
+@media only screen and (min-width: 1440px) {
+  .scroll-up-btn:hover .scroll-up-icon,
+  .scroll-up-btn:focus .scroll-up-icon {
+    fill: var(--gainsboro);
+  }
+}
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+/* =================================================== */
