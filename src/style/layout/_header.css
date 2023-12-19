@@ -41,7 +41,7 @@
     height: 20px;
   }
 }
-.header-text {
+.header-text-link {
   font-family: 'FSP DEMO - Quincy CF Black';
   color: var(--black);
   font-size: 18px;
@@ -49,9 +49,10 @@
   line-height: 1.11;
   letter-spacing: -0.02em;
   margin-right: 60px;
+  text-decoration: none;
 }
 @media only screen and (min-width: 768px) {
-  .header-text {
+  .header-text-link {
     font-size: 24px;
     font-weight: 900;
     line-height: 1;
@@ -59,7 +60,7 @@
   }
 }
 @media only screen and (min-width: 1440px) {
-  .header-text {
+  .header-text-link {
     margin-right: 792px;
   }
 }
