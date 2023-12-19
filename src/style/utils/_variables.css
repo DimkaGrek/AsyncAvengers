@@ -10,4 +10,8 @@
   --darkgrey: #a3a3a3;
   --darkgrey_30: rgba(163, 163, 163, 0.3);
   --sandy: #fdc152;
+
+  /* transition */
+  --delay: 350ms;
+  --trnz: ease;
 }
