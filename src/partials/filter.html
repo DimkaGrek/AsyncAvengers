@@ -1,13 +1,17 @@
 <!-- <h2>This is filter section</h2> -->
-<section class="filters">
+<div class="filters container">
   <p class="filters-text">Filters:</p>
   <ul class="filters-list">
     <li class="filters-li">
       <input type="text" class="filters-input" />
-      <button type="submit" class="filters-btn"></button>
+      <button type="submit" class="filters-btn">
+        <svg class="filters-icon" width="20" height="20">
+          <use href="./img/icons.svg#icon-baseline-search"></use>
+        </svg>
+      </button>
     </li>
     <li class="filters-li">
-      <select name="filters-categories" id=""></select>
+      <select name="filters-categories" id="" class="filters-select"></select>
     </li>
   </ul>
-</section>
+</div>
