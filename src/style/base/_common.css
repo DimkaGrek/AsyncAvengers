@@ -1,7 +1,10 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 @import '~node_modules/reset-css/reset.css';
+@import url(https://db.onlinewebfonts.com/c/1d07155f6a27d1f397916ad9d4e4d78d?family=FSP+DEMO+-+Quincy+CF+Black);
 
 body {
   font-family: 'Neue Montreal', sans-serif;
   font-style: normal;
+
+  background-color: var(--gainsboro);
 }
