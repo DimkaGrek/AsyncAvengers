@@ -1,13 +1,13 @@
 <footer class="footer">
   <div class="container footer-container">
     <div class="footer-container-logo">
-      <a class="logo" href="./index.html">
-        <img
-          src="./img/icons.svg#icon-logo"
-          alt="logotype"
-          width="16"
-          height="16"
-        />Food Boutique
+      <a class="footer-logo" href="./index.html">
+        <div class="container-logo">
+          <svg class="footer-logo-icon" width="16" height="16">
+            <use href="./img/icons.svg#icon-logo"></use>
+          </svg>
+        </div>
+        <div class="footer-logo-text">Food&nbsp;Boutique</div>
       </a>
     </div>
     <div class="footer-container-icons">
@@ -53,27 +53,35 @@
         </li>
       </ul>
     </div>
-    <h2>Food Boutique Discover the Variety of Flavors and Quality</h2>
-    <p>
+    <h2 class="footer-title">Discover the Variety of Flavors and Quality</h2>
+    <p class="footer-text footer-title-text">
       An online store where you will find fresh, natural and delicious products
       for a healthy life and unforgettable gastronomic adventures.
     </p>
     <div class="sudscribe-container">
-      <p class="footer-title-text">Subscribe and learn about new products!</p>
+      <p class="footer-text footer-subscribe-text">
+        Subscribe and learn about new products!
+      </p>
       <form class="footer-form" name="subscribe-form">
         <label class="footer-lebel">
           <input
-            class="footer-form-input js-footer-input"
+            class="footer-input js-footer-input"
             type="email"
             name="email"
-            placeholder="E-mail"
+            placeholder="Email"
         /></label>
         <button class="subscribe-btn js-footer-btn" type="submit">Send</button>
       </form>
     </div>
     <div class="footer-copyright">
-      <p>Food Boutique. All rights reserved.</p>
-      <p>Privacy Policy / Terms of Service</p>
+      <p class="footer-text text-copyright">
+        Food Boutique. All rights reserved.
+      </p>
+      <div class="footer-container-copyright">
+        <p class="footer-text">Privacy Policy</p>
+        <p class="footer-text">/</p>
+        <p class="footer-text">Terms of Service</p>
+      </div>
     </div>
   </div>
 </footer>

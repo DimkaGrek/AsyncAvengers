@@ -6,22 +6,44 @@
 
 .product-list {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: 20px;
 }
+
+@media only screen and (min-width: 768px) {
+  .product-list {
+    gap: 32px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .product-list {
+    gap: 40px 20px;
+  }
+}
+
 .product-card {
+  position: relative;
   padding: 20px;
   border-radius: 20px;
+  width: 335px;
 
   background: var(--white);
 }
-@media only screen and (min-width: 320px) and (max-width: 375px) {
+
+@media screen and (min-width: 768px) {
   .product-card {
-    padding: 20px 0;
+    width: 336px;
   }
 }
+@media screen and (min-width: 1440px) {
+  .product-card {
+    width: 295px;
+  }
+}
+
 .product-img-wrapper {
+  position: relative;
   display: flex;
   width: 295px;
   height: 178px;
@@ -31,28 +53,69 @@
   background-color: var(--gainsboro);
   margin-bottom: 20px;
 }
+@media screen and (min-width: 768px) {
+  .product-img-wrapper {
+    width: 296px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .product-img-wrapper {
+    width: 255px;
+  }
+}
+
+.product-discount-card {
+  position: absolute;
+  top: -17px;
+  right: -10px;
+}
+@media screen and (min-width: 768px) {
+  .product-discount-card {
+    top: -23px;
+  }
+}
 
 .product-name {
   color: var(--black);
   font-size: 18px;
   font-weight: 500;
   line-height: 1.11;
-
   margin-bottom: 10px;
 }
 
+@media screen and (min-width: 1440px) {
+}
+
+@media screen and (min-width: 768px) {
+  .product-name {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+}
+
 .product-description {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 8px;
+
   color: var(--black_30);
 
   font-size: 12px;
   font-weight: 400;
   line-height: 1.17;
 
-  margin-bottom: 40px;
+  margin-bottom: 74px;
+}
+@media screen and (min-width: 1440px) {
+  .product-description {
+    margin-bottom: 54px;
+  }
 }
 
 .product-description-accent {
   color: var(--black);
+  margin-left: 4px;
 }
 
 .product-prise {
@@ -62,10 +125,33 @@
   font-weight: 500;
   line-height: 1.11;
 }
+
+@media screen and (min-width: 768px) {
+  .product-prise {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+}
+
 .product-bye {
   display: flex;
   align-items: end;
-  justify-content: space-between;
+  gap: 215px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .product-bye {
+    gap: 211px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .product-bye {
+    gap: 170px;
+  }
 }
 
 .product-button-cart {

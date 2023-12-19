@@ -18,21 +18,28 @@
       <section>
         <include src="./partials/hero.html"></include>
       </section>
-      <div>
-        <!-- TODO: Filters -->
-        <include src="./partials/filter.html"></include>
+
+      <!-- TODO: Filters -->
+      <include src="./partials/filter.html"></include>
+
+      <section class="products-sections">
+        <include src="./partials/productList.html"></include>
+
         <div>
-          <section>
-            <include src="./partials/productList.html"></include>
-          </section>
+          <div><include src="./partials/popular.html"></include></div>
           <div>
-            <section><include src="./partials/popular.html"></include></section>
-            <section>
-              <include src="./partials/discount.html"></include>
-            </section>
+            <include src="./partials/discount.html"></include>
           </div>
         </div>
-      </div>
+      </section>
+
+      <button class="scroll-up-btn js-scroll-up-btn" type="button">
+        <span class="scroll-up-span">
+          <svg class="scroll-up-icon">
+            <use href="./img/icons.svg#icon-arrow-up"></use>
+          </svg>
+        </span>
+      </button>
     </main>
     <footer>
       <include src="./partials/footer.html"></include>

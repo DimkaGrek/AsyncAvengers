@@ -1,0 +1,121 @@
+.popular-title {
+    color: var(--black);
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.17;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+.popular-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.popular-item {
+    width: 335px;
+    background-color: var(--white);
+    border-radius: 10px;
+}
+.popular-link {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    text-decoration: none;
+}
+.polular-content-container {
+    display: flex;
+    gap: 10px;
+}
+.popular-img-container {
+    background-color: var(--gainsboro);
+    border-radius: 10px;
+    padding: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popular-img {
+    width: 56px;
+    height: 56px;
+}
+.popular-item-name {
+    color: var(--black);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.11;
+    margin-bottom: 12px;
+}
+.popular-item-title {
+    color: var(--black_30);
+    font-size: 12px;
+    line-height: 1.17;
+}
+.popular-item-title-name {
+    margin-left: 4px;
+    color: var(--black);
+}
+.popular-content-bottom {
+    display: flex;
+    gap: 9px;
+    margin-top: 9px;
+}
+.popular-buy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--gainsboro);
+    border-radius: 50%;
+    border: none;
+    padding: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 250ms ease-in;
+    cursor: pointer;
+}
+.popular-buy-btn:hover,
+.popular-buy-btn:focus {
+    background-color: var(--olive);
+}
+.popular-buy-btn-icon {
+    fill: var(--olive);
+}
+.popular-buy-btn:hover .popular-buy-btn-icon,
+.popular-buy-btn:focus .popular-buy-btn-icon {
+    fill: var(--gainsboro);
+}
+
+@media only screen and (min-width: 768px) {
+    .popular-title {
+        margin-top: 100px;
+        font-size: 28px;
+        line-height: 1.14;
+    }
+    .popular-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 13px;
+    }
+    .popular-item {
+        width: 275px;
+    }
+    .popular-item-name {
+        font-size: 20px;
+        line-height: 1.2;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .popular-title {
+        margin-top: 0;
+    }
+    .popular-list {
+        flex-direction: column;
+    }
+}
