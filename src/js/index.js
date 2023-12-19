@@ -1,6 +1,14 @@
-// ===== Examples of use FoodAPI (should be REMOVE in production version)=========
 import FoodApi from './FoodApi';
+import './header';
+import './filter';
+import './productList';
+import './popular';
+import './discount';
+import './footer';
+import './modal/modal';
+import './error';
 
+// ===== Examples of use FoodAPI (should be REMOVE in production version)=========
 const getProductList = async () => {
   const products = await FoodApi.getProducts();
   console.log(products);
