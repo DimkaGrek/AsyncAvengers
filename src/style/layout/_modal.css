@@ -1,0 +1,206 @@
+.modal-backdrope {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+  position: relative;
+  width: 335px;
+  border-radius: 20px;
+  background: #e8e8e2;
+}
+.modal-card-title {
+  color: #010101;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.modal-card-span {
+  color: #6d8434;
+}
+.modal-card-descr {
+  margin: 0 auto;
+  width: 248px;
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+}
+
+/* ---------------Modal Product Card -----------*/
+.modal-product-card-container {
+  display: block;
+  padding: 40px 20px;
+  height: 535px;
+  background: #fafafa;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background-color: transparent;
+}
+.modal-product-card-img-container {
+  width: 295px;
+  height: 212px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e8e8e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-product-card-img {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+.modal-product-card-title {
+  text-align: start;
+  font-size: 18px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.modal-product-card-text-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 9px;
+  margin-bottom: 20px;
+}
+.modal-product-card-category {
+  color: rgba(1, 1, 1, 0.3);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin-right: 4px;
+}
+.modal-product-card-category-descr {
+  color: #010101;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin-right: 8px;
+}
+.modal-product-card-descr {
+  width: 295px;
+  height: 55px;
+  line-height: 1.28;
+  text-align: start;
+  margin-bottom: 40px;
+}
+.modal-product-card-purchase-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.modal-product-card-purchase-price {
+  color: #010101;
+  font-family: Neue Montreal;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.modal-product-card-purchase-btn {
+  padding: 12px 24px;
+  border-radius: 30px;
+  background: #6d8434;
+  display: flex;
+  gap: 10px;
+
+  color: #e8e8e2;
+  font-family: Neue Montreal;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.28;
+  border: none;
+}
+.modal-product-card-purchase-btn:hover,
+.modal-product-card-purchase-btn:focus {
+  background: #586f1f;
+}
+.modal-product-card-purchase-btn-img {
+  fill: #e8e8e2;
+}
+
+/* --------------- /Modal Product Card ----------*/
+
+/* ---------------Modal Thanks --------------*/
+.modal-thanks-card-container {
+  display: none;
+  padding-top: 100px;
+  height: 400px;
+}
+.modal-thanks-card-title {
+  color: #010101;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Neue Montreal;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+  width: 245px;
+  margin-bottom: 14px;
+}
+.modal-thanks-card-title-span {
+  color: #6d8434;
+}
+.modal-thanks-card-descr {
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  margin: 0 auto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+  width: 248px;
+}
+.modal-thanks-card-img {
+  position: absolute;
+  bottom: 0;
+}
+/* ---------------/Modal Thanks --------------*/
+
+/* ---------------Modal Email Sub --------------*/
+.modal-sub-card-container {
+  display: none;
+  padding: 80px 0;
+  height: 276px;
+}
+/* ---------------/Modal Email Sub --------------*/
+
+/* -----------Modal Success -------*/
+.modal-success-card-container {
+  display: none;
+  padding: 40px 0 60px 0;
+  height: 428px;
+}
+.modal-success-icon {
+  position: absolute;
+  top: 150px;
+  left: 95px;
+  fill: rgba(1, 1, 1, 0.1);
+  filter: blur(10px);
+}
+.modal-success-card-img {
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 40px;
+}
+.modal-success-card-title {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.modal-success-card-descr {
+  width: 295px;
+}
+/* -----------/Modal Success -------*/
