@@ -57,25 +57,33 @@
         </div>
       </div>
       <div class="container-form">
-        <h2 class="footer-title">
-          Discover the Variety of Flavors and Quality
-        </h2>
-        <p class="footer-text footer-title-text">
-          An online store where you will find fresh, natural and delicious
-          products for a healthy life and unforgettable gastronomic adventures.
-        </p>
+        <div class="container-text-content">
+          <h2 class="footer-title">
+            Discover the Variety of Flavors and Quality
+          </h2>
+          <p class="footer-text footer-title-text">
+            An online store where you will find fresh, natural and delicious
+            products for a healthy life and unforgettable gastronomic
+            adventures.
+          </p>
+        </div>
         <div class="sudscribe-container">
           <p class="footer-text footer-subscribe-text">
             Subscribe and learn about new products!
           </p>
           <form class="footer-form" name="subscribe-form">
-            <label class="footer-lebel">
-              <input
-                class="footer-input js-footer-input"
-                type="email"
-                name="email"
-                placeholder="Email"
-            /></label>
+            <!-- <label class="footer-lebel"> -->
+            <input
+              class="footer-input js-footer-input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})"
+              required
+            />
+            <!-- </label> -->
+            <span class="warning-name">example: johnsmith@gmail.com</span>
+
             <button class="subscribe-btn js-footer-btn" type="submit">
               Send
             </button>

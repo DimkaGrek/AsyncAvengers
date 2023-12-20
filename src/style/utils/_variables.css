@@ -14,6 +14,8 @@
   --gainsboro_70: rgba(232, 232, 226, 0.7);
   --gainsboro_80: rgba(232, 232, 226, 0.8);
   --gainsboro_90: rgba(232, 232, 226, 0.9);
+  --black_05: rgba(109, 132, 52, 0.05);
+  --olive-accented: #586f1f;
 
   /* transition */
   --delay: 350ms;

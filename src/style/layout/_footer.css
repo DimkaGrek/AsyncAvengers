@@ -76,9 +76,8 @@
 }
 
 .footer-icons-list {
-  display: flex;
+  display: inline-flex;
   gap: 12px;
-  align-items: center;
 }
 
 .footer-icons-item {
@@ -279,4 +278,43 @@
     width: 336px;
     height: 48px;
   }
+}
+
+@media only screen and (min-width: 1440px) {
+  .container-text-content {
+    display: flex;
+    flex-direction: column;
+    margin-right: 148px;
+  }
+  .container-form {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}
+
+/* ==================warnings and fine=======================*/
+
+.footer-input:not(:placeholder-shown):required:valid {
+  border-color: rgba(30, 168, 30, 0.969);
+  box-shadow: 2px 1px 10px rgb(11, 170, 11);
+}
+
+.footer-input:not(:placeholder-shown):required:invalid {
+  border-color: rgba(255, 68, 0, 0.694);
+  box-shadow: 2px 1px 10px rgba(255, 68, 0, 0.726);
+}
+
+.warning-name {
+  position: absolute;
+  left: 80%;
+  transform: translateX(-50%) translateY(-17px) scale(1.1);
+  color: rgba(255, 68, 0, 0.694);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 400ms ease-in-out;
+}
+
+.footer-input:not(:placeholder-shown):required:invalid ~ .warning-name {
+  opacity: 1;
+  visibility: visible;
 }
