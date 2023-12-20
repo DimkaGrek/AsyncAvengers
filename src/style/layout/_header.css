@@ -1,19 +1,27 @@
+.header-content {
+  position: fixed; /* Фиксируем header */
+  top: 0; /* Прикрепляем к верхней части экрана */
+  left: 0; /* Прикрепляем к левой части экрана */
+  width: 100%; /* Задаем header ширину на всю ширину экрана */
+  z-index: 1000; /* Устанавливаем z-index, чтобы header был поверх всех других элементов */
+  background-color: var(--gainsboro);
+}
 .header-container {
   display: flex;
   padding-top: 18px;
-  padding-bottom: 72px;
+  padding-bottom: 10px;
   align-items: center;
   justify-content: space-around;
 }
 @media only screen and (min-width: 768px) {
   .header-container {
     padding-top: 24px;
-    padding-bottom: 116px;
+    /* padding-bottom: 116px; */
   }
 }
 @media only screen and (min-width: 1440px) {
   .header-container {
-    padding-bottom: 77px;
+    /* padding-bottom: 77px; */
   }
 }
 .header-logo-link-home-page {
