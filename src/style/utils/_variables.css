@@ -5,11 +5,15 @@
   --black_80: rgba(1, 1, 1, 0.8);
   --white: #fafafa;
   --gainsboro: #e8e8e2;
-  --gainsboro_30: rgba(232, 232, 226, 0.3);
   --olive: #6d8434;
   --darkgrey: #a3a3a3;
   --darkgrey_30: rgba(163, 163, 163, 0.3);
   --sandy: #fdc152;
+  --gainsboro_30: rgba(232, 232, 226, 0.3);
+  --gainsboro_60: rgba(232, 232, 226, 0.6);
+  --gainsboro_70: rgba(232, 232, 226, 0.7);
+  --gainsboro_80: rgba(232, 232, 226, 0.8);
+  --gainsboro_90: rgba(232, 232, 226, 0.9);
 
   /* transition */
   --delay: 350ms;

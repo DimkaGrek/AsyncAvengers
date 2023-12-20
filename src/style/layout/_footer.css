@@ -7,7 +7,7 @@
 /* ================LOGO===================== */
 
 .footer-container-logo {
-  padding-bottom: 24px;
+  padding-bottom: 20px;
 }
 
 .container-logo {
@@ -53,6 +53,22 @@
   align-items: center;
 }
 
+@media only screen and (min-width: 768px) {
+  .container-logo {
+    width: 32px;
+    height: 32px;
+  }
+  .footer-logo-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .footer-logo {
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+}
+
 /* ======================/LOGO========================= */
 
 .footer-container-icons {
@@ -93,8 +109,19 @@
 }
 
 .footer-svg {
-  fill: var(--gainsboro);
-  opacity: 0.8;
+  fill: var(--gainsboro_80);
+}
+
+@media only screen and (min-width: 768px) {
+  .footer-icons-item {
+    width: 44px;
+    height: 44px;
+  }
+
+  .footer-svg {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .footer-title {
@@ -114,24 +141,54 @@
   font-weight: 400;
   line-height: 1.29;
 }
+
 .footer-title-text {
-  opacity: 0.7;
+  color: var(--gainsboro_70);
   margin-bottom: 80px;
   max-width: 335px;
 }
 
-/* .sudscribe-container {
-} */
-
 .footer-subscribe-text {
   margin-bottom: 20px;
 }
+
 .footer-form {
   margin-bottom: 80px;
 }
+
 .text-copyright {
-  opacity: 0.9;
+  color: var(--gainsboro_90);
   margin-bottom: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+  .footer-title {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 429px;
+  }
+
+  .footer-title-text {
+    margin-bottom: 64px;
+    max-width: 429px;
+  }
+
+  .footer-text {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+  .text-copyright,
+  .text-policy {
+    font-size: 14px;
+    line-height: 1.29;
+    margin: 0;
+  }
+
+  .footer-form {
+    margin-bottom: 120px;
+  }
 }
 
 .footer-input {
@@ -148,14 +205,14 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.29;
+  margin-bottom: 14px;
 
   transition: border-color var(--delay) var(--trnz),
     box-shadow 700ms var(--trnz);
 }
 
 .footer-input::placeholder {
-  color: var(--gainsboro);
-  opacity: 0.6;
+  color: var(--gainsboro_60);
 }
 
 .footer-input:hover,
@@ -165,11 +222,6 @@
     rgba(0, 0, 0, 0.3) 0px 7px 15px -8px,
     rgba(1236, 217, 121, 0.35) 0px -2px 6px 0px inset;
   border: 1.5px solid #fff;
-}
-
-.footer-lebel {
-  display: block;
-  margin-bottom: 14px;
 }
 
 .subscribe-btn {
@@ -203,4 +255,28 @@
 .footer-container-copyright {
   display: flex;
   gap: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+  .container-tablet {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-copyright {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-input {
+    margin-bottom: 20px;
+  }
+
+  .footer-input,
+  .subscribe-btn {
+    font-size: 16px;
+    line-height: 1.5;
+    width: 336px;
+    height: 48px;
+  }
 }
