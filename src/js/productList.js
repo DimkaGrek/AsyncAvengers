@@ -1,6 +1,6 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-
+import { openModalProductCard } from './modal/modal';
 const refs = {
   productList: document.querySelector('.js-product-list'),
   cartQuantity: document.querySelector('.js-cart-quantity'),
@@ -11,11 +11,17 @@ getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
 
-function onListCartClick({ target }) {
-  const button = target.closest('.product-button-cart');
-  if (button === null) return;
-  isCheckedCart(button);
-  putProductListItemInCart(button.dataset.id);
+function onListCartClick(event) {
+  const button = event.target.closest('.product-button-cart');
+  if (button !== null) {
+    isCheckedCart(button);
+    putProductListItemInCart(button.dataset.id);
+    return;
+  }
+  const item = event.target.closest('.product-card');
+  if (item !== null) {
+    openModalProductCard();
+  }
 }
 
 async function getProductList() {

@@ -165,6 +165,7 @@
   background-color: var(--olive);
   color: var(--gainsboro);
   transition: all var(--delay) var(--trnz);
+  cursor: pointer;
 }
 @media screen and (min-width: 1440px) {
   .product-button-cart:hover,
