@@ -164,7 +164,15 @@
   border-radius: 50%;
   background-color: var(--olive);
   color: var(--gainsboro);
+  transition: all var(--delay) var(--trnz);
 }
+@media screen and (min-width: 1440px) {
+  .product-button-cart:hover,
+  .product-button-cart:focus {
+    background-color: var(--olive_dark);
+  }
+}
+
 .product-icon-cart {
   fill: currentColor;
   stroke: currentColor;

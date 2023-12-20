@@ -2,22 +2,50 @@ import FoodApi from './FoodApi';
 const refs = {
   productList: document.querySelector('#product-list'),
 };
+localStorage.setItem('CART', JSON.stringify([]));
 getProductList();
 refs.productList.addEventListener('click', onListCartClick);
 
 function onListCartClick({ target }) {
   const button = target.closest('.product-button-cart');
   if (button === null) return;
-  button.querySelector('use').href.baseVal = '/icons.21bad73c.svg#icon-check';
+  isCheckedCart(button);
+  putProductListItemInCart(button.dataset.id);
 }
 
 async function getProductList() {
   try {
     const products = await FoodApi.getProducts();
+    console.log(products);
     refs.productList.innerHTML = renderProductListMarcup(products);
+    localStorage.setItem('product_list', JSON.stringify(products.results));
   } catch (error) {
     console.log(error);
   }
+}
+
+function putProductListItemInCart(id) {
+  let product = null;
+  // take foollist from local starage
+  const products = JSON.parse(localStorage.getItem('product_list'));
+  // find needed product
+  products.forEach(cur => {
+    console.log(cur._id);
+    if (cur._id.includes(id)) {
+      product = cur;
+    }
+  });
+  // put product in CART
+  const newCART = JSON.parse(localStorage.getItem('CART'));
+  newCART.push(product);
+  // save Product in local CART
+  localStorage.setItem('CART', JSON.stringify(newCART));
+}
+
+function isCheckedCart(ref) {
+  ref.firstElementChild.classList.add('is-hidden');
+  ref.lastElementChild.classList.remove('is-hidden');
+  ref.disabled = true;
 }
 
 function renderProductListMarcup({ results }) {
@@ -46,9 +74,12 @@ function renderProductListMarcup({ results }) {
 
       <div class="product-bye">
         <p class="product-prise">$${price}</p>
-        <button class="product-button-cart">
+        <button class="product-button-cart" data-id="${_id}">
           <svg class="product-icon-cart" width="18" height="18">
             <use href="/icons.21bad73c.svg#icon-shopping-cart" class="icon"></use>
+          </svg>
+          <svg class="product-icon-cart is-hidden" width="18" height="18">
+            <use href="/icons.21bad73c.svg#icon-check" class="icon"></use>
           </svg>
         </button>
       </div>
