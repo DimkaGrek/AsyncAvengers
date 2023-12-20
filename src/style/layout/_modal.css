@@ -1,5 +1,5 @@
 .modal-backdrop {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -79,7 +79,7 @@
 
 /* ---------------Modal Product Card -----------*/
 .modal-product-card-container {
-  display: block;
+  display: none;
   padding: 40px 20px;
   height: 535px;
   background: #fafafa;
