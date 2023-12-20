@@ -1,5 +1,5 @@
 .modal-backdrope {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -289,7 +289,7 @@
 
 /* -----------Modal Success -------*/
 .modal-success-card-container {
-  display: block;
+  display: none;
   padding: 40px 0 60px 0;
   height: 428px;
 }
