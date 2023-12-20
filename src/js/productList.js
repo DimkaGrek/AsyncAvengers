@@ -1,3 +1,4 @@
+import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
@@ -7,10 +8,13 @@ const refs = {
   cartQuantity: document.querySelector('.js-cart-quantity'),
 };
 
+let limit = 0;
 localStorage.setItem('CART', JSON.stringify([]));
+
 getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
+window.addEventListener('resize', throttle(getProductList, 1000));
 
 async function onListCartClick(event) {
   const button = event.target.closest('.product-button-cart');
@@ -21,17 +25,24 @@ async function onListCartClick(event) {
   }
   const item = event.target.closest('.product-card');
   if (item !== null) {
-    const data = await FoodApi.getProductById(item.dataset.id);
-    openModalProductCard(data);
+    try {
+      const data = await FoodApi.getProductById(item.dataset.id);
+      openModalProductCard(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
 async function getProductList() {
-  try {
-    const products = await FoodApi.getProducts();
-    refs.productList.innerHTML = renderProductListMarcup(products);
-  } catch (error) {
-    console.log(error);
+  if (checkClientWidth()) {
+    const params = { limit: limit };
+    try {
+      const products = await FoodApi.getProductsByFilter(params);
+      refs.productList.innerHTML = renderProductListMarcup(products);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -74,17 +85,9 @@ function renderProductListMarcup({ results }) {
           <span class="product-description-accent">${popularity}</span>
         </span>
       </p>
-
       <div class="product-bye">
         <p class="product-prise">$${price}</p>
-        <button class="product-button-cart" data-id="${_id}">
-          <svg class="product-icon-cart" width="18" height="18">
-            <use href="${icons}#icon-shopping-cart" class="icon"></use>
-          </svg>
-          <svg class="product-icon-cart is-hidden" width="18" height="18">
-            <use href="${icons}#icon-check" class="icon"></use>
-          </svg>
-        </button>
+        ${renderButtonForProductList(_id)}
       </div>
     </li>`;
     }
@@ -99,4 +102,46 @@ function renderDiscountForProductList(isDiscount) {
   return isDiscount ? marcup : '';
 }
 
+function renderButtonForProductList(id) {
+  const cart = localStorage.getItem('CART');
+  const cheked = `<button class="product-button-cart" data-id="${id} disabled">
+          <svg class="product-icon-cart is-hidden" width="18" height="18">
+            <use href="${icons}#icon-shopping-cart" class="icon"></use>
+          </svg>
+          <svg class="product-icon-cart" width="18" height="18">
+            <use href="${icons}#icon-check" class="icon"></use>
+          </svg>
+        </button>`;
+  const uncheked = `<button class="product-button-cart" data-id="${id}">
+          <svg class="product-icon-cart" width="18" height="18">
+            <use href="${icons}#icon-shopping-cart" class="icon"></use>
+          </svg>
+          <svg class="product-icon-cart is-hidden" width="18" height="18">
+            <use href="${icons}#icon-check" class="icon"></use>
+          </svg>
+        </button>`;
+  return cart.includes(id) ? cheked : uncheked;
+}
+
+function checkClientWidth() {
+  const a = document.documentElement.clientWidth;
+  if (a > 1439) {
+    if (limit === 9) return false;
+    limit = 9;
+    console.log('desctop');
+    return true;
+  }
+  if (a > 767) {
+    if (limit === 8) return false;
+    limit = 8;
+    console.log('tablet');
+    return true;
+  }
+  if (a > 319) {
+    if (limit === 6) return false;
+    limit = 6;
+    console.log('mobile');
+    return true;
+  }
+}
 export default putProductListItemInCart;
