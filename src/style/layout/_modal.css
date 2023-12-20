@@ -1,5 +1,5 @@
-.modal-backdrope {
-  display: none;
+.modal-backdrop {
+  display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -79,7 +79,7 @@
 
 /* ---------------Modal Product Card -----------*/
 .modal-product-card-container {
-  display: none;
+  display: block;
   padding: 40px 20px;
   height: 535px;
   background: #fafafa;
@@ -152,6 +152,7 @@
   background: #6d8434;
   display: flex;
   gap: 10px;
+  cursor: pointer;
 
   color: #e8e8e2;
   font-size: 14px;
@@ -303,8 +304,8 @@
   filter: blur(10px);
 }
 .modal-success-card-img {
+  display: none;
   margin: 0 auto;
-  display: block;
   margin-bottom: 40px;
 }
 .modal-success-card-title {
