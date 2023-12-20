@@ -3,9 +3,10 @@ import icons from '../img/icons.svg';
 
 let productList = null;
 const refs = {
-  productList: document.querySelector('#product-list'),
+  productList: document.querySelector('.js-product-list'),
+  cartQuantity: document.querySelector('.js-cart-quantity'),
 };
-
+console.log(refs.cartQuantity.textContent);
 localStorage.setItem('CART', JSON.stringify([]));
 
 getProductList();
@@ -29,6 +30,11 @@ async function getProductList() {
   }
 }
 
+function updateCartCounter() {
+  const value = +refs.cartQuantity.textContent;
+  refs.cartQuantity.textContent = value + 1;
+}
+
 function putProductListItemInCart(id) {
   let product = null;
   // find needed product
@@ -38,6 +44,7 @@ function putProductListItemInCart(id) {
     }
   });
   updateCart(product);
+  updateCartCounter();
 }
 
 function updateCart(product) {
