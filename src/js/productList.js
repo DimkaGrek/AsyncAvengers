@@ -1,6 +1,7 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
+
 const refs = {
   productList: document.querySelector('.js-product-list'),
   cartQuantity: document.querySelector('.js-cart-quantity'),
@@ -11,7 +12,7 @@ getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
 
-function onListCartClick(event) {
+async function onListCartClick(event) {
   const button = event.target.closest('.product-button-cart');
   if (button !== null) {
     isCheckedCart(button);
@@ -20,7 +21,8 @@ function onListCartClick(event) {
   }
   const item = event.target.closest('.product-card');
   if (item !== null) {
-    openModalProductCard();
+    const data = await FoodApi.getProductById(item.dataset.id);
+    openModalProductCard(data);
   }
 }
 
