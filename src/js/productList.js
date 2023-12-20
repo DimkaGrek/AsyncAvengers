@@ -145,3 +145,4 @@ function checkClientWidth() {
   }
 }
 export default putProductListItemInCart;
+export { onListCartClick };
