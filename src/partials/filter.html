@@ -3,7 +3,11 @@
   <p class="filters-text">Filters:</p>
   <ul class="filters-list">
     <li class="filters-li">
-      <input type="text" class="filters-input" />
+      <input
+        type="text"
+        class="filters-input"
+        placeholder="Search for anything"
+      />
       <button type="submit" class="filters-btn">
         <svg class="filters-icon" width="20" height="20">
           <use href="./img/icons.svg#icon-baseline-search"></use>
@@ -13,5 +17,47 @@
     <li class="filters-li">
       <select name="filters-categories" id="" class="filters-select"></select>
     </li>
+    <!-- <li class="filters-li">
+      <div class="dropdown">
+        <button class="dropdown_button">A to Z</button>
+        <ul class="dropdown_list">
+          <li class="dropdown_list-item" data-value="alfabet">A to Z</li>
+          <li class="dropdown_list-item" data-value="alfabet-reverse">
+            Z to A
+          </li>
+          <li class="dropdown_list-item" data-value="cheap">Cheap</li>
+          <li class="dropdown_list-item" data-value="expensive">Expensive</li>
+          <li class="dropdown_list-item" data-value="popular">Popular</li>
+          <li class="dropdown_list-item" data-value="not-popular">
+            Not popular
+          </li>
+          <li class="dropdown_list-item" data-value="show-all">Show all</li>
+        </ul>
+        <input
+          type="text"
+          name="selected-category"
+          value=""
+          class="dropdown_input-hidden"
+        />
+      </div>
+    </li> -->
   </ul>
+  <div class="dropdown">
+    <button class="dropdown_button">A to Z</button>
+    <ul class="dropdown_list">
+      <li class="dropdown_list-item" data-value="alfabet">A to Z</li>
+      <li class="dropdown_list-item" data-value="alfabet-reverse">Z to A</li>
+      <li class="dropdown_list-item" data-value="cheap">Cheap</li>
+      <li class="dropdown_list-item" data-value="expensive">Expensive</li>
+      <li class="dropdown_list-item" data-value="popular">Popular</li>
+      <li class="dropdown_list-item" data-value="not-popular">Not popular</li>
+      <li class="dropdown_list-item" data-value="show-all">Show all</li>
+    </ul>
+    <input
+      type="text"
+      name="selected-category"
+      value=""
+      class="dropdown_input-hidden"
+    />
+  </div>
 </div>
