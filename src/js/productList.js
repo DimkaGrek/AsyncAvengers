@@ -1,14 +1,12 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 
-let productList = null;
 const refs = {
   productList: document.querySelector('.js-product-list'),
   cartQuantity: document.querySelector('.js-cart-quantity'),
 };
-console.log(refs.cartQuantity.textContent);
-localStorage.setItem('CART', JSON.stringify([]));
 
+localStorage.setItem('CART', JSON.stringify([]));
 getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
@@ -24,35 +22,19 @@ async function getProductList() {
   try {
     const products = await FoodApi.getProducts();
     refs.productList.innerHTML = renderProductListMarcup(products);
-    productList = products.results;
   } catch (error) {
     console.log(error);
   }
 }
 
-function updateCartCounter() {
+function putProductListItemInCart(id) {
+  const newCART = JSON.parse(localStorage.getItem('CART'));
+  if (newCART.includes(id)) return;
+
+  newCART.push(id);
+  localStorage.setItem('CART', JSON.stringify(newCART));
   const value = +refs.cartQuantity.textContent;
   refs.cartQuantity.textContent = value + 1;
-}
-
-function putProductListItemInCart(id) {
-  let product = null;
-  // find needed product
-  productList.forEach(cur => {
-    if (cur._id.includes(id)) {
-      product = cur;
-    }
-  });
-  updateCart(product);
-  updateCartCounter();
-}
-
-function updateCart(product) {
-  // put products in CART
-  const newCART = JSON.parse(localStorage.getItem('CART'));
-  newCART.push(product);
-  // save Product in local CART
-  localStorage.setItem('CART', JSON.stringify(newCART));
 }
 
 function isCheckedCart(ref) {
@@ -108,3 +90,5 @@ function renderDiscountForProductList(isDiscount) {
         </svg> `;
   return isDiscount ? marcup : '';
 }
+
+export default putProductListItemInCart;
