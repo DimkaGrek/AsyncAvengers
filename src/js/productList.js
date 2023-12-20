@@ -1,9 +1,15 @@
 import FoodApi from './FoodApi';
+import icons from '../img/icons.svg';
+
+let productList = null;
 const refs = {
   productList: document.querySelector('#product-list'),
 };
+
 localStorage.setItem('CART', JSON.stringify([]));
+
 getProductList();
+
 refs.productList.addEventListener('click', onListCartClick);
 
 function onListCartClick({ target }) {
@@ -16,9 +22,8 @@ function onListCartClick({ target }) {
 async function getProductList() {
   try {
     const products = await FoodApi.getProducts();
-    console.log(products);
     refs.productList.innerHTML = renderProductListMarcup(products);
-    localStorage.setItem('product_list', JSON.stringify(products.results));
+    productList = products.results;
   } catch (error) {
     console.log(error);
   }
@@ -26,16 +31,17 @@ async function getProductList() {
 
 function putProductListItemInCart(id) {
   let product = null;
-  // take foollist from local starage
-  const products = JSON.parse(localStorage.getItem('product_list'));
   // find needed product
-  products.forEach(cur => {
-    console.log(cur._id);
+  productList.forEach(cur => {
     if (cur._id.includes(id)) {
       product = cur;
     }
   });
-  // put product in CART
+  updateCart(product);
+}
+
+function updateCart(product) {
+  // put products in CART
   const newCART = JSON.parse(localStorage.getItem('CART'));
   newCART.push(product);
   // save Product in local CART
@@ -76,10 +82,10 @@ function renderProductListMarcup({ results }) {
         <p class="product-prise">$${price}</p>
         <button class="product-button-cart" data-id="${_id}">
           <svg class="product-icon-cart" width="18" height="18">
-            <use href="/icons.21bad73c.svg#icon-shopping-cart" class="icon"></use>
+            <use href="${icons}#icon-shopping-cart" class="icon"></use>
           </svg>
           <svg class="product-icon-cart is-hidden" width="18" height="18">
-            <use href="/icons.21bad73c.svg#icon-check" class="icon"></use>
+            <use href="${icons}#icon-check" class="icon"></use>
           </svg>
         </button>
       </div>
@@ -91,7 +97,7 @@ function renderProductListMarcup({ results }) {
 
 function renderDiscountForProductList(isDiscount) {
   const marcup = `<svg class="product-discount-card" width="60" height="60">
-          <use href="/icons.21bad73c.svg#icon-discount"></use>
+          <use href="/${icons}#icon-discount"></use>
         </svg> `;
   return isDiscount ? marcup : '';
 }
