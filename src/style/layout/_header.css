@@ -9,14 +9,20 @@
 .header-container {
   display: flex;
   padding-top: 18px;
-  padding-bottom: 10px;
+  padding-bottom: 18px;
   align-items: center;
   justify-content: space-around;
 }
 @media only screen and (min-width: 768px) {
   .header-container {
     padding-top: 24px;
+    padding-bottom: 24px;
   }
+}
+
+.header-shadow {
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .header-logo-link-home-page {
