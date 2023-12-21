@@ -144,5 +144,4 @@ function checkClientWidth() {
     return true;
   }
 }
-export default putProductListItemInCart;
-export { onListCartClick };
+export { onListCartClick, putProductListItemInCart, renderProductListMarcup };
