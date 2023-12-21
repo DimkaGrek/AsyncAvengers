@@ -178,3 +178,92 @@
   fill: currentColor;
   stroke: currentColor;
 }
+.pagi-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+@media screen and (min-width: 768px) and (max-width: 1440px) {
+  .pagi-container {
+    margin-top: 50px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .pagi-container {
+    gap: 32px;
+  }
+}
+
+.pagi-btn-list,
+.pagi-pages {
+  display: flex;
+  gap: 4px;
+}
+@media screen and (min-width: 768px) {
+  .pagi-btn-list,
+  .pagi-pages {
+    gap: 8px;
+  }
+}
+
+.icon-pagination {
+  stroke: currentColor;
+}
+
+.pagi-item {
+  border: none;
+  outline: none;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color var(--delay) var(--trnz),
+    color var(--delay) var(--trnz);
+}
+
+button.pagi-item {
+  background-color: var(--white);
+  color: var(--darkgrey);
+}
+
+button.pagi-item:disabled {
+  color: var(--darkgrey_30);
+  background-color: var(--white);
+  cursor: auto;
+}
+
+button.pagi-item:disabled:hover,
+button.pagi-item:disabled:focus {
+  color: var(--darkgrey_30);
+  background-color: var(--white);
+  cursor: auto;
+}
+
+button.pagi-item:hover,
+button.pagi-item:focus {
+  background-color: var(--olive);
+  color: var(--gainsboro);
+}
+
+li.pagi-item {
+  color: var(--darkgrey);
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.43;
+  transition: background-color var(--delay) var(--trnz);
+}
+
+li.pagi-item.is-active {
+  background-color: var(--olive);
+  color: var(--gainsboro);
+}
+
+li.pagi-item:hover,
+li.pagi-item:focus {
+  background-color: var(--olive);
+  color: var(--gainsboro);
+}

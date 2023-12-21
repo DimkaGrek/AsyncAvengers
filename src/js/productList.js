@@ -6,15 +6,20 @@ import { openModalProductCard } from './modal/modal';
 const refs = {
   productList: document.querySelector('.js-product-list'),
   cartQuantity: document.querySelector('.js-cart-quantity'),
+  pagiList: document.querySelector('.js-pagi-pages'),
 };
 
 let limit = 0;
-localStorage.setItem('CART', JSON.stringify([]));
+let page = 1;
+let currentPage = null;
 
+checkCartContents();
+checkClientWidth();
 getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
-window.addEventListener('resize', throttle(getProductList, 1000));
+refs.pagiList.addEventListener('click', onPagiListClick);
+window.addEventListener('resize', throttle(onResizeUpdateProductList, 1000));
 
 async function onListCartClick(event) {
   const button = event.target.closest('.product-button-cart');
@@ -34,15 +39,41 @@ async function onListCartClick(event) {
   }
 }
 
-async function getProductList() {
-  if (checkClientWidth()) {
-    const params = { limit: limit };
-    try {
-      const products = await FoodApi.getProductsByFilter(params);
-      refs.productList.innerHTML = renderProductListMarcup(products);
-    } catch (error) {
-      console.log(error);
+function onPagiListClick({ target }) {
+  if (target.nodeName !== 'LI') return;
+  if (target.textContent === '...') {
+    if (target.closest('ul').firstElementChild === target) {
+      page = currentPage - 3;
+      getProductList();
+      return;
     }
+    if (target.closest('ul').lastElementChild === target) {
+      page = currentPage + 3;
+      getProductList();
+      return;
+    }
+  }
+
+  page = +target.textContent;
+  getProductList();
+}
+
+function onResizeUpdateProductList() {
+  if (checkClientWidth()) {
+    getProductList();
+  }
+}
+
+async function getProductList() {
+  const params = { limit: limit, page: page };
+  try {
+    const products = await FoodApi.getProductsByFilter(params);
+    const { page, totalPages } = products;
+    currentPage = page;
+    refs.productList.innerHTML = renderProductListMarcup(products);
+    refs.pagiList.innerHTML = renderProductListPagi(page, totalPages);
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -50,7 +81,7 @@ function putProductListItemInCart(id) {
   const newCART = JSON.parse(localStorage.getItem('CART'));
   if (newCART.includes(id)) return;
 
-  newCART.push(id);
+  newCART.push({ productId: id, amount: 1 });
   localStorage.setItem('CART', JSON.stringify(newCART));
   const value = +refs.cartQuantity.textContent;
   refs.cartQuantity.textContent = value + 1;
@@ -60,6 +91,15 @@ function isCheckedCart(ref) {
   ref.firstElementChild.classList.add('is-hidden');
   ref.lastElementChild.classList.remove('is-hidden');
   ref.disabled = true;
+}
+
+function checkCartContents() {
+  if (localStorage.getItem('CART')) {
+    cartContent = JSON.parse(localStorage.getItem('CART'));
+    refs.cartQuantity.textContent = cartContent.length;
+    return;
+  }
+  localStorage.setItem('CART', JSON.stringify([]));
 }
 
 function renderProductListMarcup({ results }) {
@@ -123,24 +163,64 @@ function renderButtonForProductList(id) {
   return cart.includes(id) ? cheked : uncheked;
 }
 
+function prepareForRenderPagi(page, totalPage) {
+  const res = [];
+  if (totalPage === 1) return [1];
+  if (totalPage < 5) {
+    for (i = 1; i <= totalPage; i++) {
+      res.push(i);
+    }
+    return res;
+  }
+  if (totalPage >= 5) {
+    if (page === 1 || page === 2 || page === 3) {
+      return [1, 2, 3, 4, '...'];
+    }
+    if (
+      page === totalPage ||
+      page === totalPage - 1 ||
+      page === totalPage - 2
+    ) {
+      res.push('...');
+      for (i = totalPage - 3; i <= totalPage; i++) {
+        res.push(i);
+      }
+      return res;
+    }
+    return ['...', page - 1, page, page + 1, '...'];
+  }
+}
+
+function renderProductListPagi(page, totalPage) {
+  arr = prepareForRenderPagi(page, totalPage);
+  return arr
+    .map(cur => {
+      if (cur === page) {
+        return `<li class="pagi-item is-active">${cur}</li>`;
+      }
+      if (cur === '...') {
+        return `<li class="pagi-item dotted">${cur}</li>`;
+      }
+      return `<li class="pagi-item">${cur}</li>`;
+    })
+    .join('');
+}
+
 function checkClientWidth() {
   const a = document.documentElement.clientWidth;
   if (a > 1439) {
     if (limit === 9) return false;
     limit = 9;
-    console.log('desctop');
     return true;
   }
   if (a > 767) {
     if (limit === 8) return false;
     limit = 8;
-    console.log('tablet');
     return true;
   }
   if (a > 319) {
     if (limit === 6) return false;
     limit = 6;
-    console.log('mobile');
     return true;
   }
 }
