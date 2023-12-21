@@ -1,7 +1,9 @@
 import icons from "../img/icons.svg";
 import foodApi from "./FoodApi";
+import { openModalProductCard } from './modal/modal';
 
 const popularList = document.querySelector('.popular-list');
+const cartQuantity = document.querySelector('.js-cart-quantity')
 
 renderPopularList();
 
@@ -31,11 +33,7 @@ async function renderPopularList() {
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="popular-buy-btn">
-                        <svg class="popular-buy-btn-icon" width="12" height="12">
-                            <use href="${icons}#icon-popular-shopping-cart"></use>
-                        </svg>
-                    </button>
+                    ${renderButtonForProductList(_id)}
                 </a>
             </li>
         `;
@@ -45,7 +43,7 @@ async function renderPopularList() {
     popularList.addEventListener('click', onProductClick);
 }
 
-function onProductClick(event) {
+async function onProductClick(event) {
     event.preventDefault();
     if(event.target.nodeName === 'UL') return;
 
@@ -54,10 +52,54 @@ function onProductClick(event) {
     if(event.target.nodeName === 'BUTTON' 
         || event.target.nodeName === 'svg' 
         || event.target.nodeName === 'use') {
-        console.log(li.dataset.id);
-        // add product to cart
+        const button = event.target.closest('.popular-buy-btn');
+        isCheckedCart(button);
+        putProductListItemInCart(button.dataset.id);
     } else {
-        console.log(li.dataset.id);
-        // open product detail modal
+        try {
+            const data = await foodApi.getProductById(li.dataset.id);
+            console.log(data)
+            openModalProductCard(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
+
+function putProductListItemInCart(id) {
+    console.log(id);
+    const newCART = JSON.parse(localStorage.getItem('CART'));
+    if (newCART.includes(id)) return;
+  
+    newCART.push(id);
+    localStorage.setItem('CART', JSON.stringify(newCART));
+    const value = +cartQuantity.textContent;
+    cartQuantity.textContent = value + 1;
+}
+
+function isCheckedCart(ref) {
+    ref.firstElementChild.classList.add('is-hidden');
+    ref.lastElementChild.classList.remove('is-hidden');
+    ref.disabled = true;
+}
+
+function renderButtonForProductList(id) {
+    const cart = localStorage.getItem('CART');
+    const cheked = `<button class="popular-buy-btn" data-id="${id} disabled">
+            <svg class="popular-buy-btn-icon is-hidden" width="12" height="12">
+              <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
+            </svg>
+            <svg class="popular-buy-btn-icon" width="12" height="12">
+              <use href="${icons}#icon-check" class="icon"></use>
+            </svg>
+          </button>`;
+    const uncheked = `<button class="popular-buy-btn" data-id="${id}">
+            <svg class="popular-buy-btn-icon" width="12" height="12">
+                <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
+            </svg>
+            <svg class="popular-buy-btn-icon is-hidden" width="12" height="12">
+                <use href="${icons}#icon-check" class="icon"></use>
+            </svg>
+        </button>`;
+    return cart.includes(id) ? cheked : uncheked;
+  }
