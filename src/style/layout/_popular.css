@@ -83,10 +83,12 @@
 }
 .popular-buy-btn-icon {
     fill: var(--olive);
+    stroke: var(--olive);
 }
 .popular-buy-btn:hover .popular-buy-btn-icon,
 .popular-buy-btn:focus .popular-buy-btn-icon {
     fill: var(--gainsboro);
+    stroke: var(--gainsboro);
 }
 
 @media only screen and (min-width: 768px) {
