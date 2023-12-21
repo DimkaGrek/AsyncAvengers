@@ -150,12 +150,24 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition: transform var(--delay) var(--trnz);
+}
+.delete-btn:active {
+  transform: scale(1.1);
 }
 @media only screen and (min-width: 768px) {
   .delete-btn {
-    right: 0px;
+    top: 0;
+    right: 0;
   }
 }
+@media only screen and (min-width: 1440px) {
+  .delete-btn:hover,
+  .delete-btn:focus {
+    transform: scale(1.2);
+  }
+}
+
 .cart-product-name,
 .cart-product-price {
   color: var(--black);
@@ -451,5 +463,42 @@
   .checkout-btn:hover,
   .checkout-btn:focus {
     background-color: var(--olive-accented);
+  }
+}
+/* ---------------------Empty cart--------------- */
+.empty-cart {
+  text-align: center;
+}
+.empty-cart-text1 {
+  color: var(--black);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+  margin-top: 28px;
+}
+.empty-cart-text1-span {
+  color: var(--olive);
+}
+.empty-cart-text2 {
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.29;
+  margin: 0 auto;
+  width: 279px;
+  margin-top: 14px;
+}
+@media only screen and (min-width: 768px) {
+  .empty-cart-text1 {
+    font-size: 20px;
+    line-height: 1.2;
+    margin-top: 40px;
+  }
+  .empty-cart-text2 {
+    font-size: 18px;
+    line-height: 24px;
+    width: 387px;
   }
 }
