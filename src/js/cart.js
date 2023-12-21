@@ -3,7 +3,7 @@ import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-const elems = {
+const refs = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
   emptyCart: document.querySelector('.js-empty-cart'),
@@ -17,16 +17,17 @@ if (!isEmpty(productsId?.length)) {
   getProducts();
 }
 
-elems.deleteAllButton.addEventListener('click', () => {
+refs.deleteAllButton.addEventListener('click', () => {
   localStorage.removeItem('CART');
   productsId = [];
   isEmpty(productsId?.length);
-  elems.quantityTitle.textContent = '0';
-  elems.itemsList.innerHTML = '';
-  elems.totalSpan.textContent = '$0';
+  refs.quantityTitle.textContent = '0';
+  refs.quantityHeaderSpan.textContent = '0';
+  refs.itemsList.innerHTML = '';
+  refs.totalSpan.textContent = '$0';
 });
 
-elems.itemsList.addEventListener('click', async event => {
+refs.itemsList.addEventListener('click', async event => {
   if (event.target.nodeName === 'UL') return;
 
   if (event.target.dataset.action === 'delete') {
@@ -47,9 +48,9 @@ elems.itemsList.addEventListener('click', async event => {
       totalPrice = productItems.reduce((total, elem, i) => {
         return total + elem.price * Number(allPricesOfProducts[i].textContent);
       }, 0);
-      elems.quantityTitle.textContent = `${productItems.length}`;
-      elems.quantityHeaderSpan.textContent = `${productItems.length}`;
-      elems.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+      refs.quantityTitle.textContent = `${productItems.length}`;
+      refs.quantityHeaderSpan.textContent = `${productItems.length}`;
+      refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
       saveToLS('CART', filteredId);
       isEmpty(filteredId?.length);
     } catch (error) {
@@ -68,10 +69,10 @@ elems.itemsList.addEventListener('click', async event => {
     let value = Number(quantityElement.textContent);
     if (value === 1) return;
     value -= 1;
-    elems.totalSpan.textContent =
+    refs.totalSpan.textContent =
       '$' +
       (
-        Number(elems.totalSpan.textContent.replace('$', '')) - productPrice
+        Number(refs.totalSpan.textContent.replace('$', '')) - productPrice
       ).toFixed(2);
     quantityElement.textContent = value;
   }
@@ -86,10 +87,10 @@ elems.itemsList.addEventListener('click', async event => {
       event.target.closest('SPAN').firstElementChild.nextElementSibling;
     let value = Number(quantityElement.textContent);
     value += 1;
-    elems.totalSpan.textContent =
+    refs.totalSpan.textContent =
       '$' +
       (
-        Number(elems.totalSpan.textContent.replace('$', '')) + productPrice
+        Number(refs.totalSpan.textContent.replace('$', '')) + productPrice
       ).toFixed(2);
     quantityElement.textContent = value;
   }
@@ -108,11 +109,11 @@ async function getProducts() {
       return total + elem.price;
     }, 0);
     const markup = createMarkup(productItems);
-    elems.itemsList.innerHTML = markup;
-    elems.quantityTitle.textContent = `${productItems.length}`;
-    elems.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-    elems.quantityHeaderSpan.textContent = `${productItems.length}`;
-    new SimpleBar(elems.itemsList, { autoHide: false });
+    refs.itemsList.innerHTML = markup;
+    refs.quantityTitle.textContent = `${productItems.length}`;
+    refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+    refs.quantityHeaderSpan.textContent = `${productItems.length}`;
+    new SimpleBar(refs.itemsList, { autoHide: false });
   } catch (error) {
     console.log(error);
   }
@@ -187,11 +188,11 @@ function createMarkup(items) {
 
 function isEmpty(items) {
   if (!items) {
-    elems.fullCart.classList.add('is-hidden');
-    elems.emptyCart.classList.remove('is-hidden');
+    refs.fullCart.classList.add('is-hidden');
+    refs.emptyCart.classList.remove('is-hidden');
   } else {
-    elems.emptyCart.classList.add('is-hidden');
-    elems.fullCart.classList.remove('is-hidden');
+    refs.emptyCart.classList.add('is-hidden');
+    refs.fullCart.classList.remove('is-hidden');
   }
 }
 // Save to local storage
