@@ -3,16 +3,14 @@ import {
   modalEmailSubMarkup,
   modalEmailSubErrorMarkup,
 } from './modalMarkup.js';
+import { putProductListItemInCart, isCheckedCart } from '../productList.js';
 
 const refsModal = {
   backdrop: document.querySelector('.modal-backdrop'),
-  modals: document.querySelectorAll('.modal-container'),
-  closeBtn: document.querySelector('.modal-close-btn'),
   modalProduct: document.querySelector('.modal-product-card-container'),
   modalThanks: document.querySelector('.modal-thanks-card-container'),
   modalSub: document.querySelector('.js-modal-sub'),
   modalSuccess: document.querySelector('.js-modal-success'),
-  cartBtn: document.querySelector('.modal-product-card-purchase-btn'),
 };
 const { backdrop, modalProduct, modalThanks } = refsModal;
 
@@ -32,6 +30,19 @@ function activateCloseButton() {
     closeBtn.addEventListener('click', closeModalProductCard);
   }
 }
+function activateAddToCartButton() {
+  const addToCartBtn = document.querySelector(
+    '.modal-product-card-purchase-btn'
+  );
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', e => {
+      const elemId = e.target.dataset.modalid;
+      const btnElem = document.querySelector(`button[data-id="${elemId}"]`);
+      putProductListItemInCart(elemId);
+      isCheckedCart(btnElem);
+    });
+  }
+}
 function addEventListenerToEscape() {
   document.addEventListener('keydown', handleEscapeKey);
 }
@@ -43,6 +54,7 @@ function openModalProductCard(data) {
   showModal(modalProduct);
   modalProductCardMarkup(data);
   activateCloseButton();
+  activateAddToCartButton();
   isModalOpen = true;
   addEventListenerToEscape();
 }
