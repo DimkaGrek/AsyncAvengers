@@ -23,9 +23,14 @@ export function modalProductCardMarkup(data) {
 				<p class="modal-product-card-category-descr">${data.category}</p>
 				<p class="modal-product-card-category">Size:</p>
 				<p class="modal-product-card-category-descr relocate">${data.size}</p>
-				<p class="modal-product-card-category relocate">Popularity:</p>
+				
+			</div>
+			
+			<div class="modal-product-card-popularity-wrap">
+			<p class="modal-product-card-category relocate">Popularity:</p>
 				<p class="modal-product-card-category-descr">${data.popularity}</p>
 			</div>
+			
 			<p class="modal-product-card-descr modal-card-descr">
 				${data.desc}
 			</p>
@@ -45,4 +50,58 @@ export function modalProductCardMarkup(data) {
 		</button>
 	</div>`;
   refsModal.modalProduct.innerHTML = markup;
+}
+
+export function modalEmailSubMarkup() {
+  const markupSub = `
+	<button class="modal-close-btn">
+        <svg class="modal-close-btn-img" width="13" height="13">
+				<use href="${icons}#icon-close"></use>
+        </svg>
+      </button>
+      <div class="modal-thanks-card-text-wrapper">
+        <h2 class="modal-thanks-card-title modal-card-title">
+          Thanks for subscribing for
+          <span class="modal-card-span">new</span> products
+        </h2>
+        <p class="modal-thanks-card-descr modal-card-descr">
+          We promise you organic and high-quality products that will meet your
+          expectations. Please stay with us and we promise you many pleasant
+          surprises.
+        </p>
+      </div>
+      <div class="modal-thanks-card-img-wrap">
+        <img
+          class="modal-thanks-card-img"
+          srcset="
+            ./img/modal/modal-thanks-card-img.png     1x,
+            ./img/modal/modal-thanks-card-img-@2x.png 2x
+          "
+          src="./img/modal/modal-thanks-card-img.png"
+          alt="fruit busket"
+          width="335"
+          height="144"
+        />
+      </div>`;
+  refsModal.modalThanks.innerHTML = markupSub;
+}
+
+export function modalEmailSubErrorMarkup() {
+  refsModal.modalThanks.style.paddingTop = '80px';
+  const markupSubError = `<button class="modal-close-btn">
+	<svg class="modal-close-btn-img" width="13" height="13">
+	<use href="${icons}#icon-close"></use>
+	</svg>
+</button>
+<h2 class="modal-sub-card-title modal-card-title">
+	This
+	<span class="modal-card-span">email address</span> has already been
+	entered
+</h2>
+<p class="modal-sub-card-descr modal-card-descr">
+	You have already subscribed to our new products. Watch for offers at the
+	mailing address.
+</p>
+</div>`;
+  refsModal.modalThanks.innerHTML = markupSubError;
 }
