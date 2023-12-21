@@ -39,6 +39,7 @@ async function choiceCategories(li) {
   refs.ftSelect.classList.remove('is-open');
   params.category = liValue;
   const productResoult = await FoodApi.getProductsByFilter(params);
+  localStorage.setItem('searchKey', JSON.stringify(params));
 }
 
 // =======================Create-Search-Input========================
