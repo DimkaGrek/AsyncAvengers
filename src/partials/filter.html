@@ -26,18 +26,40 @@
     <li class="dropdown">
       <button class="dropdown_button">
         A to Z
-        <svg class="dropdown-icon" width="20" height="20">
-          <use href="./img/icons.svg#icon-chevron-down"></use>
+        <svg class="dropdown-icon-two" width="20" height="20">
+          <use href="./img/icons.svg#icon-arrow-down_icon"></use>
         </svg>
       </button>
       <ul class="dropdown_list">
-        <li class="dropdown_list-item" data-value="alfabet">A to Z</li>
-        <li class="dropdown_list-item" data-value="alfabet-reverse">Z to A</li>
-        <li class="dropdown_list-item" data-value="cheap">Cheap</li>
-        <li class="dropdown_list-item" data-value="expensive">Expensive</li>
-        <li class="dropdown_list-item" data-value="popular">Popular</li>
-        <li class="dropdown_list-item" data-value="not-popular">Not popular</li>
-        <li class="dropdown_list-item" data-value="show-all">Show all</li>
+        <li class="dropdown_list-item" data-value="true" data-key="byABC">
+          A to Z
+        </li>
+        <li class="dropdown_list-item" data-value="false" data-key="byABC">
+          Z to A
+        </li>
+        <li class="dropdown_list-item" data-value="true" data-key="byPrice">
+          Cheap
+        </li>
+        <li class="dropdown_list-item" data-value="false" data-key="byPrice">
+          Expensive
+        </li>
+        <li
+          class="dropdown_list-item"
+          data-value="false"
+          data-key="byPopularity"
+        >
+          Popular
+        </li>
+        <li
+          class="dropdown_list-item"
+          data-value="true"
+          data-key="byPopularity"
+        >
+          Not popular
+        </li>
+        <li class="dropdown_list-item" data-value="showAll" data-key="showAll">
+          Show all
+        </li>
       </ul>
     </li>
   </ul>

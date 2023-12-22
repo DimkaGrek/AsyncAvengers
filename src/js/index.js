@@ -12,49 +12,49 @@ import './modal/modal';
 import './error';
 
 // ===== Examples of use FoodAPI (should be REMOVE in production version)=========
-const getProductList = async () => {
-  const products = await FoodApi.getProducts();
-  console.log('getProductList: ', products);
-};
+// const getProductList = async () => {
+//   const products = await FoodApi.getProducts();
+//   console.log('getProductList: ', products);
+// };
 
-const getPopularProductList = async () => {
-  const products = await FoodApi.getPopularProducts();
-  console.log('getPopularProductList: ', products);
-};
+// const getPopularProductList = async () => {
+//   const products = await FoodApi.getPopularProducts();
+//   console.log('getPopularProductList: ', products);
+// };
 
-const getDiscountProductList = async () => {
-  const products = await FoodApi.getDiscountProducts();
-  console.log('getDiscountProductList: ', products);
-};
+// const getDiscountProductList = async () => {
+//   const products = await FoodApi.getDiscountProducts();
+//   console.log('getDiscountProductList: ', products);
+// };
 
-const getProductsCategories = async () => {
-  const categories = await FoodApi.getProductsCategories();
-  console.log('getProductsCategories: ', categories);
-};
+// const getProductsCategories = async () => {
+//   const categories = await FoodApi.getProductsCategories();
+//   console.log('getProductsCategories: ', categories);
+// };
 
-const getProduct = async id => {
-  const product = await FoodApi.getProductById(id);
-  console.log('getProduct: ', product);
-};
+// const getProduct = async id => {
+//   const product = await FoodApi.getProductById(id);
+//   console.log('getProduct: ', product);
+// };
 
-const sendOrder = async (email, products) => {
-  const order = {
-    email,
-    products,
-  };
-  const message = await FoodApi.createOrder(order);
-  console.log('sendOrder: ', message);
-};
+// const sendOrder = async (email, products) => {
+//   const order = {
+//     email,
+//     products,
+//   };
+//   const message = await FoodApi.createOrder(order);
+//   console.log('sendOrder: ', message);
+// };
 
-const orderSubscription = async email => {
-  const message = await FoodApi.createSubscription(email);
-  console.log('orderSubscription: ', message);
-};
+// const orderSubscription = async email => {
+//   const message = await FoodApi.createSubscription(email);
+//   console.log('orderSubscription: ', message);
+// };
 
-const getProductsByFilter = async params => {
-  const products = await FoodApi.getProductsByFilter(params);
-  console.log('getProductsByFilter: ', products);
-};
+// const getProductsByFilter = async params => {
+//   const products = await FoodApi.getProductsByFilter(params);
+//   console.log('getProductsByFilter: ', products);
+// };
 
 // Variant 2
 // const getProductsByFilter = async (
