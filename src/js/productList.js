@@ -2,7 +2,8 @@ import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
-// import { spinnerStop, spinnerPlay } from './spinner';
+import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
+// import { params } from './filter';
 
 const refs = {
   productList: document.querySelector('.js-product-list'),
@@ -18,6 +19,8 @@ const refs = {
 const params = {
   limit: 5,
   page: 1,
+  keyword: null,
+  category: null,
 };
 
 let currentPage = null;
@@ -40,16 +43,15 @@ async function onListCartClick(event) {
   }
   const item = event.target.closest('.product-card');
   if (item !== null) {
-    // spinnerPlay();
+    spinnerPlay();
     try {
       const data = await FoodApi.getProductById(item.dataset.id);
       openModalProductCard(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      spinnerStop();
     }
-    // finally {
-    //   spinnerStop();
-    // }
   }
 }
 
@@ -115,7 +117,7 @@ function onResizeUpdateProductList() {
 }
 
 async function getProductList(products = {}) {
-  // spinnerPlay();
+  spinnerPlay();
   try {
     if (Object.keys(products).length === 0) {
       products = await FoodApi.getProductsByFilter(params);
@@ -131,10 +133,9 @@ async function getProductList(products = {}) {
     refs.pagiContainer.classList.add('is-hidden');
 
     console.log(error);
+  } finally {
+    spinnerStop();
   }
-  // finally {
-  //   spinnerStop();
-  // }
 }
 
 function putProductListItemInCart(id) {

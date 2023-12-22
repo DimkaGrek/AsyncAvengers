@@ -165,12 +165,12 @@
   background-color: var(--olive);
   color: var(--gainsboro);
   transition: all var(--delay) var(--trnz);
-  cursor: pointer;
 }
 @media screen and (min-width: 1440px) {
-  .product-button-cart:hover,
-  .product-button-cart:focus {
+  .product-button-cart:not([disabled]):hover,
+  .product-button-cart:not([disabled]):focus {
     background-color: var(--olive_dark);
+    cursor: pointer;
   }
 }
 
@@ -219,7 +219,6 @@
   height: 40px;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   border-radius: 50%;
   transition: background-color var(--delay) var(--trnz),
     color var(--delay) var(--trnz);
@@ -236,29 +235,17 @@ button.pagi-item:disabled {
   cursor: auto;
 }
 @media screen and (max-width: 1439.98px) {
-  button.pagi-item:disabled:active {
-    color: var(--darkgrey_30);
-    background-color: var(--white);
-    cursor: auto;
-  }
-
-  button.pagi-item:active {
+  button.pagi-item:not([disabled]):active {
     background-color: var(--olive);
     color: var(--gainsboro);
   }
 }
 @media screen and (min-width: 1440px) {
-  button.pagi-item:disabled:hover,
-  button.pagi-item:disabled:focus {
-    color: var(--darkgrey_30);
-    background-color: var(--white);
-    cursor: auto;
-  }
-
-  button.pagi-item:hover,
-  button.pagi-item:focus {
+  button.pagi-item:not([disabled]):hover,
+  button.pagi-item:not([disabled]):focus {
     background-color: var(--olive);
     color: var(--gainsboro);
+    cursor: pointer;
   }
 }
 li.pagi-item {
