@@ -7,14 +7,8 @@ const cardQuantity = document.querySelector('.js-cart-quantity');
 
 discountList.addEventListener('click', onListCartClick);
 function getRandomProducts(items, numb = 2) {
-  let arrayProducts = [];
-  let indexEs = [];
-  while (indexEs.length < numb) {
-    let index = Math.floor(Math.random() * items.length);
-    indexEs.push(index);
-  }
-  indexEs.forEach(index => !arrayProducts.push(items[index]));
-  return arrayProducts;
+  const result = [...items].sort(() => 0.5 - Math.random());
+  return result.slice(0, numb);
 }
 
 const getDiscountProductList = async () => {
@@ -43,7 +37,7 @@ async function renderDiscountList(toRandomObject) {
       }) => {
         return `   <li class="item-discount" data-id="${_id}">
       <div class="discount-image-container">
-      <img src="${img}" alt="${category}" width="114" class="discout-image"/>
+      <img src="${img}" alt="${category}" width="114" class="discout-image" loading="lazy"/>
       </div>
         <svg width=60 height=60 class="discount-icon">
           <use href="${icons}#icon-discount"></use>
@@ -60,7 +54,6 @@ async function renderDiscountList(toRandomObject) {
   discountList.innerHTML = markup;
   discountList.addEventListener('click', onListCartClick);
 }
-localStorage.setItem('CART', JSON.stringify([]));
 
 function isCheckedCart(ref) {
   ref.firstElementChild.classList.add('is-hidden');
@@ -89,8 +82,7 @@ async function onListCartClick(event) {
 function putProductListItemInCart(id) {
   const newCART = JSON.parse(localStorage.getItem('CART'));
   if (newCART.includes(id)) return;
-
-  newCART.push(id);
+  newCART.push({ productId: id, amount: 1 });
   localStorage.setItem('CART', JSON.stringify(newCART));
   const value = cardQuantity.textContent;
   cardQuantity.textContent = Number(value) + 1;
@@ -98,7 +90,7 @@ function putProductListItemInCart(id) {
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="button-discount" data-id="${id} disabled">
+  const cheked = `<button class="button-discount" data-id="${id}"disabled>
           <svg class="pbutton-svg-discount is-hidden" width="18" height="18">
             <use href="${icons}#icon-shopping-cart" class="icon"></use>
           </svg>
