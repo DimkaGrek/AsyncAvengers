@@ -204,7 +204,7 @@ function renderDiscountForProductList(isDiscount) {
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="product-button-cart" data-id="${id} disabled">
+  const cheked = `<button class="product-button-cart" data-id="${id}" disabled>
           <svg class="product-icon-cart is-hidden" width="18" height="18">
             <use href="${icons}#icon-shopping-cart"></use>
           </svg>
