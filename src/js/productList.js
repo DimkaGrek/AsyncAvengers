@@ -2,7 +2,8 @@ import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
-// import { spinnerStop, spinnerPlay } from './spinner';
+import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
+// import { params } from './filter';
 
 const refs = {
   productList: document.querySelector('.js-product-list'),
@@ -18,6 +19,8 @@ const refs = {
 const params = {
   limit: 5,
   page: 1,
+  keyword: null,
+  category: null,
 };
 
 let currentPage = null;
@@ -40,16 +43,15 @@ async function onListCartClick(event) {
   }
   const item = event.target.closest('.product-card');
   if (item !== null) {
-    // spinnerPlay();
+    spinnerPlay();
     try {
       const data = await FoodApi.getProductById(item.dataset.id);
       openModalProductCard(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      spinnerStop();
     }
-    // finally {
-    //   spinnerStop();
-    // }
   }
 }
 
@@ -81,6 +83,57 @@ function onPagiBtnClick(event) {
   }
 }
 
+function onResizeUpdateProductList() {
+  if (checkClientWidth()) {
+    getProductList();
+  }
+}
+
+async function getProductList(products = {}) {
+  spinnerPlay();
+  try {
+    if (Object.keys(products).length === 0) {
+      products = await FoodApi.getProductsByFilter(params);
+    }
+    const { page, totalPages } = products;
+    currentPage = page;
+    refs.productList.innerHTML = renderProductListMarcup(products);
+    if (isMoreThenOnePage(totalPages)) {
+      refs.pagiList.innerHTML = renderProductListPagi(page, totalPages);
+    }
+    togglePagiBtn(page, totalPages);
+  } catch (error) {
+    refs.pagiContainer.classList.add('is-hidden');
+
+    console.log(error);
+  } finally {
+    spinnerStop();
+  }
+}
+
+function checkClientWidth() {
+  const clientWidth = document.documentElement.clientWidth;
+  if (clientWidth > 1439) {
+    if (params.limit === 9) return false;
+    params.limit = 9;
+    return true;
+  }
+  if (clientWidth > 767) {
+    if (params.limit === 8) return false;
+    params.limit = 8;
+    return true;
+  }
+  if (clientWidth > 319) {
+    if (params.limit === 6) return false;
+    params.limit = 6;
+    return true;
+  }
+}
+
+/* =====================================================
+=============Pagination logics
+========================================================*/
+// Set status of pagi button disabled/enabled
 function togglePagiBtn(page, totalPages) {
   if (page > 1) {
     refs.pagiBtnLeftDuble.disabled = true;
@@ -107,120 +160,15 @@ function togglePagiBtn(page, totalPages) {
     refs.pagiBtnRightDuble.disabled = true;
   }
 }
-
-function onResizeUpdateProductList() {
-  if (checkClientWidth()) {
-    getProductList();
-  }
-}
-
-async function getProductList(products = {}) {
-  // spinnerPlay();
-  try {
-    if (Object.keys(products).length === 0) {
-      products = await FoodApi.getProductsByFilter(params);
-    }
-    const { page, totalPages } = products;
-    currentPage = page;
-    refs.productList.innerHTML = renderProductListMarcup(products);
-    if (isMoreThenOnePage(totalPages)) {
-      refs.pagiList.innerHTML = renderProductListPagi(page, totalPages);
-    }
-    togglePagiBtn(page, totalPages);
-  } catch (error) {
+// Hide pagi container if total page = 1 or show if total page > 1
+function isMoreThenOnePage(totalPages) {
+  if (totalPages > 1) {
+    refs.pagiContainer.classList.remove('is-hidden');
+    return true;
+  } else {
     refs.pagiContainer.classList.add('is-hidden');
-
-    console.log(error);
+    return false;
   }
-  // finally {
-  //   spinnerStop();
-  // }
-}
-
-function putProductListItemInCart(id) {
-  const newCART = JSON.parse(localStorage.getItem('CART'));
-  if (newCART.includes(id)) return;
-
-  newCART.push({ productId: id, amount: 1 });
-  localStorage.setItem('CART', JSON.stringify(newCART));
-  const value = +refs.cartQuantity.textContent;
-  refs.cartQuantity.textContent = value + 1;
-}
-
-function isCheckedCart(ref) {
-  ref.firstElementChild.classList.add('is-hidden');
-  ref.lastElementChild.classList.remove('is-hidden');
-  ref.disabled = true;
-}
-
-function checkCartContents() {
-  if (localStorage.getItem('CART')) {
-    const cartContent = JSON.parse(localStorage.getItem('CART'));
-    refs.cartQuantity.textContent = cartContent.length;
-    return;
-  }
-  localStorage.setItem('CART', JSON.stringify([]));
-}
-
-function renderProductListMarcup({ results }) {
-  const marcup = results.map(
-    ({ _id, name, img, category, price, size, is10PercentOff, popularity }) => {
-      return `<li class="product-card" data-id="${_id}">
-      <div class="product-img-wrapper">
-        <img src="${img}" alt="${name}" width="140" />    
-        ${renderDiscountForProductList(is10PercentOff)}
-      </div>
-      <h3 class="product-name">${name}</h3>
-      <p class="product-description">
-        <span>
-          Category:
-          <span class="product-description-accent">${category}</span>
-        </span>
-        <span>
-          Size:
-          <span class="product-description-accent">${size}</span>
-        </span>
-        <span>
-          Popularity:
-          <span class="product-description-accent">${popularity}</span>
-        </span>
-      </p>
-      <div class="product-bye">
-        <p class="product-prise">$${price}</p>
-        ${renderButtonForProductList(_id)}
-      </div>
-    </li>`;
-    }
-  );
-  return marcup.join('');
-}
-
-function renderDiscountForProductList(isDiscount) {
-  const marcup = `<svg class="product-discount-card" width="60" height="60">
-          <use href="${icons}#icon-discount"></use>
-        </svg> `;
-  return isDiscount ? marcup : '';
-}
-
-function renderButtonForProductList(id) {
-  const cart = localStorage.getItem('CART');
-  const cheked = `<button class="product-button-cart" data-id="${id}" disabled>
-          <svg class="product-icon-cart is-hidden" width="18" height="18">
-            <use href="${icons}#icon-shopping-cart"></use>
-          </svg>
-          <svg class="product-icon-cart" width="18" height="18">
-            <use href="${icons}#icon-check"></use>
-          </svg>
-        </button>`;
-  const uncheked = `<button class="product-button-cart" data-id="${id}">
-          <svg class="product-icon-cart" width="18" height="18">
-            <use href="${icons}#icon-shopping-cart"></use>
-          </svg>
-          <svg class="product-icon-cart is-hidden" width="18" height="18">
-            <use href="${icons}#icon-check"></use>
-          </svg>
-        </button>`;
-  return cart.includes(id) ? cheked : uncheked;
 }
 
 function prepareForRenderPagi(page, totalPage) {
@@ -289,34 +237,100 @@ function renderProductListPagi(page, totalPage) {
     .join('');
 }
 
-function isMoreThenOnePage(totalPages) {
-  if (totalPages > 1) {
-    refs.pagiContainer.classList.remove('is-hidden');
-    return true;
-  } else {
-    refs.pagiContainer.classList.add('is-hidden');
-    return false;
+/* =====================================================
+=============Can Be Repalse in other file
+========================================================*/
+
+// need ref on span in header
+function checkCartContents() {
+  if (localStorage.getItem('CART')) {
+    const cartContent = JSON.parse(localStorage.getItem('CART'));
+    refs.cartQuantity.textContent = cartContent.length;
+    return;
   }
+  localStorage.setItem('CART', JSON.stringify([]));
+}
+// need ref on span in header
+function putProductListItemInCart(id) {
+  const newCART = JSON.parse(localStorage.getItem('CART'));
+  if (newCART.includes(id)) return;
+
+  newCART.push({ productId: id, amount: 1 });
+  localStorage.setItem('CART', JSON.stringify(newCART));
+  const value = +refs.cartQuantity.textContent;
+  refs.cartQuantity.textContent = value + 1;
 }
 
-function checkClientWidth() {
-  const clientWidth = document.documentElement.clientWidth;
-  if (clientWidth > 1439) {
-    if (params.limit === 9) return false;
-    params.limit = 9;
-    return true;
-  }
-  if (clientWidth > 767) {
-    if (params.limit === 8) return false;
-    params.limit = 8;
-    return true;
-  }
-  if (clientWidth > 319) {
-    if (params.limit === 6) return false;
-    params.limit = 6;
-    return true;
-  }
+// parent function
+function renderProductListMarcup({ results }) {
+  const marcup = results.map(
+    ({ _id, name, img, category, price, size, is10PercentOff, popularity }) => {
+      return `<li class="product-card" data-id="${_id}">
+      <div class="product-img-wrapper">
+        <img src="${img}" alt="${name}" width="140" />    
+        ${renderDiscountForProductList(is10PercentOff)}
+      </div>
+      <h3 class="product-name">${name}</h3>
+      <p class="product-description">
+        <span>
+          Category:
+          <span class="product-description-accent">${category}</span>
+        </span>
+        <span>
+          Size:
+          <span class="product-description-accent">${size}</span>
+        </span>
+        <span>
+          Popularity:
+          <span class="product-description-accent">${popularity}</span>
+        </span>
+      </p>
+      <div class="product-bye">
+        <p class="product-prise">$${price}</p>
+        ${renderButtonForProductList(_id)}
+      </div>
+    </li>`;
+    }
+  );
+  return marcup.join('');
 }
+
+// child function
+function renderDiscountForProductList(isDiscount) {
+  const marcup = `<svg class="product-discount-card" width="60" height="60">
+          <use href="${icons}#icon-discount"></use>
+        </svg> `;
+  return isDiscount ? marcup : '';
+}
+
+// child function
+function renderButtonForProductList(id) {
+  const cart = localStorage.getItem('CART');
+  const cheked = `<button class="product-button-cart" data-id="${id}" disabled>
+          <svg class="product-icon-cart is-hidden" width="18" height="18">
+            <use href="${icons}#icon-shopping-cart"></use>
+          </svg>
+          <svg class="product-icon-cart" width="18" height="18">
+            <use href="${icons}#icon-check"></use>
+          </svg>
+        </button>`;
+  const uncheked = `<button class="product-button-cart" data-id="${id}">
+          <svg class="product-icon-cart" width="18" height="18">
+            <use href="${icons}#icon-shopping-cart"></use>
+          </svg>
+          <svg class="product-icon-cart is-hidden" width="18" height="18">
+            <use href="${icons}#icon-check"></use>
+          </svg>
+        </button>`;
+  return cart.includes(id) ? cheked : uncheked;
+}
+// take refs on element button can toggle clases inside function
+function isCheckedCart(ref) {
+  ref.firstElementChild.classList.add('is-hidden');
+  ref.lastElementChild.classList.remove('is-hidden');
+  ref.disabled = true;
+}
+
 export {
   onListCartClick,
   putProductListItemInCart,
@@ -325,5 +339,3 @@ export {
   isCheckedCart,
   getProductList,
 };
-
-// new push
