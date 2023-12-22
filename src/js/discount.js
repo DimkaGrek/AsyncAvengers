@@ -81,7 +81,9 @@ async function onListCartClick(event) {
 }
 function putProductListItemInCart(id) {
   const newCART = JSON.parse(localStorage.getItem('CART'));
-  if (newCART.includes(id)) return;
+  const foundItem = newCART.find(cartItem => cartItem.productId === id);
+  if (foundItem !== undefined) return;
+  
   newCART.push({ productId: id, amount: 1 });
   localStorage.setItem('CART', JSON.stringify(newCART));
   const value = cardQuantity.textContent;
