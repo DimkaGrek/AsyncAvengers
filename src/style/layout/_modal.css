@@ -170,6 +170,7 @@
 }
 .modal-product-card-purchase-btn:disabled {
   background: #586f1f;
+  cursor: default;
 }
 .modal-product-card-purchase-btn-img {
   fill: #e8e8e2;
@@ -315,6 +316,7 @@
 .modal-success-card-title {
   text-transform: uppercase;
   margin-bottom: 20px;
+  color: tomato;
 }
 .modal-success-card-descr {
   width: 295px;
@@ -335,7 +337,7 @@
     margin-bottom: 37px;
   }
   .modal-success-card-descr {
-    width: 480px;
+    width: 350px;
     height: 120px;
     font-size: 18px;
     line-height: 1.33;

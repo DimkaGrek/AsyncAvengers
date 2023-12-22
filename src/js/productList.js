@@ -1,7 +1,7 @@
 import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-import { openModalProductCard } from './modal/modal';
+import { openModalError, openModalProductCard } from './modal/modal';
 import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
 // import { params } from './filter';
 
@@ -104,7 +104,7 @@ async function getProductList(products = {}) {
     togglePagiBtn(page, totalPages);
   } catch (error) {
     refs.pagiContainer.classList.add('is-hidden');
-
+    openModalError();
     console.log(error);
   } finally {
     spinnerStop();
