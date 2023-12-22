@@ -125,6 +125,7 @@
   }
 }
 .cart-product-img-container {
+  position: relative;
   padding: 18px;
   display: flex;
   justify-content: center;
@@ -141,6 +142,17 @@
   .cart-product-img {
     width: 72px;
     height: 72px;
+  }
+}
+.cart-product-discount-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+@media only screen and (min-width: 1440px) {
+  .cart-product-discount-icon {
+    width: 40px;
+    height: 40px;
   }
 }
 .delete-btn {
@@ -274,15 +286,28 @@
 }
 .cart-icon-minus,
 .cart-icon-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   fill: currentColor;
   stroke: currentColor;
 }
 @media only screen and (min-width: 768px) {
-  .cart-icon-minus,
+  .cart-icon-minus {
+    width: 12px;
+    height: 12px;
+  }
   .cart-icon-plus {
     width: 16px;
-    height: 18px;
+    height: 16px;
   }
+}
+.border-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(1, 1, 1, 0.1);
 }
 /* -------------ScrollBar------------------ */
 .simplebar-scrollbar::before {
@@ -361,13 +386,6 @@
     margin-right: 8px;
   }
 }
-.border-container {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background-color: rgba(1, 1, 1, 0.1);
-}
 .checkout-form {
   position: relative;
 }
@@ -399,7 +417,27 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.29;
+  transition: border-color var(--delay) var(--trnz),
+    box-shadow var(--delay) var(--trnz), border-color var(--delay) var(--trnz);
 }
+.checkout-input:hover,
+.checkout-input:focus {
+  border-color: #fff;
+  box-shadow: rgba(234, 233, 231, 0.25) 0px 12px 12px -5px,
+    rgba(0, 0, 0, 0.3) 0px 7px 15px -8px,
+    rgba(1236, 217, 121, 0.35) 0px -2px 6px 0px inset;
+  border: 1.5px solid #fff;
+}
+.checkout-input:not(:placeholder-shown):required:valid {
+  border-color: rgba(30, 168, 30, 0.969);
+  box-shadow: 2px 1px 10px var(--olive);
+}
+
+.checkout-input:not(:placeholder-shown):required:invalid {
+  border-color: rgba(255, 68, 0, 0.694);
+  box-shadow: 2px 1px 10px rgba(255, 68, 0, 0.694);
+}
+
 @media only screen and (min-width: 768px) {
   .checkout-input {
     padding-left: 63px;
