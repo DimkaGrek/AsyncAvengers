@@ -223,7 +223,7 @@ function prepareForRenderPagi(page, totalPage) {
 }
 
 function renderProductListPagi(page, totalPage) {
-  arr = prepareForRenderPagi(page, totalPage);
+  const arr = prepareForRenderPagi(page, totalPage);
   return arr
     .map(cur => {
       if (cur === page) {
