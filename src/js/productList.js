@@ -2,6 +2,7 @@ import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
+// import { spinnerStop, spinnerPlay } from './spinner';
 
 const refs = {
   productList: document.querySelector('.js-product-list'),
@@ -15,12 +16,8 @@ const refs = {
 };
 
 const params = {
-  limit: 0,
+  limit: 5,
   page: 1,
-  category: '',
-  byABC: true,
-  byPrice: false,
-  byPopularity: false,
 };
 
 let currentPage = null;
@@ -43,12 +40,16 @@ async function onListCartClick(event) {
   }
   const item = event.target.closest('.product-card');
   if (item !== null) {
+    // spinnerPlay();
     try {
       const data = await FoodApi.getProductById(item.dataset.id);
       openModalProductCard(data);
     } catch (error) {
       console.log(error);
     }
+    // finally {
+    //   spinnerStop();
+    // }
   }
 }
 
@@ -113,9 +114,12 @@ function onResizeUpdateProductList() {
   }
 }
 
-async function getProductList() {
+async function getProductList(products = {}) {
+  // spinnerPlay();
   try {
-    const products = await FoodApi.getProductsByFilter(params);
+    if (Object.keys(products).length === 0) {
+      products = await FoodApi.getProductsByFilter(params);
+    }
     const { page, totalPages } = products;
     currentPage = page;
     refs.productList.innerHTML = renderProductListMarcup(products);
@@ -124,8 +128,13 @@ async function getProductList() {
     }
     togglePagiBtn(page, totalPages);
   } catch (error) {
+    refs.pagiContainer.classList.add('is-hidden');
+
     console.log(error);
   }
+  // finally {
+  //   spinnerStop();
+  // }
 }
 
 function putProductListItemInCart(id) {
@@ -146,7 +155,7 @@ function isCheckedCart(ref) {
 
 function checkCartContents() {
   if (localStorage.getItem('CART')) {
-    cartContent = JSON.parse(localStorage.getItem('CART'));
+    const cartContent = JSON.parse(localStorage.getItem('CART'));
     refs.cartQuantity.textContent = cartContent.length;
     return;
   }
@@ -195,7 +204,7 @@ function renderDiscountForProductList(isDiscount) {
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="product-button-cart" data-id="${id} disabled">
+  const cheked = `<button class="product-button-cart" data-id="${id}" disabled>
           <svg class="product-icon-cart is-hidden" width="18" height="18">
             <use href="${icons}#icon-shopping-cart"></use>
           </svg>
@@ -312,7 +321,9 @@ export {
   onListCartClick,
   putProductListItemInCart,
   renderProductListMarcup,
-  params,
   renderButtonForProductList,
   isCheckedCart,
+  getProductList,
 };
+
+// new push
