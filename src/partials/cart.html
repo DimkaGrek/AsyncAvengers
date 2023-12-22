@@ -37,11 +37,12 @@
           <label class="checkout-label">
             <input
               class="checkout-input js-checkout-input"
-              type="text"
+              type="email"
+              name="email"
               minlength="6"
               placeholder="Enter your email"
               title="Example: nojahi6436@newnime.com"
-              pattern="[a-zA-Z1-9\-\._]+@[a-z1-9]+(.[a-z1-9]+){1,}"
+              pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
               required
             />
           </label>
@@ -57,6 +58,18 @@
   <div class="empty-cart js-empty-cart is-hidden">
     <picture>
       <!-- Tablet, Desktop -->
+      <!-- .webp -->
+      <source
+        media="(min-width:768px)"
+        srcset="
+          ./img/cart/desktop/yellow_shopping_basket_desc@1x.webp 1x,
+          ./img/cart/desktop/yellow_shopping_basket_desc@2x.webp 2x
+        "
+        type="image/webp"
+        width="164"
+        height="140"
+      />
+      <!-- .png -->
       <source
         media="(min-width:768px)"
         srcset="
@@ -68,6 +81,18 @@
         height="140"
       />
       <!-- Mobile -->
+      <!-- .webp -->
+      <source
+        media="(max-width:767.98px)"
+        srcset="
+          ./img/cart/mobile/yellow_shopping_basket_mob@1x.webp 1x,
+          ./img/cart/mobile/yellow_shopping_basket_mob@2x.webp 2x
+        "
+        type="image/webp"
+        width="132"
+        height="114"
+      />
+      <!-- .png -->
       <source
         media="(max-width:767.98px)"
         srcset="
@@ -94,4 +119,5 @@
       cart.
     </p>
   </div>
+  <div class="backdrop js-backdrop is-hidden"></div>
 </section>
