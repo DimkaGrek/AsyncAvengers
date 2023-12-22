@@ -3,6 +3,8 @@ import {
   modalEmailSubMarkup,
   modalEmailSubErrorMarkup,
   changeAddToCartBtn,
+  modalSuccessMarkup,
+  modalErrorMarkup,
 } from './modalMarkup.js';
 import { putProductListItemInCart, isCheckedCart } from '../productList.js';
 
@@ -38,10 +40,28 @@ function activateAddToCartButton() {
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', e => {
       const elemId = e.currentTarget.dataset.modalid;
+
       const btnElem = document.querySelector(`button[data-id="${elemId}"]`);
+      if (btnElem) {
+        isCheckedCart(btnElem);
+      }
+
+      const btnPopularElem = document.querySelector(
+        `.popular-buy-btn[data-id="${elemId}"]`
+      );
+      if (btnPopularElem) {
+        isCheckedCart(btnPopularElem);
+      }
+
+      const btnDiscountElem = document.querySelector(
+        `.button-discount[data-id="${elemId}"]`
+      );
+      if (btnDiscountElem) {
+        isCheckedCart(btnDiscountElem);
+      }
+
       putProductListItemInCart(elemId);
       changeAddToCartBtn(addToCartBtn);
-      isCheckedCart(btnElem);
     });
   }
 }
@@ -94,12 +114,25 @@ function closeModalEmailSubError() {
 
 function openModalSuccess() {
   showModal(modalThanks);
-  renderModalSuccessMarkup();
+  modalSuccessMarkup;
   activateCloseButton();
   isModalOpen = true;
   addEventListenerToEscape();
 }
 function closeModalSuccess() {
+  hideModal(modalThanks);
+  isModalOpen = false;
+  removeEventListenerFromEscape();
+}
+
+function openModalError() {
+  showModal(modalThanks);
+  modalErrorMarkup;
+  activateCloseButton();
+  isModalOpen = true;
+  addEventListenerToEscape();
+}
+function closeModalError() {
   hideModal(modalThanks);
   isModalOpen = false;
   removeEventListenerFromEscape();
@@ -129,5 +162,7 @@ export {
   closeModalEmailSubError,
   openModalSuccess,
   closeModalSuccess,
+  openModalError,
+  closeModalError,
   handleEscapeKey,
 };
