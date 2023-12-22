@@ -10,7 +10,6 @@ import './discount';
 import './footer';
 import './modal/modal';
 import './error';
-import { spinnerPlay } from './spinner';
 
 // ===== Examples of use FoodAPI (should be REMOVE in production version)=========
 const getProductList = async () => {
