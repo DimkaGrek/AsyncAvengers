@@ -313,4 +313,6 @@ export {
   putProductListItemInCart,
   renderProductListMarcup,
   params,
+  renderButtonForProductList,
+  isCheckedCart,
 };

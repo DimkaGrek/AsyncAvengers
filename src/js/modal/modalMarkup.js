@@ -1,5 +1,7 @@
 import icons from '../../img/icons.svg';
 import { refsModal } from './modal';
+import modalThanksCardImg from '../../img/modal/modal-thanks-card-img.png';
+import modalThanksCardImg2x from '../../img/modal/modal-thanks-card-img-@2x.png';
 
 export function modalProductCardMarkup(data) {
   const markup = `
@@ -39,7 +41,7 @@ export function modalProductCardMarkup(data) {
 
 	<div class="modal-product-card-purchase-wrapper">
 		<p class="modal-product-card-purchase-price">$${data.price}</p>
-		<button class="modal-product-card-purchase-btn">
+		<button data-modalId="${data._id}" class="modal-product-card-purchase-btn">
 			Add to<svg
 				class="modal-product-card-purchase-btn-img"
 				width="18"
@@ -73,11 +75,8 @@ export function modalEmailSubMarkup() {
       <div class="modal-thanks-card-img-wrap">
         <img
           class="modal-thanks-card-img"
-          srcset="
-            ./img/modal/modal-thanks-card-img.png     1x,
-            ./img/modal/modal-thanks-card-img-@2x.png 2x
-          "
-          src="./img/modal/modal-thanks-card-img.png"
+          srcset="${modalThanksCardImg} 1x, ${modalThanksCardImg2x} 2x"
+          src="${modalThanksCardImg}"
           alt="fruit busket"
           width="335"
           height="144"
@@ -101,7 +100,6 @@ export function modalEmailSubErrorMarkup() {
 <p class="modal-sub-card-descr modal-card-descr">
 	You have already subscribed to our new products. Watch for offers at the
 	mailing address.
-</p>
-</div>`;
+</p>`;
   refsModal.modalThanks.innerHTML = markupSubError;
 }
