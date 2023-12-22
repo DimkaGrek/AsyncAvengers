@@ -71,19 +71,19 @@
           <p class="footer-text footer-subscribe-text">
             Subscribe and learn about new products!
           </p>
-          <form class="footer-form" name="subscribe-form">
-            <!-- <label class="footer-lebel"> -->
-            <input
-              class="footer-input js-footer-input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})"
-              required
-            />
-            <!-- </label> -->
-            <span class="warning-name">example: johnsmith@gmail.com</span>
-
+          <form class="footer-form js-footer-form">
+            <label class="footer-lebel">
+              <input
+                class="footer-input js-footer-input"
+                type="email"
+                name="email"
+                minlength="6"
+                title="example: johnsmith125@gmail.com"
+                placeholder="Email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"
+                required
+              />
+            </label>
             <button class="subscribe-btn js-footer-btn" type="submit">
               Send
             </button>
