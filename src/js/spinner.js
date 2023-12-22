@@ -1,5 +1,8 @@
 import { Spinner } from 'spin.js';
-// <div class="backdrop js-backdrop is-hidden"></div>
+// import { spinnerPlay, spinnerStop } from './spinner'; put in file your js
+// spinnerPlay();
+// spinnerStop();
+// <div class="backdrop js-backdrop is-hidden"></div> put in your file html
 const spinerContainer = document.querySelector('.js-backdrop');
 
 var opts = {
