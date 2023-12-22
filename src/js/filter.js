@@ -1,11 +1,6 @@
 import FoodApi from './FoodApi';
 
-let params = {
-  keyword: null,
-  category: null,
-  page: 1,
-  limit: 6,
-};
+let params;
 
 const refs = {
   ftInput: document.querySelector('.filters-input'),
@@ -16,7 +11,7 @@ const refs = {
 
 // =======================Сhecking-saved-filters===================
 if (localStorage.getItem('searchKey') === null) {
-  let params = {
+  params = {
     keyword: null,
     category: null,
     page: 1,

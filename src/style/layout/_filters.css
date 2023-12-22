@@ -93,12 +93,6 @@
   fill: var(--black);
 }
 
-/* .filters-select {
-    width: 100%;
-    border: none;
-    outline-style: none;
-    background-color: transparent;
-} */
 .flt-li {
   position: relative;
   padding: 0;
@@ -124,25 +118,20 @@
 .select_list {
   margin: 0;
   padding: 0;
-  margin-top: 8px;
   list-style-type: none;
   border-radius: 15px;
   background: #fff;
   width: 189px;
-  box-shadow: 0px 4px 11.212px 0px rgba(0, 0, 0, 0.04),
-    0px 20px 69px 0px rgba(0, 0, 0, 0.07);
   position: absolute;
   left: 0;
-  top: 48px;
+  top: 60px;
   z-index: 1;
 
   padding-top: 14px;
   padding-bottom: 14px;
   display: none;
 }
-/* .is-open {
-  display: block;
-} */
+
 /*=============== Style-filter category =================== */
 @media only screen and (max-width: 767px) {
   .filters-input {
