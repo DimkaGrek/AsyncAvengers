@@ -146,8 +146,16 @@
   cursor: pointer;
   border: none;
   color: var(--gainsboro);
+  transition: all var(--delay) var(--trnz);
 }
 
 .button-svg-discount {
   fill: var(--gainsboro);
+}
+.button-discount:not([disabled]):hover,
+.button-discount:not([disabled]):focus {
+  background-color: var(--olive_dark);
+}
+.button-discount:disabled {
+  cursor: default;
 }
