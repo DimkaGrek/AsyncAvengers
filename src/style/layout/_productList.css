@@ -235,20 +235,32 @@ button.pagi-item:disabled {
   background-color: var(--white);
   cursor: auto;
 }
+@media screen and (max-width: 1439.98px) {
+  button.pagi-item:disabled:active {
+    color: var(--darkgrey_30);
+    background-color: var(--white);
+    cursor: auto;
+  }
 
-button.pagi-item:disabled:hover,
-button.pagi-item:disabled:focus {
-  color: var(--darkgrey_30);
-  background-color: var(--white);
-  cursor: auto;
+  button.pagi-item:active {
+    background-color: var(--olive);
+    color: var(--gainsboro);
+  }
 }
+@media screen and (min-width: 1440px) {
+  button.pagi-item:disabled:hover,
+  button.pagi-item:disabled:focus {
+    color: var(--darkgrey_30);
+    background-color: var(--white);
+    cursor: auto;
+  }
 
-button.pagi-item:hover,
-button.pagi-item:focus {
-  background-color: var(--olive);
-  color: var(--gainsboro);
+  button.pagi-item:hover,
+  button.pagi-item:focus {
+    background-color: var(--olive);
+    color: var(--gainsboro);
+  }
 }
-
 li.pagi-item {
   color: var(--darkgrey);
   text-align: center;
@@ -261,9 +273,16 @@ li.pagi-item.is-active {
   background-color: var(--olive);
   color: var(--gainsboro);
 }
-
-li.pagi-item:hover,
-li.pagi-item:focus {
-  background-color: var(--olive);
-  color: var(--gainsboro);
+@media screen and (min-width: 1440px) {
+  li.pagi-item.dotted:hover,
+  li.pagi-item.dotted:focus {
+    background-color: var(--gainsboro);
+    color: var(--darkgrey);
+    cursor: default;
+  }
+  li.pagi-item:hover,
+  li.pagi-item:focus {
+    background-color: var(--olive);
+    color: var(--gainsboro);
+  }
 }
