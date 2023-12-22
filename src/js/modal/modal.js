@@ -2,6 +2,7 @@ import { modalProductCardMarkup } from './modalMarkup.js';
 import {
   modalEmailSubMarkup,
   modalEmailSubErrorMarkup,
+  changeAddToCartBtn,
 } from './modalMarkup.js';
 import { putProductListItemInCart, isCheckedCart } from '../productList.js';
 
@@ -36,9 +37,10 @@ function activateAddToCartButton() {
   );
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', e => {
-      const elemId = e.target.dataset.modalid;
+      const elemId = e.currentTarget.dataset.modalid;
       const btnElem = document.querySelector(`button[data-id="${elemId}"]`);
       putProductListItemInCart(elemId);
+      changeAddToCartBtn(addToCartBtn);
       isCheckedCart(btnElem);
     });
   }
@@ -58,7 +60,6 @@ function openModalProductCard(data) {
   isModalOpen = true;
   addEventListenerToEscape();
 }
-
 function closeModalProductCard() {
   hideModal(modalProduct);
   isModalOpen = false;
@@ -77,6 +78,7 @@ function closeModalEmailSub() {
   isModalOpen = false;
   removeEventListenerFromEscape();
 }
+
 function openModalEmailSubError() {
   showModal(modalThanks);
   modalEmailSubErrorMarkup();
@@ -85,6 +87,19 @@ function openModalEmailSubError() {
   addEventListenerToEscape();
 }
 function closeModalEmailSubError() {
+  hideModal(modalThanks);
+  isModalOpen = false;
+  removeEventListenerFromEscape();
+}
+
+function openModalSuccess() {
+  showModal(modalThanks);
+  renderModalSuccessMarkup();
+  activateCloseButton();
+  isModalOpen = true;
+  addEventListenerToEscape();
+}
+function closeModalSuccess() {
   hideModal(modalThanks);
   isModalOpen = false;
   removeEventListenerFromEscape();
@@ -112,5 +127,7 @@ export {
   closeModalEmailSub,
   openModalEmailSubError,
   closeModalEmailSubError,
+  openModalSuccess,
+  closeModalSuccess,
   handleEscapeKey,
 };

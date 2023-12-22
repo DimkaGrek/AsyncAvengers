@@ -168,6 +168,9 @@
 .modal-product-card-purchase-btn:focus {
   background: #586f1f;
 }
+.modal-product-card-purchase-btn:disabled {
+  background: #586f1f;
+}
 .modal-product-card-purchase-btn-img {
   fill: #e8e8e2;
 }
@@ -214,16 +217,14 @@
 /* ---------------Modal Thanks for Sub----------*/
 .modal-thanks-card-container {
   display: none;
-  padding-top: 100px;
+  padding: 100px 0;
 }
 .modal-thanks-card-title {
   color: #010101;
   margin: 0 auto;
   text-align: center;
   font-family: Neue Montreal;
-  font-size: 20px;
   font-weight: 500;
-  line-height: 1.2;
   width: 245px;
   margin-bottom: 14px;
 }
@@ -234,9 +235,7 @@
   color: rgba(1, 1, 1, 0.7);
   text-align: center;
   margin: 0 auto;
-  font-size: 14px;
   font-weight: 400;
-  line-height: 1.28;
   width: 248px;
   height: 72px;
   margin-bottom: 22px;
@@ -248,9 +247,7 @@
 
 @media only screen and (min-width: 768px) {
   .modal-thanks-card-container {
-    padding-top: 90px;
     width: 490px;
-    height: 400px;
   }
   .modal-thanks-card-title {
     margin-bottom: 20px;
