@@ -73,11 +73,11 @@ const getProductsByFilter = async params => {
 //   console.log(products);
 // };
 
-getProductList();
-getPopularProductList();
-getDiscountProductList();
-getProductsCategories();
-getProduct('640c2dd963a319ea671e383b');
+// getProductList();
+// getPopularProductList();
+// getDiscountProductList();
+// getProductsCategories();
+// getProduct('640c2dd963a319ea671e383b');
 
 // sendOrder('dmytrozinkovsky@gmail.com', [
 //   { productId: '640c2dd963a319ea671e383b', amount: 2 },
@@ -85,7 +85,7 @@ getProduct('640c2dd963a319ea671e383b');
 
 // orderSubscription('dimkagrek2023@gmail.com');
 
-getProductsByFilter({ keyword: 'Ac' });
+// getProductsByFilter({ keyword: 'Ac' });
 
 // =========================================
 // -----------------ScrollUp Button----------------------
