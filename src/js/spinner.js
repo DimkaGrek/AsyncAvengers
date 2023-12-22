@@ -1,4 +1,5 @@
 import { Spinner } from 'spin.js';
+// <div class="backdrop js-backdrop is-hidden"></div>
 const spinerContainer = document.querySelector('.js-backdrop');
 
 var opts = {

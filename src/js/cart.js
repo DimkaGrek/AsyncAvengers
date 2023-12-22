@@ -3,6 +3,8 @@ import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
+import { spinnerPlay, spinnerStop } from './spinner';
+// import {} from './modal/modal';
 const refs = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
@@ -11,100 +13,146 @@ const refs = {
   quantityTitle: document.querySelector('.js-quantity-span'),
   deleteAllButton: document.querySelector('.js-delete-all-btn'),
   totalSpan: document.querySelector('.js-total-price'),
+  form: document.querySelector('.js-form-checkout'),
 };
-let productsId = loadFromLS('CART');
-if (!isEmpty(productsId?.length)) {
+let products = [];
+checkStorage();
+
+if (!isEmpty(products?.length)) {
+  spinnerPlay();
+
   getProducts();
+
+  refs.deleteAllButton.addEventListener('click', () => {
+    localStorage.removeItem('CART');
+    localStorage.removeItem('CART-LIST');
+    products = [];
+
+    isEmpty(products?.length);
+    spinnerStop();
+  });
+
+  refs.itemsList.addEventListener('click', async event => {
+    if (event.target.nodeName === 'UL') return;
+
+    if (event.target.dataset.action === 'delete') {
+      const item = event.target.closest('LI');
+      const id = item.dataset.id;
+
+      const updateProducts = loadFromLS('CART-LIST');
+
+      const filteredProducts = updateProducts.filter(
+        elem => elem.productId !== id
+      );
+
+      item.remove();
+
+      let totalPrice = 0;
+      refs.allPricesofProducts = document.querySelectorAll(
+        '.js-cart-product-price'
+      );
+      refs.allAmountOfProducts = document.querySelectorAll('.js-amount-span');
+      totalPrice = filteredProducts.reduce((total, elem, i) => {
+        return (
+          total +
+          Number(refs.allPricesofProducts[i].textContent.replace('$', '')) *
+            Number(refs.allAmountOfProducts[i].textContent)
+        );
+      }, 0);
+
+      refs.quantityTitle.textContent = `${filteredProducts.length}`;
+      refs.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
+      refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+
+      saveToLS('CART-LIST', filteredProducts);
+      isEmpty(filteredProducts?.length);
+    }
+
+    if (event.target.dataset.action === 'decrement') {
+      const productPrice = Number(
+        event.target
+          .closest('.js-border-container')
+          .previousElementSibling.lastElementChild.textContent.replace('$', '')
+      );
+      const quantityElement =
+        event.target.closest('SPAN').firstElementChild.nextElementSibling;
+      let value = Number(quantityElement.textContent);
+      const id = event.target.closest('LI').dataset.id;
+      if (value === 1) return;
+      value -= 1;
+      refs.totalSpan.textContent =
+        '$' +
+        (
+          Number(refs.totalSpan.textContent.replace('$', '')) - productPrice
+        ).toFixed(2);
+      quantityElement.textContent = value;
+      const productsList = loadFromLS('CART-LIST');
+      const index = productsList.findIndex(elem => {
+        return elem.productId === id;
+      });
+      productsList[index].amount = value;
+      saveToLS('CART-LIST', productsList);
+    }
+
+    if (event.target.dataset.action === 'increment') {
+      const productPrice = Number(
+        event.target
+          .closest('.js-border-container')
+          .previousElementSibling.lastElementChild.textContent.replace('$', '')
+      );
+      const quantityElement =
+        event.target.closest('SPAN').firstElementChild.nextElementSibling;
+      const id = event.target.closest('LI').dataset.id;
+      let value = Number(quantityElement.textContent);
+      value += 1;
+      refs.totalSpan.textContent =
+        '$' +
+        (
+          Number(refs.totalSpan.textContent.replace('$', '')) + productPrice
+        ).toFixed(2);
+      quantityElement.textContent = value;
+      const productsList = loadFromLS('CART-LIST');
+      const index = productsList.findIndex(elem => {
+        return elem.productId === id;
+      });
+      productsList[index].amount = value;
+      saveToLS('CART-LIST', productsList);
+    }
+  });
 }
 
-refs.deleteAllButton.addEventListener('click', () => {
-  localStorage.removeItem('CART');
-  productsId = [];
-  isEmpty(productsId?.length);
-  refs.quantityTitle.textContent = '0';
-  refs.quantityHeaderSpan.textContent = '0';
-  refs.itemsList.innerHTML = '';
-  refs.totalSpan.textContent = '$0';
-});
+refs.form.addEventListener('submit', async event => {
+  event.preventDefault();
 
-refs.itemsList.addEventListener('click', async event => {
-  if (event.target.nodeName === 'UL') return;
-
-  if (event.target.dataset.action === 'delete') {
-    const item = event.target.closest('LI');
-    const id = item.dataset.id;
-    productsId = loadFromLS('CART');
-    const filteredId = productsId.filter(elem => elem !== id);
-    item.remove();
-
-    try {
-      let totalPrice = 0;
-      const products = filteredId.map(async id => {
-        const response = await FoodApi.getProductById(id);
-        return response;
-      });
-      const productItems = await Promise.all(products);
-      const allPricesOfProducts = document.querySelectorAll('.js-amount-span');
-      totalPrice = productItems.reduce((total, elem, i) => {
-        return total + elem.price * Number(allPricesOfProducts[i].textContent);
-      }, 0);
-      refs.quantityTitle.textContent = `${productItems.length}`;
-      refs.quantityHeaderSpan.textContent = `${productItems.length}`;
-      refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-      saveToLS('CART', filteredId);
-      isEmpty(filteredId?.length);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (event.target.dataset.action === 'decrement') {
-    const productPrice = Number(
-      event.target
-        .closest('.js-border-container')
-        .previousElementSibling.lastElementChild.textContent.replace('$', '')
-    );
-    const quantityElement =
-      event.target.closest('SPAN').firstElementChild.nextElementSibling;
-    let value = Number(quantityElement.textContent);
-    if (value === 1) return;
-    value -= 1;
-    refs.totalSpan.textContent =
-      '$' +
-      (
-        Number(refs.totalSpan.textContent.replace('$', '')) - productPrice
-      ).toFixed(2);
-    quantityElement.textContent = value;
-  }
-
-  if (event.target.dataset.action === 'increment') {
-    const productPrice = Number(
-      event.target
-        .closest('.js-border-container')
-        .previousElementSibling.lastElementChild.textContent.replace('$', '')
-    );
-    const quantityElement =
-      event.target.closest('SPAN').firstElementChild.nextElementSibling;
-    let value = Number(quantityElement.textContent);
-    value += 1;
-    refs.totalSpan.textContent =
-      '$' +
-      (
-        Number(refs.totalSpan.textContent.replace('$', '')) + productPrice
-      ).toFixed(2);
-    quantityElement.textContent = value;
+  let email = '';
+  const formData = new FormData(event.target);
+  formData.forEach(value => {
+    email = value;
+  });
+  const order = {};
+  order.products = loadFromLS('CART-LIST');
+  order.email = email;
+  saveToLS('CART-LIST', order);
+  try {
+    const { message } = await FoodApi.createOrder(order);
+    localStorage.removeItem('CART-LIST');
+    event.target.reset();
+    products = [];
+    isEmpty(products?.length);
+  } catch (error) {
+    console.log(error);
+  } finally {
   }
 });
 
 async function getProducts() {
   try {
     let totalPrice = 0;
-    const products = productsId.map(async id => {
-      const response = await FoodApi.getProductById(id);
+    const productsList = products.map(async elem => {
+      const response = await FoodApi.getProductById(elem.productId);
       return response;
     });
-    const productItems = await Promise.all(products);
-
+    const productItems = await Promise.all(productsList);
     totalPrice = productItems.reduce((total, elem) => {
       return total + elem.price;
     }, 0);
@@ -116,6 +164,8 @@ async function getProducts() {
     new SimpleBar(refs.itemsList, { autoHide: false });
   } catch (error) {
     console.log(error);
+  } finally {
+    spinnerStop();
   }
 }
 
@@ -184,6 +234,19 @@ function createMarkup(items) {
           </li>`;
     })
     .join('');
+}
+
+async function checkStorage() {
+  spinnerPlay();
+  if (loadFromLS('CART')) {
+    products = loadFromLS('CART');
+    saveToLS('CART-LIST', products);
+    localStorage.removeItem('CART');
+  } else {
+    if (!loadFromLS('CART-LIST')) return;
+    products = loadFromLS('CART-LIST');
+  }
+  spinnerStop();
 }
 
 function isEmpty(items) {
