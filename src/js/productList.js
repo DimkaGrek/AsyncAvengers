@@ -15,12 +15,8 @@ const refs = {
 };
 
 const params = {
-  limit: 0,
+  limit: 5,
   page: 1,
-  category: '',
-  byABC: true,
-  byPrice: false,
-  byPopularity: false,
 };
 
 let currentPage = null;
@@ -113,9 +109,11 @@ function onResizeUpdateProductList() {
   }
 }
 
-async function getProductList() {
+async function getProductList(products = {}) {
   try {
-    const products = await FoodApi.getProductsByFilter(params);
+    if (Object.keys(products).length === 0) {
+      products = await FoodApi.getProductsByFilter(params);
+    }
     const { page, totalPages } = products;
     currentPage = page;
     refs.productList.innerHTML = renderProductListMarcup(products);
@@ -312,7 +310,7 @@ export {
   onListCartClick,
   putProductListItemInCart,
   renderProductListMarcup,
-  params,
   renderButtonForProductList,
   isCheckedCart,
+  getProductList,
 };
