@@ -224,4 +224,10 @@ function checkClientWidth() {
     return true;
   }
 }
-export { onListCartClick, putProductListItemInCart, renderProductListMarcup };
+export {
+  onListCartClick,
+  putProductListItemInCart,
+  renderProductListMarcup,
+  renderButtonForProductList,
+  isCheckedCart,
+};
