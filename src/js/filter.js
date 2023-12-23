@@ -1,4 +1,5 @@
 import FoodApi from './FoodApi';
+import { getProductList } from './productList';
 
 let params;
 
@@ -19,10 +20,14 @@ if (localStorage.getItem('searchKey') === null) {
   };
 } else {
   params = JSON.parse(localStorage.getItem('searchKey'));
-  refs.ftInput.innerHTML = params.keyword;
+  refs.ftInput.value = params.keyword;
   refs.ftBtn.innerHTML = params.category;
 }
-console.log(refs.ftInput);
+async function getProductsByFilter(params) {
+  const products = await FoodApi.getProductsByFilter(params);
+  getProductList(products);
+}
+getProductsByFilter(params);
 // =======================Create-Categories========================
 
 const getProductsCategories = async () => {
@@ -43,17 +48,22 @@ function openCategories() {
   refs.ftSelect.classList.toggle('is-open');
 }
 
-async function choiceCategories(li) {
-  const liValue = li.target.textContent;
-  refs.ftBtn.innerHTML = liValue;
+refs.ftSelect.addEventListener('mouseleave', () => {
   refs.ftSelect.classList.remove('is-open');
-  params.category = liValue;
+});
+
+async function choiceCategories(li) {
+  const liValue = li.target.closest('.select-li');
+  refs.ftBtn.innerHTML = liValue.textContent;
+  refs.ftSelect.classList.remove('is-open');
+  params.category = liValue.textContent;
 
   if (liValue === 'Show all') {
     params.category = null;
   }
-  const productResoult = await FoodApi.getProductsByFilter(params);
   localStorage.setItem('searchKey', JSON.stringify(params));
+  const productResoult = await FoodApi.getProductsByFilter(params);
+  getProductList(productResoult);
 }
 
 // =======================Create-Search-Input========================
@@ -62,5 +72,6 @@ const getSearch = async () => {
   params.keyword = searchValue;
   localStorage.setItem('searchKey', JSON.stringify(params));
   const productResoult = await FoodApi.getProductsByFilter(params);
+  getProductList(productResoult);
 };
 refs.inputBtn.addEventListener('click', getSearch);
