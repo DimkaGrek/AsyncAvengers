@@ -112,19 +112,6 @@ function closeModalEmailSubError() {
   removeEventListenerFromEscape();
 }
 
-function openModalSuccess() {
-  showModal(modalThanks);
-  modalSuccessMarkup;
-  activateCloseButton();
-  isModalOpen = true;
-  addEventListenerToEscape();
-}
-function closeModalSuccess() {
-  hideModal(modalThanks);
-  isModalOpen = false;
-  removeEventListenerFromEscape();
-}
-
 function openModalError() {
   showModal(modalThanks);
   modalErrorMarkup();
@@ -160,9 +147,10 @@ export {
   closeModalEmailSub,
   openModalEmailSubError,
   closeModalEmailSubError,
-  openModalSuccess,
-  closeModalSuccess,
+  // openModalSuccess,
+  // closeModalSuccess,
   openModalError,
   closeModalError,
   handleEscapeKey,
+  activateCloseButton,
 };

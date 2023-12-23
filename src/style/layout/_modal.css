@@ -309,14 +309,14 @@
   filter: blur(10px);
 }
 .modal-success-card-img {
-  display: none;
+  display: block;
   margin: 0 auto;
   margin-bottom: 40px;
 }
 .modal-success-card-title {
   text-transform: uppercase;
   margin-bottom: 20px;
-  color: tomato;
+  color: var(--black);
 }
 .modal-success-card-descr {
   width: 295px;

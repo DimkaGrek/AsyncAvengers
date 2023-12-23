@@ -3,6 +3,7 @@ import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
+import * as modalCart from './modal/modalCart';
 import { spinnerPlay, spinnerStop } from './spinner';
 // import { openModalSuccess } from './modal/modal';
 const refs = {
@@ -14,12 +15,11 @@ const refs = {
   deleteAllButton: document.querySelector('.js-delete-all-btn'),
   totalSpan: document.querySelector('.js-total-price'),
   form: document.querySelector('.js-form-checkout'),
-  backdrop: document.querySelector('.modal-backdrop'),
-  modalThanks: document.querySelector('.modal-thanks-card-container'),
+  // backdrop: document.querySelector('.modal-backdrop'),
+  // modalThanks: document.querySelector('.modal-thanks-card-container'),
 };
 
-let isModalOpen = false;
-let products = [];
+export let products = [];
 spinnerPlay();
 
 products = loadFromLS('CART');
@@ -141,7 +141,7 @@ refs.form.addEventListener('submit', async event => {
 
     saveToLS('CART', []);
     products = [];
-    openModalSuccess();
+    modalCart.openModalSuccess();
   } catch (error) {
     alert('Something went wrong. Please try later');
     console.log(error);
@@ -251,7 +251,7 @@ function renderDiscountForProductList(isDiscount) {
   return isDiscount ? markup : '';
 }
 
-function isEmpty(items) {
+export function isEmpty(items) {
   if (!items) {
     refs.fullCart.classList.add('is-hidden');
     refs.emptyCart.classList.remove('is-hidden');
@@ -279,57 +279,7 @@ function loadFromLS(key) {
     console.error('Get state error: ', error.message);
   }
 }
-// ----------------------Modal------------------------------------
-refs.backdrop.addEventListener('click', e => {
-  if (e.target === refs.backdrop) {
-    closeModalSuccess();
-  }
-});
 
-function activateCloseButton() {
-  const closeBtn = document.querySelector('.modal-close-btn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModalSuccess);
-  }
-}
-
-function addEventListenerToEscape() {
-  document.addEventListener('keydown', handleEscapeKey);
-}
-function removeEventListenerFromEscape() {
-  document.removeEventListener('keydown', handleEscapeKey);
-}
-
-function handleEscapeKey(event) {
-  if (event.key === 'Escape' && isModalOpen) {
-    hideModal(refs.modalThanks);
-  }
-}
-
-function showModal(element) {
-  refs.backdrop.style.display = 'flex';
-  element.style.display = 'block';
-}
-
-function hideModal(element) {
-  refs.backdrop.style.display = 'none';
-  element.style.display = 'none';
-}
-
-function openModalSuccess() {
-  showModal(refs.modalThanks);
-  activateCloseButton();
-  isModalOpen = true;
-  addEventListenerToEscape();
-}
-
-function closeModalSuccess() {
-  refs.form.reset();
-  isEmpty(products?.length);
-  hideModal(refs.modalThanks);
-  isModalOpen = false;
-  removeEventListenerFromEscape();
-}
 // ------------------------------------------------------
 // -----------------ScrollUp Button----------------------
 const scrollUpButton = document.querySelector('.js-scroll-up-btn');
