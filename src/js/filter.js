@@ -41,15 +41,25 @@ const getProductsCategories = async () => {
 };
 getProductsCategories();
 
+refs.ftBtn.addEventListener('mouseenter', openCateg);
 refs.ftBtn.addEventListener('click', openCategories);
 refs.ftSelect.addEventListener('click', choiceCategories);
 
 function openCategories() {
   refs.ftSelect.classList.toggle('is-open');
 }
+function openCateg() {
+  refs.ftSelect.classList.add('is-open');
+}
 
 refs.ftSelect.addEventListener('mouseleave', () => {
   refs.ftSelect.classList.remove('is-open');
+});
+
+document.addEventListener('click', function (e) {
+  if (e.target !== refs.ftBtn) {
+    refs.ftSelect.classList.remove('is-open');
+  }
 });
 
 async function choiceCategories(li) {
