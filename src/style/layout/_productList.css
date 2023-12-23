@@ -159,6 +159,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 8px;
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -232,13 +233,16 @@ button.pagi-item {
 button.pagi-item:disabled {
   color: var(--darkgrey_30);
   background-color: var(--white);
-  cursor: auto;
+  cursor: default;
 }
-@media screen and (max-width: 1439.98px) {
-  button.pagi-item:not([disabled]):active {
-    background-color: var(--olive);
-    color: var(--gainsboro);
-  }
+button.pagi-item:not([disabled]):active {
+  background-color: var(--olive);
+  color: var(--gainsboro);
+}
+button.pagi-item:disabled:active {
+  color: var(--darkgrey_30);
+  background-color: var(--white);
+  cursor: default;
 }
 @media screen and (min-width: 1440px) {
   button.pagi-item:not([disabled]):hover,
@@ -247,13 +251,20 @@ button.pagi-item:disabled {
     color: var(--gainsboro);
     cursor: pointer;
   }
+  button.pagi-item:disabled:hover,
+  button.pagi-item:disabled:focus {
+    color: var(--darkgrey_30);
+    background-color: var(--white);
+    cursor: default;
+  }
 }
 li.pagi-item {
   color: var(--darkgrey);
   text-align: center;
   font-weight: 500;
   line-height: 1.43;
-  transition: background-color var(--delay) var(--trnz);
+  transition: background-color var(--delay) var(--trnz),
+    color var(--delay) var(--trnz);
 }
 
 li.pagi-item.is-active {
@@ -271,5 +282,6 @@ li.pagi-item.is-active {
   li.pagi-item:focus {
     background-color: var(--olive);
     color: var(--gainsboro);
+    cursor: pointer;
   }
 }

@@ -3,7 +3,7 @@ import FoodApi from './FoodApi';
 // import icons from '../img/icons.svg';
 import { getProductList } from './productList';
 
-refs = {
+const refs = {
   dropdownBtn: document.querySelector('.dropdown_button'),
   dropdownList: document.querySelector('.dropdown_list'),
   dropdownListItem: document.querySelectorAll('.dropdown_list-item'),

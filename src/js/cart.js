@@ -4,7 +4,7 @@ import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { spinnerPlay, spinnerStop } from './spinner';
-// import {} from './modal/modal';
+// import { openModalSuccess } from './modal/modal';
 const refs = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
@@ -14,17 +14,21 @@ const refs = {
   deleteAllButton: document.querySelector('.js-delete-all-btn'),
   totalSpan: document.querySelector('.js-total-price'),
   form: document.querySelector('.js-form-checkout'),
+  backdrop: document.querySelector('.modal-backdrop'),
+  modalThanks: document.querySelector('.modal-thanks-card-container'),
 };
+
+let isModalOpen = false;
 let products = [];
-checkStorage();
+spinnerPlay();
+
+products = loadFromLS('CART');
 
 if (!isEmpty(products?.length)) {
-  spinnerPlay();
-
-  getProducts();
+  getProducts(products);
 
   refs.deleteAllButton.addEventListener('click', () => {
-    localStorage.removeItem('CART-LIST');
+    localStorage.removeItem('CART');
     products = [];
     isEmpty(products?.length);
     spinnerStop();
@@ -37,7 +41,7 @@ if (!isEmpty(products?.length)) {
       const item = event.target.closest('LI');
       const id = item.dataset.id;
 
-      const updateProducts = loadFromLS('CART-LIST');
+      const updateProducts = loadFromLS('CART');
 
       const filteredProducts = updateProducts.filter(
         elem => elem.productId !== id
@@ -62,7 +66,7 @@ if (!isEmpty(products?.length)) {
       refs.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
       refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
 
-      saveToLS('CART-LIST', filteredProducts);
+      saveToLS('CART', filteredProducts);
       isEmpty(filteredProducts?.length);
     }
 
@@ -84,12 +88,12 @@ if (!isEmpty(products?.length)) {
           Number(refs.totalSpan.textContent.replace('$', '')) - productPrice
         ).toFixed(2);
       quantityElement.textContent = value;
-      const productsList = loadFromLS('CART-LIST');
+      const productsList = loadFromLS('CART');
       const index = productsList.findIndex(elem => {
         return elem.productId === id;
       });
       productsList[index].amount = value;
-      saveToLS('CART-LIST', productsList);
+      saveToLS('CART', productsList);
     }
 
     if (event.target.dataset.action === 'increment') {
@@ -109,44 +113,47 @@ if (!isEmpty(products?.length)) {
           Number(refs.totalSpan.textContent.replace('$', '')) + productPrice
         ).toFixed(2);
       quantityElement.textContent = value;
-      const productsList = loadFromLS('CART-LIST');
+      const productsList = loadFromLS('CART');
       const index = productsList.findIndex(elem => {
         return elem.productId === id;
       });
       productsList[index].amount = value;
-      saveToLS('CART-LIST', productsList);
+      saveToLS('CART', productsList);
     }
   });
 }
 
 refs.form.addEventListener('submit', async event => {
   event.preventDefault();
-
+  spinnerPlay();
   let email = '';
   const formData = new FormData(event.target);
   formData.forEach(value => {
     email = value;
   });
   const order = {};
-  order.products = loadFromLS('CART-LIST');
+  order.products = loadFromLS('CART');
   order.email = email;
-  saveToLS('CART-LIST', order);
+  // saveToLS('CART', order);
   try {
     const { message } = await FoodApi.createOrder(order);
-    localStorage.removeItem('CART-LIST');
-    event.target.reset();
+    spinnerStop();
+
+    saveToLS('CART', []);
     products = [];
-    isEmpty(products?.length);
+    openModalSuccess();
   } catch (error) {
+    alert('Something went wrong. Please try later');
     console.log(error);
   } finally {
+    spinnerStop();
   }
 });
 
-async function getProducts() {
+async function getProducts(cartList) {
   try {
     let totalPrice = 0;
-    const productsList = products.map(async elem => {
+    const productsList = cartList.map(async elem => {
       const response = await FoodApi.getProductById(elem.productId);
       return response;
     });
@@ -154,7 +161,7 @@ async function getProducts() {
     totalPrice = productItems.reduce((total, elem) => {
       return total + elem.price;
     }, 0);
-    const markup = createMarkup(productItems);
+    const markup = createMarkup(productItems, cartList);
     refs.itemsList.innerHTML = markup;
     refs.quantityTitle.textContent = `${productItems.length}`;
     refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
@@ -167,9 +174,9 @@ async function getProducts() {
   }
 }
 
-function createMarkup(items) {
+function createMarkup(items, amountItems) {
   return items
-    .map(({ name, category, size, img, price, _id }) => {
+    .map(({ name, category, size, img, price, _id, is10PercentOff }, i) => {
       return `<li class="item-list" data-id="${_id}">
             <div class="cart-product-img-container">
               <img
@@ -179,6 +186,7 @@ function createMarkup(items) {
                 width="64"
                 height="64"
               />
+       ${renderDiscountForProductList(is10PercentOff)}
             </div>
             <div class="cart-product-container">
               <h3 class="cart-product-name">${name}</h3>
@@ -206,10 +214,12 @@ function createMarkup(items) {
                       type="button"
                       data-action="decrement"
                     >
-                      <svg class="cart-icon-minus" width="14" height="14" data-action="decrement">
+                      <svg class="cart-icon-minus" width="10" height="10" data-action="decrement">
                         <use href="${icons}#icon-minus" data-action="decrement"></use>
                       </svg></button
-                    ><span class="js-amount-span">1</span>
+                    ><span class="js-amount-span">${
+                      amountItems[i].amount
+                    }</span>
                     <button
                       class="quantity-span-btn"
                       type="button"
@@ -234,16 +244,11 @@ function createMarkup(items) {
     .join('');
 }
 
-async function checkStorage() {
-  spinnerPlay();
-  if (!loadFromLS('CART-LIST')?.length) {
-    products = loadFromLS('CART');
-    if (products.length) saveToLS('CART-LIST', products);
-  } else {
-    products = loadFromLS('CART-LIST');
-  }
-
-  spinnerStop();
+function renderDiscountForProductList(isDiscount) {
+  const markup = `<svg class="cart-product-discount-icon" width="30" height="30">
+          <use href="${icons}#icon-discount"></use>
+        </svg> `;
+  return isDiscount ? markup : '';
 }
 
 function isEmpty(items) {
@@ -274,7 +279,58 @@ function loadFromLS(key) {
     console.error('Get state error: ', error.message);
   }
 }
+// ----------------------Modal------------------------------------
+refs.backdrop.addEventListener('click', e => {
+  if (e.target === refs.backdrop) {
+    closeModalSuccess();
+  }
+});
 
+function activateCloseButton() {
+  const closeBtn = document.querySelector('.modal-close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModalSuccess);
+  }
+}
+
+function addEventListenerToEscape() {
+  document.addEventListener('keydown', handleEscapeKey);
+}
+function removeEventListenerFromEscape() {
+  document.removeEventListener('keydown', handleEscapeKey);
+}
+
+function handleEscapeKey(event) {
+  if (event.key === 'Escape' && isModalOpen) {
+    hideModal(refs.modalThanks);
+  }
+}
+
+function showModal(element) {
+  refs.backdrop.style.display = 'flex';
+  element.style.display = 'block';
+}
+
+function hideModal(element) {
+  refs.backdrop.style.display = 'none';
+  element.style.display = 'none';
+}
+
+function openModalSuccess() {
+  showModal(refs.modalThanks);
+  activateCloseButton();
+  isModalOpen = true;
+  addEventListenerToEscape();
+}
+
+function closeModalSuccess() {
+  refs.form.reset();
+  isEmpty(products?.length);
+  hideModal(refs.modalThanks);
+  isModalOpen = false;
+  removeEventListenerFromEscape();
+}
+// ------------------------------------------------------
 // -----------------ScrollUp Button----------------------
 const scrollUpButton = document.querySelector('.js-scroll-up-btn');
 document.addEventListener(

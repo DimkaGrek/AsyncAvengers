@@ -1,7 +1,7 @@
 import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-import { openModalProductCard } from './modal/modal';
+import { openModalError, openModalProductCard } from './modal/modal';
 import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
 // import { params } from './filter';
 
@@ -37,7 +37,7 @@ window.addEventListener('resize', throttle(onResizeUpdateProductList, 1000));
 async function onListCartClick(event) {
   const button = event.target.closest('.product-button-cart');
   if (button !== null) {
-    isCheckedCart(button);
+    switchSameBtn(button.dataset.id);
     putProductListItemInCart(button.dataset.id);
     return;
   }
@@ -104,7 +104,7 @@ async function getProductList(products = {}) {
     togglePagiBtn(page, totalPages);
   } catch (error) {
     refs.pagiContainer.classList.add('is-hidden');
-
+    openModalError();
     console.log(error);
   } finally {
     spinnerStop();
@@ -147,12 +147,12 @@ function togglePagiBtn(page, totalPages) {
     refs.pagiBtnLeft.disabled = true;
     refs.pagiBtnLeftDuble.disabled = true;
   }
-  if (totalPages - 3 < page) {
-    refs.pagiBtnRightDuble.disabled = false;
-  }
-  if (totalPages - 2 < page) {
+  if (totalPages > page) {
     refs.pagiBtnRightDuble.disabled = true;
     refs.pagiBtnRight.disabled = false;
+  }
+  if (totalPages - 1 > page) {
+    refs.pagiBtnRightDuble.disabled = false;
   }
 
   if (page === totalPages) {
@@ -178,7 +178,7 @@ function prepareForRenderPagi(page, totalPage) {
   const clientWidth = document.documentElement.clientWidth;
   if (clientWidth > 767) {
     if (totalPage <= 5) {
-      for (i = 1; i <= totalPage; i++) {
+      for (let i = 1; i <= totalPage; i++) {
         res.push(i);
       }
       return res;
@@ -193,7 +193,7 @@ function prepareForRenderPagi(page, totalPage) {
         page === totalPage - 2
       ) {
         res.push(1, '...');
-        for (i = totalPage - 2; i <= totalPage; i++) {
+        for (let i = totalPage - 2; i <= totalPage; i++) {
           res.push(i);
         }
         return res;
@@ -202,7 +202,7 @@ function prepareForRenderPagi(page, totalPage) {
     }
   }
   if (totalPage <= 3) {
-    for (i = 1; i <= totalPage; i++) {
+    for (let i = 1; i <= totalPage; i++) {
       res.push(i);
     }
     return res;
@@ -213,7 +213,7 @@ function prepareForRenderPagi(page, totalPage) {
     }
     if (page === totalPage || page === totalPage - 1) {
       res.push('...');
-      for (i = totalPage - 1; i <= totalPage; i++) {
+      for (let i = totalPage - 1; i <= totalPage; i++) {
         res.push(i);
       }
       return res;
@@ -223,7 +223,7 @@ function prepareForRenderPagi(page, totalPage) {
 }
 
 function renderProductListPagi(page, totalPage) {
-  arr = prepareForRenderPagi(page, totalPage);
+  const arr = prepareForRenderPagi(page, totalPage);
   return arr
     .map(cur => {
       if (cur === page) {
@@ -253,7 +253,8 @@ function checkCartContents() {
 // need ref on span in header
 function putProductListItemInCart(id) {
   const newCART = JSON.parse(localStorage.getItem('CART'));
-  if (newCART.includes(id)) return;
+  const foundItem = newCART.find(cartItem => cartItem.productId === id);
+  if (foundItem !== undefined) return;
 
   newCART.push({ productId: id, amount: 1 });
   localStorage.setItem('CART', JSON.stringify(newCART));
@@ -330,6 +331,27 @@ function isCheckedCart(ref) {
   ref.lastElementChild.classList.remove('is-hidden');
   ref.disabled = true;
 }
+// Switch same Button in every container
+function switchSameBtn(elemId) {
+  const btnProductElem = document.querySelector(`button[data-id="${elemId}"]`);
+  const btnDiscountElem = document.querySelector(
+    `.button-discount[data-id="${elemId}"]`
+  );
+  const btnPopularElem = document.querySelector(
+    `.popular-buy-btn[data-id="${elemId}"]`
+  );
+  if (btnProductElem) {
+    isCheckedCart(btnProductElem);
+  }
+
+  if (btnPopularElem) {
+    isCheckedCart(btnPopularElem);
+  }
+
+  if (btnDiscountElem) {
+    isCheckedCart(btnDiscountElem);
+  }
+}
 
 export {
   onListCartClick,
@@ -338,4 +360,5 @@ export {
   renderButtonForProductList,
   isCheckedCart,
   getProductList,
+  switchSameBtn,
 };

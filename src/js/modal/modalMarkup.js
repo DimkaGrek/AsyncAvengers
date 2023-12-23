@@ -98,7 +98,7 @@ function modalEmailSubErrorMarkup() {
   refsModal.modalThanks.innerHTML = markupSubError;
 }
 
-function renderModalSuccessMarkup() {
+function modalSuccessMarkup() {
   const successMarkup = `<button class="modal-close-btn">
 	<svg class="modal-close-btn-img" width="13" height="13">
 		<use href="${icons}#icon-close"></use>
@@ -124,12 +124,12 @@ function renderModalSuccessMarkup() {
 </p>`;
   refsModal.modalThanks.innerHTML = successMarkup;
 }
-function renderModalErrorMarkup() {
-  const errorTitle = document.querySelector(
-    '.modal-success-card-title modal-card-title'
-  );
-  errorTitle.style.color = 'red';
-  const errorMarkup = `
+function modalErrorMarkup() {
+  const errorMarkup = `<button class="modal-close-btn">
+	<svg class="modal-close-btn-img" width="13" height="13">
+		<use href="${icons}#icon-close"></use>
+	</svg>
+</button>
 <h2 class="modal-success-card-title modal-card-title">Server Issue</h2>
 <p class="modal-success-card-descr modal-card-descr">
 We're sorry, but it seems there's an issue with our server. Please try again later.
@@ -139,7 +139,6 @@ We're sorry, but it seems there's an issue with our server. Please try again lat
 
 function renderAddToButtonForModalProductCard(id) {
   const cart = localStorage.getItem('CART');
-  console.log(cart);
   const checked = `<button disabled data-modalId="${id}" class="modal-product-card-purchase-btn">
 	Remove from<svg
 		class="modal-product-card-purchase-btn-img"
@@ -176,6 +175,6 @@ export {
   modalEmailSubMarkup,
   modalEmailSubErrorMarkup,
   changeAddToCartBtn,
-  renderModalSuccessMarkup,
-  renderModalErrorMarkup,
+  modalSuccessMarkup,
+  modalErrorMarkup,
 };

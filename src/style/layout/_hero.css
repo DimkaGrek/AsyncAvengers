@@ -40,7 +40,7 @@
   color: var(--olive);
 }
 .hero-desc {
-  width: 292px;
+  max-width: 292px;
   color: var(--black_80);
   text-align: center;
   font-size: 14px;
@@ -48,7 +48,7 @@
 }
 @media only screen and (min-width: 768px) {
   .hero-desc {
-    width: 492px;
+    max-width: 492px;
     font-size: 18px;
     line-height: 1.33;
   }
@@ -60,6 +60,12 @@
   border-radius: 30px;
   overflow: hidden;
 }
+@media only screen and (max-width: 350px) {
+  .hero-main-img {
+    width: 280px;
+    height: 440px;
+  }
+}
 @media only screen and (min-width: 768px) {
   .hero-main-img {
     border-radius: 60px;
@@ -69,6 +75,12 @@
   position: absolute;
   top: -7px;
   right: 8px;
+}
+@media only screen and (max-width: 350px) {
+  .hero-img-quality {
+    width: 70px;
+    height: 70px;
+  }
 }
 @media only screen and (min-width: 768px) {
   .hero-img-quality {
