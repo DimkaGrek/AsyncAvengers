@@ -291,3 +291,13 @@ input::placeholder {
   pointer-events: none;
   stroke: var(--black);
 }
+
+.reset_btn {
+  background-color: transparent;
+  border-radius: 30px;
+  border: 1px solid var(--black_30);
+}
+.reset_btn:hover,
+.reset_btn:focus {
+  border-color: rgba(255, 68, 0, 0.694);
+}
