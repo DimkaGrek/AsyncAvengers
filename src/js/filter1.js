@@ -1,6 +1,4 @@
-// console.log('filter1.js');
 import FoodApi from './FoodApi';
-// import icons from '../img/icons.svg';
 import { getProductList } from './productList';
 
 const refs = {
@@ -49,7 +47,7 @@ refs.dropdownList.addEventListener('click', event => {
   elementKey = event.target.dataset.key;
   const sort = { [elementKey]: elementValue };
   localStorage.setItem(`sort`, JSON.stringify(sort));
-  console.log(sort);
+  //   console.log(sort);
   addParamsToFilter();
 });
 
