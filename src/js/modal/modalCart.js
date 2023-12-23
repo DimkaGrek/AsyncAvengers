@@ -44,26 +44,3 @@ export function hideModal(element) {
   refs.backdrop.style.display = 'none';
   element.style.display = 'none';
 }
-
-export function openModalSuccess() {
-  showModal(refs.modalThanks);
-  activateCloseButton();
-  isModalOpen = true;
-  addEventListenerToEscape();
-}
-
-export function closeModalSuccess() {
-  refs.form.reset();
-  isEmpty(products?.length);
-  hideModal(refs.modalThanks);
-  isModalOpen = false;
-  removeEventListenerFromEscape();
-}
-// ------ Email subscription------
-// function openModalEmailSub() {
-//   showModal(modalThanks);
-//   modalEmailSubMarkup();
-//   activateCloseButton();
-//   isModalOpen = true;
-//   addEventListenerToEscape();
-// }

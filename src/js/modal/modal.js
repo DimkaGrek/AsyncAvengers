@@ -6,18 +6,14 @@ import {
   modalSuccessMarkup,
   modalErrorMarkup,
 } from './modalMarkup.js';
-import { putProductListItemInCart, isCheckedCart } from '../productList.js';
+import { putProductListItemInCart, switchSameBtn } from '../tools.js';
 
-const refsModal = {
-  backdrop: document.querySelector('.modal-backdrop'),
-  modalProduct: document.querySelector('.modal-product-card-container'),
-  modalThanks: document.querySelector('.modal-thanks-card-container'),
-  modalSub: document.querySelector('.js-modal-sub'),
-  modalSuccess: document.querySelector('.js-modal-success'),
-};
-const { backdrop, modalProduct, modalThanks } = refsModal;
+// import { showModal, hideModal, activateCloseButton } from './modalCommon.js';
 
 let isModalOpen = false;
+import { refsModal } from './modalRefs.js';
+const { backdrop, modalProduct, modalThanks } = refsModal;
+console.log('backdrop: ', backdrop);
 
 function showModal(element) {
   backdrop.style.display = 'flex';
@@ -27,12 +23,21 @@ function hideModal(element) {
   backdrop.style.display = 'none';
   element.style.display = 'none';
 }
-function activateCloseButton() {
-  const closeBtn = document.querySelector('.modal-close-btn');
+function activateCloseButton(ref, data) {
+  console.log('my ref: ', ref);
+  const closeBtn = document.querySelector(`[data-modal="${data}"]`);
+  console.log('closeBtn before', closeBtn);
   if (closeBtn) {
-    closeBtn.addEventListener('click', closeModalProductCard);
+    console.log('closeBtn', closeBtn);
+    closeBtn.addEventListener('click', ref);
   }
 }
+function closeModalProductCard() {
+  hideModal(modalProduct);
+  isModalOpen = false;
+  removeEventListenerFromEscape();
+}
+
 function activateAddToCartButton() {
   const addToCartBtn = document.querySelector(
     '.modal-product-card-purchase-btn'
@@ -41,25 +46,9 @@ function activateAddToCartButton() {
     addToCartBtn.addEventListener('click', e => {
       const elemId = e.currentTarget.dataset.modalid;
 
-      const btnElem = document.querySelector(`button[data-id="${elemId}"]`);
-      if (btnElem) {
-        isCheckedCart(btnElem);
-      }
+      switchSameBtn(elemId);
 
-      const btnPopularElem = document.querySelector(
-        `.popular-buy-btn[data-id="${elemId}"]`
-      );
-      if (btnPopularElem) {
-        isCheckedCart(btnPopularElem);
-      }
-
-      const btnDiscountElem = document.querySelector(
-        `.button-discount[data-id="${elemId}"]`
-      );
-      if (btnDiscountElem) {
-        isCheckedCart(btnDiscountElem);
-      }
-
+      console.log('elemId: ', elemId);
       putProductListItemInCart(elemId);
       changeAddToCartBtn(addToCartBtn);
     });
@@ -75,24 +64,20 @@ function removeEventListenerFromEscape() {
 function openModalProductCard(data) {
   showModal(modalProduct);
   modalProductCardMarkup(data);
-  activateCloseButton();
+  activateCloseButton(closeModalProductCard, 'product');
   activateAddToCartButton();
   isModalOpen = true;
   addEventListenerToEscape();
-}
-function closeModalProductCard() {
-  hideModal(modalProduct);
-  isModalOpen = false;
-  removeEventListenerFromEscape();
 }
 
 function openModalEmailSub() {
   showModal(modalThanks);
   modalEmailSubMarkup();
-  activateCloseButton();
+  activateCloseButton(closeModalEmailSub, 'email-sub');
   isModalOpen = true;
   addEventListenerToEscape();
 }
+
 function closeModalEmailSub() {
   hideModal(modalThanks);
   isModalOpen = false;
@@ -102,11 +87,12 @@ function closeModalEmailSub() {
 function openModalEmailSubError() {
   showModal(modalThanks);
   modalEmailSubErrorMarkup();
-  activateCloseButton();
+  activateCloseButton(closeModalEmailSubError, 'email-sub');
   isModalOpen = true;
   addEventListenerToEscape();
 }
 function closeModalEmailSubError() {
+  console.log('closeModalEmailSubError');
   hideModal(modalThanks);
   isModalOpen = false;
   removeEventListenerFromEscape();
@@ -133,11 +119,27 @@ function handleEscapeKey(event) {
 }
 
 backdrop.addEventListener('click', e => {
-  if (e.target === refsModal.backdrop) {
+  if (e.target === backdrop) {
     closeModalProductCard();
     closeModalEmailSub();
   }
 });
+
+function openModalSuccess() {
+  showModal(refs.modalThanks);
+  modalSuccessMarkup();
+  activateCloseButton(closeModalSuccess, 'order');
+  isModalOpen = true;
+  addEventListenerToEscape();
+}
+
+function closeModalSuccess() {
+  refs.form.reset();
+  isEmpty(products?.length);
+  hideModal(refs.modalThanks);
+  isModalOpen = false;
+  removeEventListenerFromEscape();
+}
 
 export {
   refsModal,
@@ -147,8 +149,8 @@ export {
   closeModalEmailSub,
   openModalEmailSubError,
   closeModalEmailSubError,
-  // openModalSuccess,
-  // closeModalSuccess,
+  openModalSuccess,
+  closeModalSuccess,
   openModalError,
   closeModalError,
   handleEscapeKey,

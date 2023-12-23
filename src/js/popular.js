@@ -1,6 +1,7 @@
 import icons from '../img/icons.svg';
 import foodApi from './FoodApi';
 import { openModalProductCard } from './modal/modal';
+import { switchSameBtn } from './tools';
 
 const popularList = document.querySelector('.popular-list');
 const cartQuantity = document.querySelector('.js-cart-quantity');
@@ -60,7 +61,7 @@ async function onProductClick(event) {
     event.target.nodeName === 'use'
   ) {
     const button = event.target.closest('.popular-buy-btn');
-    isCheckedCart(button);
+    switchSameBtn(button.dataset.id);
     putProductListItemInCart(button.dataset.id);
   } else {
     try {

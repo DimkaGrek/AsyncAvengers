@@ -1,51 +1,52 @@
 import icons from '../../img/icons.svg';
 import { refsModal } from './modal';
-import modalThanksCardImg from '../../img/modal/modal-thanks-card-img.png';
-import modalThanksCardImg2x from '../../img/modal/modal-thanks-card-img-@2x.png';
+
 import modalSuccessCardImg from '../../img/modal/modal-success-card-img.png';
 import modalSuccessCardImg2x from '../../img/modal/modal-success-card-img@2x.png';
+import modalThanksCardImg from '~/src/img/modal/modal-thanks-card-img.png';
+import modalThanksCardImg2x from '~/src/img/modal/modal-thanks-card-img-@2x.png';
 
 import { productCardMarkup } from './markUp/productCardMarkup.js';
+// import { emailSubMarkup } from './markUp/EmailSubMarkup.js';
 
 function modalProductCardMarkup(data) {
-  console.log('kuku');
   refsModal.modalProduct.innerHTML = productCardMarkup(data);
 }
 
 function modalEmailSubMarkup() {
-  const markupSub = `
-	<button class="modal-close-btn">
-        <svg class="modal-close-btn-img" width="13" height="13">
-				<use href="${icons}#icon-close"></use>
-        </svg>
-      </button>
-      <div class="modal-thanks-card-text-wrapper">
-        <h2 class="modal-thanks-card-title modal-card-title">
-          Thanks for subscribing for
-          <span class="modal-card-span">new</span> products
-        </h2>
-        <p class="modal-thanks-card-descr modal-card-descr">
-          We promise you organic and high-quality products that will meet your
-          expectations. Please stay with us and we promise you many pleasant
-          surprises.
-        </p>
-      </div>
-      <div class="modal-thanks-card-img-wrap">
-        <img
-          class="modal-thanks-card-img"
-          srcset="${modalThanksCardImg} 1x, ${modalThanksCardImg2x} 2x"
-          src="${modalThanksCardImg}"
-          alt="fruit busket"
-          width="335"
-          height="144"
-        />
-      </div>`;
-  refsModal.modalThanks.innerHTML = markupSub;
+  const markup = `
+	  <button class="modal-close-btn" data-modal="email-sub">
+		  <svg class="modal-close-btn-img" width="13" height="13">
+				  <use href="${icons}#icon-close"></use>
+		  </svg>
+		</button>
+		<div class="modal-thanks-card-text-wrapper">
+		  <h2 class="modal-thanks-card-title modal-card-title">
+			Thanks for subscribing for
+			<span class="modal-card-span">new</span> products
+		  </h2>
+		  <p class="modal-thanks-card-descr modal-card-descr">
+			We promise you organic and high-quality products that will meet your
+			expectations. Please stay with us and we promise you many pleasant
+			surprises.
+		  </p>
+		</div>
+		<div class="modal-thanks-card-img-wrap">
+		  <img
+			class="modal-thanks-card-img"
+			srcset="${modalThanksCardImg} 1x, ${modalThanksCardImg2x} 2x"
+			src="${modalThanksCardImg}"
+			alt="fruit busket"
+			width="335"
+			height="144"
+		  />
+		</div>`;
+  refsModal.modalThanks.innerHTML = markup;
 }
 
 function modalEmailSubErrorMarkup() {
   // refsModal.modalThanks.style.paddingTop = '80px';
-  const markupSubError = `<button class="modal-close-btn">
+  const markupSubError = `<button class="modal-close-btn" data-modal="email-sub">
 	<svg class="modal-close-btn-img" width="13" height="13">
 	<use href="${icons}#icon-close"></use>
 	</svg>
@@ -63,7 +64,7 @@ function modalEmailSubErrorMarkup() {
 }
 
 function modalSuccessMarkup() {
-  const successMarkup = `<button class="modal-close-btn">
+  const successMarkup = `<button class="modal-close-btn" data-modal="order">
 	<svg class="modal-close-btn-img" width="13" height="13">
 		<use href="${icons}#icon-close"></use>
 	</svg>
@@ -103,7 +104,7 @@ We're sorry, but it seems there's an issue with our server. Please try again lat
 
 export function renderAddToButtonForModalProductCard(id) {
   const cart = localStorage.getItem('CART');
-  const checked = `<button disabled data-modalId="${id}" class="modal-product-card-purchase-btn">
+  const checked = `<button data-modalId="${id}" class="modal-product-card-purchase-btn" data-remove="remove">
 	Remove from<svg
 		class="modal-product-card-purchase-btn-img"
 		width="18"
@@ -126,6 +127,19 @@ export function renderAddToButtonForModalProductCard(id) {
 }
 
 function changeAddToCartBtn(target) {
+  //   console.log('target.dataset: ', target.dataset.remove);
+  if (target.dataset.remove === 'remove') {
+    console.log('change button');
+    target.innerHTML = `Add to<svg
+		class="modal-product-card-purchase-btn-img"
+		width="18"
+		height="18"
+	>
+		<use href="${icons}#icon-shopping-cart"></use>
+	</svg>`;
+    target.dataset.remove = '';
+    return;
+  }
   target.innerHTML = `Remove from<svg
 class="modal-product-card-purchase-btn-img"
 width="18"
@@ -133,7 +147,8 @@ height="18"
 >
 <use href="${icons}#icon-shopping-cart"></use>
 </svg>`;
-  target.disabled = true;
+  //   target.disabled = true;
+  target.dataset.remove = 'remove';
 }
 export {
   modalProductCardMarkup,

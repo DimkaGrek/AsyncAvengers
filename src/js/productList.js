@@ -3,36 +3,26 @@ import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalError, openModalProductCard } from './modal/modal';
 import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
-// import { params } from './filter';
+import { params } from './filter';
+import { refs } from './refs';
+import { putProductListItemInCart, switchSameBtn } from './tools';
 
-const refs = {
-  productList: document.querySelector('.js-product-list'),
-  cartQuantity: document.querySelector('.js-cart-quantity'),
-  pagiList: document.querySelector('.js-pagi-pages'),
-  pagiContainer: document.querySelector('.js-pagi-container'),
-  pagiBtnLeftDuble: document.querySelector('[data-button-left="dubleArrow"]'),
-  pagiBtnLeft: document.querySelector('[data-button-left="arrow"]'),
-  pagiBtnRight: document.querySelector('[data-button-right="arrow"]'),
-  pagiBtnRightDuble: document.querySelector('[data-button-right="dubleArrow"]'),
-};
-
-const params = {
-  limit: 5,
-  page: 1,
-  keyword: null,
-  category: null,
-};
+// const params = {
+//   limit: 5,
+//   page: 1,
+//   keyword: null,
+//   category: null,
+// };
 
 let currentPage = null;
 
 checkCartContents();
-checkClientWidth();
-getProductList();
+// checkClientWidth();
+// getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
 refs.pagiList.addEventListener('click', onPagiListClick);
 refs.pagiContainer.addEventListener('click', onPagiBtnClick);
-window.addEventListener('resize', throttle(onResizeUpdateProductList, 1000));
 
 async function onListCartClick(event) {
   const button = event.target.closest('.product-button-cart');
@@ -83,16 +73,11 @@ function onPagiBtnClick(event) {
   }
 }
 
-function onResizeUpdateProductList() {
-  if (checkClientWidth()) {
-    getProductList();
-  }
-}
-
 async function getProductList(products = {}) {
-  spinnerPlay();
   try {
     if (Object.keys(products).length === 0) {
+      // const params = JSON.parce(localStorage.getItem('searchKey'));
+      spinnerPlay();
       products = await FoodApi.getProductsByFilter(params);
     }
     const { page, totalPages } = products;
@@ -108,25 +93,6 @@ async function getProductList(products = {}) {
     console.log(error);
   } finally {
     spinnerStop();
-  }
-}
-
-function checkClientWidth() {
-  const clientWidth = document.documentElement.clientWidth;
-  if (clientWidth > 1439) {
-    if (params.limit === 9) return false;
-    params.limit = 9;
-    return true;
-  }
-  if (clientWidth > 767) {
-    if (params.limit === 8) return false;
-    params.limit = 8;
-    return true;
-  }
-  if (clientWidth > 319) {
-    if (params.limit === 6) return false;
-    params.limit = 6;
-    return true;
   }
 }
 
@@ -250,17 +216,6 @@ function checkCartContents() {
   }
   localStorage.setItem('CART', JSON.stringify([]));
 }
-// need ref on span in header
-function putProductListItemInCart(id) {
-  const newCART = JSON.parse(localStorage.getItem('CART'));
-  const foundItem = newCART.find(cartItem => cartItem.productId === id);
-  if (foundItem !== undefined) return;
-
-  newCART.push({ productId: id, amount: 1 });
-  localStorage.setItem('CART', JSON.stringify(newCART));
-  const value = +refs.cartQuantity.textContent;
-  refs.cartQuantity.textContent = value + 1;
-}
 
 // parent function
 function renderProductListMarcup({ results }) {
@@ -325,40 +280,13 @@ function renderButtonForProductList(id) {
         </button>`;
   return cart.includes(id) ? cheked : uncheked;
 }
-// take refs on element button can toggle clases inside function
-function isCheckedCart(ref) {
-  ref.firstElementChild.classList.add('is-hidden');
-  ref.lastElementChild.classList.remove('is-hidden');
-  ref.disabled = true;
-}
+
 // Switch same Button in every container
-function switchSameBtn(elemId) {
-  const btnProductElem = document.querySelector(`button[data-id="${elemId}"]`);
-  const btnDiscountElem = document.querySelector(
-    `.button-discount[data-id="${elemId}"]`
-  );
-  const btnPopularElem = document.querySelector(
-    `.popular-buy-btn[data-id="${elemId}"]`
-  );
-  if (btnProductElem) {
-    isCheckedCart(btnProductElem);
-  }
-
-  if (btnPopularElem) {
-    isCheckedCart(btnPopularElem);
-  }
-
-  if (btnDiscountElem) {
-    isCheckedCart(btnDiscountElem);
-  }
-}
 
 export {
   onListCartClick,
-  putProductListItemInCart,
   renderProductListMarcup,
   renderButtonForProductList,
-  isCheckedCart,
   getProductList,
   switchSameBtn,
 };

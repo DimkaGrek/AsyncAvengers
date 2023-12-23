@@ -3,9 +3,10 @@ import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-import * as modalCart from './modal/modalCart';
+// import * as modalCart from './modal/modalCart';
+import './footer';
 import { spinnerPlay, spinnerStop } from './spinner';
-// import { openModalSuccess } from './modal/modal';
+import { openModalSuccess } from './modal/modal';
 const refs = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
@@ -141,7 +142,7 @@ refs.form.addEventListener('submit', async event => {
 
     saveToLS('CART', []);
     products = [];
-    modalCart.openModalSuccess();
+    openModalSuccess();
   } catch (error) {
     alert('Something went wrong. Please try later');
     console.log(error);

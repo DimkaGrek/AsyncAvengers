@@ -1,6 +1,7 @@
 import FoodApi from './FoodApi';
 import { openModalEmailSub, openModalEmailSubError } from './modal/modal';
 import iziToast from 'izitoast';
+import { refsModal } from './modal/modal';
 
 const refs = {
   form: document.querySelector('.js-footer-form'),

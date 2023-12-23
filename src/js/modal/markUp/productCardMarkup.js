@@ -3,7 +3,7 @@ import { renderAddToButtonForModalProductCard } from '../modalMarkup.js';
 
 export const productCardMarkup = data => {
   return `
-	<button class="modal-close-btn">
+	<button class="modal-close-btn" data-modal="product">
         <svg class="modal-close-btn-img" width="13" height="13">
           <use href="${icons}#icon-close"></use>
         </svg>

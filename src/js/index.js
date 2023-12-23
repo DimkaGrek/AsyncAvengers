@@ -3,7 +3,6 @@ import throttle from 'lodash.throttle';
 import FoodApi from './FoodApi';
 import './header';
 import './filter';
-import './filter1';
 import './productList';
 import './popular';
 import './discount';

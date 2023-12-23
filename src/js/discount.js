@@ -1,6 +1,7 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalProductCard } from './modal/modal';
+import { switchSameBtn } from './tools';
 
 const discountList = document.querySelector('.js-product-discount');
 const cardQuantity = document.querySelector('.js-cart-quantity');
@@ -13,7 +14,6 @@ function getRandomProducts(items, numb = 2) {
 
 const getDiscountProductList = async () => {
   const products = await FoodApi.getDiscountProducts();
-  console.log('my get discount:', products);
   let toRandomObject = [];
   if (products.length > 2) {
     toRandomObject = getRandomProducts(products);
@@ -55,16 +55,10 @@ async function renderDiscountList(toRandomObject) {
   discountList.addEventListener('click', onListCartClick);
 }
 
-function isCheckedCart(ref) {
-  ref.firstElementChild.classList.add('is-hidden');
-  ref.lastElementChild.classList.remove('is-hidden');
-  ref.disabled = true;
-}
-
 async function onListCartClick(event) {
   const button = event.target.closest('.button-discount');
   if (button !== null) {
-    isCheckedCart(button);
+    switchSameBtn(button.dataset.id);
     putProductListItemInCart(button.dataset.id);
     return;
   }
@@ -83,7 +77,7 @@ function putProductListItemInCart(id) {
   const newCART = JSON.parse(localStorage.getItem('CART'));
   const foundItem = newCART.find(cartItem => cartItem.productId === id);
   if (foundItem !== undefined) return;
-  
+
   newCART.push({ productId: id, amount: 1 });
   localStorage.setItem('CART', JSON.stringify(newCART));
   const value = cardQuantity.textContent;
