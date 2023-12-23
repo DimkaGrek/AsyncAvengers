@@ -5,7 +5,7 @@ import modalThanksCardImg2x from '../../img/modal/modal-thanks-card-img-@2x.png'
 import modalSuccessCardImg from '../../img/modal/modal-success-card-img.png';
 import modalSuccessCardImg2x from '../../img/modal/modal-success-card-img@2x.png';
 
-import productCardMarkup from './markUp/productCardMarkup.js';
+import { productCardMarkup } from './markUp/productCardMarkup.js';
 
 function modalProductCardMarkup(data) {
   console.log('kuku');

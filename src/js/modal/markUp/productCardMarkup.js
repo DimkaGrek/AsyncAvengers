@@ -1,7 +1,7 @@
 import icons from '~/src/img/icons.svg';
 import { renderAddToButtonForModalProductCard } from '../modalMarkup.js';
 
-export default productCardMarkup = data => {
+export const productCardMarkup = data => {
   return `
 	<button class="modal-close-btn">
         <svg class="modal-close-btn-img" width="13" height="13">
