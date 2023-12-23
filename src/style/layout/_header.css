@@ -116,7 +116,14 @@
     margin-right: 16px;
   }
 }
-
+.header-link-home-page:hover,
+.header-link-home-page:focus {
+  background-color: var(--olive_dark);
+}
+.header-container-cart-page:hover,
+.header-container-cart-page:focus {
+  background-color: var(--olive_dark);
+}
 .header-container-cart-page {
   display: flex;
   justify-content: center;
