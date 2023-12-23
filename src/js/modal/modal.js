@@ -127,7 +127,7 @@ function closeModalSuccess() {
 
 function openModalError() {
   showModal(modalThanks);
-  modalErrorMarkup;
+  modalErrorMarkup();
   activateCloseButton();
   isModalOpen = true;
   addEventListenerToEscape();

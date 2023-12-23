@@ -125,10 +125,6 @@ function modalSuccessMarkup() {
   refsModal.modalThanks.innerHTML = successMarkup;
 }
 function modalErrorMarkup() {
-  const errorTitle = document.querySelector(
-    '.modal-success-card-title modal-card-title'
-  );
-  errorTitle.style.color = 'red';
   const errorMarkup = `<button class="modal-close-btn">
 	<svg class="modal-close-btn-img" width="13" height="13">
 		<use href="${icons}#icon-close"></use>
