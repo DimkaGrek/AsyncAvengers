@@ -6,7 +6,8 @@ import icons from '../img/icons.svg';
 import './footer';
 import { spinnerPlay, spinnerStop } from './spinner';
 import { openModalError, openModalSuccess } from './modal/modal';
-const refsCart = {
+
+export const refsCart = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
   emptyCart: document.querySelector('.js-empty-cart'),
@@ -18,11 +19,10 @@ const refsCart = {
 };
 
 let products = [];
-spinnerPlay();
 
 products = loadFromLS('CART');
 
-if (!isEmpty(products?.length)) {
+if (!isEmpty(products)) {
   getProducts(products);
 
   refsCart.deleteAllButton.addEventListener('click', onClickDeleteAllButton);
@@ -41,14 +41,14 @@ if (!isEmpty(products?.length)) {
       onChangeAmountProducts(event, event.target.dataset.action);
     }
   });
-}
 
-refsCart.form.addEventListener('submit', handleSubmit);
+  refsCart.form.addEventListener('submit', handleSubmit);
+}
 
 function onClickDeleteAllButton() {
   localStorage.removeItem('CART');
   products = [];
-  isEmpty(products?.length);
+  isEmpty(products);
   spinnerStop();
 }
 
@@ -79,7 +79,7 @@ function onClickDeleteButton(event) {
   refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
 
   saveToLS('CART', filteredProducts);
-  isEmpty(filteredProducts?.length);
+  isEmpty(filteredProducts);
 }
 
 function onChangeAmountProducts(event, action) {
@@ -132,14 +132,13 @@ async function handleSubmit(event) {
   order.products = loadFromLS('CART');
   order.email = email;
   try {
-    const { message } = await FoodApi.createOrder(order);
-    spinnerStop();
+    const response = await FoodApi.createOrder(order);
+    openModalSuccess();
 
     saveToLS('CART', []);
     products = [];
-    openModalSuccess();
     refsCart.form.reset();
-    isEmpty(products?.length);
+    isEmpty(products);
   } catch (error) {
     openModalError();
     console.log(error);
@@ -149,6 +148,7 @@ async function handleSubmit(event) {
 }
 
 async function getProducts(cartList) {
+  spinnerPlay();
   try {
     if (!products) return;
     let totalPrice = 0;
@@ -185,7 +185,7 @@ function createMarkup(items, amountItems) {
                 width="64"
                 height="64"
               />
-       ${renderDiscountForProductList(is10PercentOff)}
+       ${createMarkupDiscountProduct(is10PercentOff)}
             </div>
             <div class="cart-product-container">
               <h3 class="cart-product-name">${name}</h3>
@@ -243,7 +243,7 @@ function createMarkup(items, amountItems) {
     .join('');
 }
 
-function renderDiscountForProductList(isDiscount) {
+function createMarkupDiscountProduct(isDiscount) {
   const markup = `<svg class="cart-product-discount-icon" width="35" height="35">
           <use href="${icons}#icon-discount"></use>
         </svg> `;
@@ -251,13 +251,15 @@ function renderDiscountForProductList(isDiscount) {
 }
 
 function isEmpty(items) {
-  if (!items) {
+  if (!items?.length) {
     refsCart.fullCart.classList.add('is-hidden');
     refsCart.emptyCart.classList.remove('is-hidden');
     refsCart.quantityHeaderSpan.textContent = '0';
+    return true;
   } else {
     refsCart.emptyCart.classList.add('is-hidden');
     refsCart.fullCart.classList.remove('is-hidden');
+    return false;
   }
 }
 // Save to local storage
