@@ -1,17 +1,18 @@
-import icons from "../img/icons.svg";
-import foodApi from "./FoodApi";
+import icons from '../img/icons.svg';
+import foodApi from './FoodApi';
 import { openModalProductCard } from './modal/modal';
 
 const popularList = document.querySelector('.popular-list');
-const cartQuantity = document.querySelector('.js-cart-quantity')
+const cartQuantity = document.querySelector('.js-cart-quantity');
 
 renderPopularList();
 
 async function renderPopularList() {
-    const popularProducts = await foodApi.getPopularProducts();
+  const popularProducts = await foodApi.getPopularProducts();
 
-    const markup = popularProducts.map(({category, img, name, popularity, size, _id}) => {
-        return `
+  const markup = popularProducts
+    .map(({ category, img, name, popularity, size, _id }) => {
+      return `
             <li class="popular-item" data-id="${_id}">
                 <a href="" class="popular-link">
                     <div class="polular-content-container">
@@ -21,7 +22,10 @@ async function renderPopularList() {
                         <div class="popular-content">
                             <h5 class="popular-item-name">${name}</h5>
                             <p class="popular-item-title">
-                                Category: <span class="popular-item-title-name">${category.replace('_', ' ')}</span>
+                                Category: <span class="popular-item-title-name">${category.replace(
+                                  '_',
+                                  ' '
+                                )}</span>
                             </p>
                             <div class="popular-content-bottom">
                                 <p class="popular-item-title">
@@ -37,55 +41,58 @@ async function renderPopularList() {
                 </a>
             </li>
         `;
-    }).join('');
+    })
+    .join('');
 
-    popularList.insertAdjacentHTML('beforeend', markup);
-    popularList.addEventListener('click', onProductClick);
+  popularList.insertAdjacentHTML('beforeend', markup);
+  popularList.addEventListener('click', onProductClick);
 }
 
 async function onProductClick(event) {
-    event.preventDefault();
-    if(event.target.nodeName === 'UL') return;
+  event.preventDefault();
+  if (event.target.nodeName === 'UL') return;
 
-    const li = event.target.closest('LI');
+  const li = event.target.closest('LI');
 
-    if(event.target.nodeName === 'BUTTON' 
-        || event.target.nodeName === 'svg' 
-        || event.target.nodeName === 'use') {
-        const button = event.target.closest('.popular-buy-btn');
-        isCheckedCart(button);
-        putProductListItemInCart(button.dataset.id);
-    } else {
-        try {
-            const data = await foodApi.getProductById(li.dataset.id);
-            console.log(data)
-            openModalProductCard(data);
-        } catch (error) {
-            console.log(error);
-        }
+  if (
+    event.target.nodeName === 'BUTTON' ||
+    event.target.nodeName === 'svg' ||
+    event.target.nodeName === 'use'
+  ) {
+    const button = event.target.closest('.popular-buy-btn');
+    isCheckedCart(button);
+    putProductListItemInCart(button.dataset.id);
+  } else {
+    try {
+      const data = await foodApi.getProductById(li.dataset.id);
+      console.log(data);
+      openModalProductCard(data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 }
 
 function putProductListItemInCart(id) {
-    console.log(id);
-    const newCART = JSON.parse(localStorage.getItem('CART'));
-    if (newCART.includes(id)) return;
-  
-    newCART.push(id);
-    localStorage.setItem('CART', JSON.stringify(newCART));
-    const value = +cartQuantity.textContent;
-    cartQuantity.textContent = value + 1;
+  console.log(id);
+  const newCART = JSON.parse(localStorage.getItem('CART'));
+  if (newCART.includes(id)) return;
+
+  newCART.push(id);
+  localStorage.setItem('CART', JSON.stringify(newCART));
+  const value = +cartQuantity.textContent;
+  cartQuantity.textContent = value + 1;
 }
 
 function isCheckedCart(ref) {
-    ref.firstElementChild.classList.add('is-hidden');
-    ref.lastElementChild.classList.remove('is-hidden');
-    ref.disabled = true;
+  ref.firstElementChild.classList.add('is-hidden');
+  ref.lastElementChild.classList.remove('is-hidden');
+  ref.disabled = true;
 }
 
 function renderButtonForProductList(id) {
-    const cart = localStorage.getItem('CART');
-    const cheked = `<button class="popular-buy-btn" data-id="${id} disabled">
+  const cart = localStorage.getItem('CART');
+  const cheked = `<button class="popular-buy-btn" data-id="${id} disabled">
             <svg class="popular-buy-btn-icon is-hidden" width="12" height="12">
               <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
             </svg>
@@ -93,7 +100,7 @@ function renderButtonForProductList(id) {
               <use href="${icons}#icon-check" class="icon"></use>
             </svg>
           </button>`;
-    const uncheked = `<button class="popular-buy-btn" data-id="${id}">
+  const uncheked = `<button class="popular-buy-btn" data-id="${id}">
             <svg class="popular-buy-btn-icon" width="12" height="12">
                 <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
             </svg>
@@ -101,5 +108,5 @@ function renderButtonForProductList(id) {
                 <use href="${icons}#icon-check" class="icon"></use>
             </svg>
         </button>`;
-    return cart.includes(id) ? cheked : uncheked;
-  }
+  return cart.includes(id) ? cheked : uncheked;
+}
