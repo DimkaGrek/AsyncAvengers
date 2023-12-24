@@ -24,13 +24,14 @@ export function putProductListItemInCart(id) {
 export function isCheckedCart(ref) {
   ref.firstElementChild.classList.toggle('is-hidden');
   ref.lastElementChild.classList.toggle('is-hidden');
-  console.log('toggle button');
   ref.disabled ? (ref.disabled = false) : (ref.disabled = true);
 }
 
 export function switchSameBtn(elemId) {
   console.log('switchSameBtn');
-  const btnProductElem = document.querySelector(`button[data-id="${elemId}"]`);
+  const btnProductElem = document.querySelector(
+    `.product-button-cart[data-id="${elemId}"]`
+  );
   const btnDiscountElem = document.querySelector(
     `.button-discount[data-id="${elemId}"]`
   );
