@@ -1,0 +1,32 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
+@import '~node_modules/reset-css/reset.css';
+@import url(https://db.onlinewebfonts.com/c/1d07155f6a27d1f397916ad9d4e4d78d?family=FSP+DEMO+-+Quincy+CF+Black);
+
+body {
+  font-family: 'Neue Montreal', sans-serif;
+  font-style: normal;
+  background-color: var(--gainsboro);
+  padding-top: 128px;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+  flex-grow: 1;
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    padding-top: 188px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  body {
+    padding-top: 149px;
+  }
+}
+a {
+  text-decoration: none;
+  color: currentColor;
+}

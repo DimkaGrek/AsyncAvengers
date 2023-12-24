@@ -17,39 +17,22 @@
   </head>
   <body>
     <!-- ❗️❗️❗️ Add partials like so for every page -->
-
     <include src="./partials/header.html"></include>
-
     <main>
-      <include src="./partials/hero.html"></include>
-
-      <!-- TODO: Filters -->
-      <include src="./partials/filter.html"></include>
-
-      <section class="products-sections container">
-        <include src="./partials/productList.html"></include>
-
-        <div>
-          <div><include src="./partials/popular.html"></include></div>
-          <div>
-            <include src="./partials/discount.html"></include>
-          </div>
-        </div>
-      </section>
-
-      <button class="scroll-up-btn js-scroll-up-btn" type="button">
-        <svg class="scroll-up-icon">
-          <use href="./img/icons.svg#icon-arrow-up"></use>
-        </svg>
-      </button>
+      <include src="./partials/cart.html"></include>
     </main>
 
-    <include src="./partials/footer.html"></include>
+    <button class="scroll-up-btn js-scroll-up-btn" type="button">
+      <svg class="scroll-up-icon">
+        <use href="./img/icons.svg#icon-arrow-up"></use>
+      </svg>
+    </button>
 
+    <include src="./partials/footer.html"></include>
     <include src="./partials/modal.html"></include>
-    <!-- spinner container -->
-    <div class="backdrop js-backdrop is-hidden"></div>
-    <script type="module" src="./js/index.js"></script>
+
+    <script type="module" src="./js/cart.js"></script>
+    <!-- <script type="module" src="./js/footer.js"></script> -->
   </body>
 </html>
 

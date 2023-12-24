@@ -1,0 +1,199 @@
+.header-content {
+  position: fixed; /* Фиксируем header */
+  top: 0; /* Прикрепляем к верхней части экрана */
+  left: 0; /* Прикрепляем к левой части экрана */
+  width: 100%; /* Задаем header ширину на всю ширину экрана */
+  z-index: 1000; /* Устанавливаем z-index, чтобы header был поверх всех других элементов */
+  background-color: var(--gainsboro);
+}
+.header-container {
+  display: flex;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  align-items: center;
+  justify-content: space-around;
+}
+@media only screen and (min-width: 768px) {
+  .header-container {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.header-shadow {
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-logo-link-home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 60px;
+}
+
+@media only screen and (min-width: 768px) {
+  .header-logo-link-home-page {
+    margin-right: 262px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .header-logo-link-home-page {
+    margin-right: 792px;
+  }
+}
+
+.header-logo-icon {
+  fill: var(--gainsboro);
+}
+@media only screen and (min-width: 768px) {
+  .header-logo-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+.header-text {
+  font-family: 'FSP DEMO - Quincy CF Black';
+  color: var(--black);
+  font-size: 18px;
+  line-height: 1.11;
+  letter-spacing: -0.02em;
+}
+@media only screen and (min-width: 768px) {
+  .header-text {
+    font-size: 24px;
+    line-height: 1;
+  }
+}
+
+.logo-container {
+  color: var(--gainsboro);
+  background-color: var(--olive);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  animation: rotate-in-center 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite
+    alternate both;
+}
+@keyframes rotate-in-center {
+  0% {
+    transform: rotate(-360deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .logo-container {
+    width: 32px;
+    height: 32px;
+  }
+}
+.header-logo-link-home-page {
+  text-decoration: none;
+}
+.header-link-home-page {
+  color: var(--gainsboro);
+  background-color: var(--olive);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 77px;
+  height: 38px;
+  margin-right: 6px;
+  border-radius: 30px;
+}
+@media only screen and (min-width: 768px) {
+  .header-link-home-page {
+    font-size: 18px;
+    line-height: 1.33;
+    width: 104px;
+    height: 48px;
+    margin-right: 16px;
+  }
+}
+.header-link-home-page:hover,
+.header-link-home-page:focus {
+  background-color: var(--olive_dark);
+  transition: background-color var(--delay) var(--trnz);
+}
+.header-container-cart-page:hover,
+.header-container-cart-page:focus {
+  background-color: var(--olive_dark);
+  transition: background-color var(--delay) var(--trnz);
+}
+.header-container-cart-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--olive);
+  width: 60px;
+  height: 38px;
+  border-radius: 30px;
+  text-decoration: none;
+}
+@media only screen and (min-width: 768px) {
+  .header-container-cart-page {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    margin-right: 14px;
+  }
+  .cart-mobile-quantity {
+    display: none;
+  }
+}
+.header-cart-icon {
+  fill: var(--gainsboro);
+}
+@media only screen and (min-width: 768px) {
+  .header-cart-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+.cart {
+  color: var(--black);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.33;
+}
+@media only screen and (max-width: 767px) {
+  .cart {
+    display: none;
+  }
+  .cart-mobile-quantity {
+    color: var(--gainsboro);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.29;
+  }
+  .span-cart-mobile-quantity {
+    font-weight: 500;
+  }
+}
+.cart-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-link-cart-page {
+  text-decoration: none;
+}

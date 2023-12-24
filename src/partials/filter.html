@@ -1,0 +1,74 @@
+<!-- <h2>This is filter section</h2> -->
+<div class="filters container">
+  <p class="filters-text">Filters:</p>
+  <ul class="filters-list">
+    <li class="filters-li">
+      <input
+        type="text"
+        class="filters-input"
+        placeholder="Search for anything"
+      />
+      <button type="submit" class="filters-btn" aria-label="filter button">
+        <svg class="filters-icon" width="20" height="20">
+          <use href="./img/icons.svg#icon-baseline-search"></use>
+        </svg>
+      </button>
+    </li>
+    <li class="flt-li">
+      <button class="select-btn">
+        Categories
+        <svg class="dropdown-icon-two" width="13" height="13">
+          <use href="./img/icons.svg#icon-arrow-down_icon"></use>
+        </svg>
+      </button>
+      <ul class="select_list"></ul>
+    </li>
+    <li class="dropdown">
+      <button class="dropdown_button">
+        A to Z
+        <svg class="dropdown-icon-two" width="13" height="13">
+          <use href="./img/icons.svg#icon-arrow-down_icon"></use>
+        </svg>
+      </button>
+      <ul class="dropdown_list">
+        <li class="dropdown_list-item" data-value="true" data-key="byABC">
+          A to Z
+        </li>
+        <li class="dropdown_list-item" data-value="false" data-key="byABC">
+          Z to A
+        </li>
+        <li class="dropdown_list-item" data-value="true" data-key="byPrice">
+          Cheap
+        </li>
+        <li class="dropdown_list-item" data-value="false" data-key="byPrice">
+          Expensive
+        </li>
+        <li
+          class="dropdown_list-item"
+          data-value="false"
+          data-key="byPopularity"
+        >
+          Popular
+        </li>
+        <li
+          class="dropdown_list-item"
+          data-value="true"
+          data-key="byPopularity"
+        >
+          Not popular
+        </li>
+        <li class="dropdown_list-item" data-value="showAll" data-key="showAll">
+          Show all
+        </li>
+      </ul>
+    </li>
+    <li>
+      <button class="reset_btn" aria-label="reset button">
+        <span class="reset_btn-text">Reset filters</span>
+        <svg class="reset-icon" width="18" height="18">
+          <use href="./img/icons.svg#icon-reset"></use>
+        </svg>
+      </button>
+    </li>
+  </ul>
+</div>

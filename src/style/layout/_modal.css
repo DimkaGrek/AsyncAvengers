@@ -1,0 +1,361 @@
+.modal-backdrop {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(1, 1, 1, 0.4);
+}
+.simplebar-scrollbar::before {
+  width: 5px;
+  height: 50px;
+  border-radius: 20px;
+  background: rgba(1, 1, 1, 0.08);
+}
+@media only screen and (min-width: 768px) {
+  .simplebar-scrollbar:before {
+    width: 9px;
+    height: 50px;
+  }
+}
+.modal-container {
+  position: relative;
+  width: 335px;
+  border-radius: 20px;
+  background: #e8e8e2;
+}
+.modal-close-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22px;
+  height: 22px;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.modal-close-btn-img {
+  width: 12.4px;
+  height: 12.4px;
+}
+@media only screen and (min-width: 768px) {
+  .modal-close-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .modal-close-btn-img {
+    width: 15.75px;
+    height: 15.75px;
+    top: 24px;
+    right: 24px;
+  }
+}
+.modal-card-title {
+  color: #010101;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+@media only screen and (min-width: 768px) {
+  .modal-card-title {
+    font-size: 24px;
+    line-height: 1;
+  }
+}
+.modal-card-span {
+  color: #6d8434;
+}
+.modal-card-descr {
+  margin: 0 auto;
+  width: 248px;
+  height: 55px;
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+}
+@media only screen and (min-width: 768px) {
+  .modal-card-descr {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+
+/* ---------------Modal Product Card -----------*/
+.modal-product-card-container {
+  display: none;
+  padding: 40px 20px;
+  height: 535px;
+  background: #fafafa;
+}
+.modal-product-card-img-container {
+  width: 295px;
+  height: 212px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e8e8e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-product-card-img {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+}
+.modal-product-card-title {
+  text-align: start;
+  font-size: 18px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.modal-product-card-text-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 9px;
+}
+.modal-product-card-popularity-wrap {
+  display: flex;
+  margin-bottom: 20px;
+}
+.modal-product-card-category {
+  color: rgba(1, 1, 1, 0.3);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin-right: 4px;
+}
+.modal-product-card-category-descr {
+  color: #010101;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin-right: 8px;
+}
+.modal-product-card-descr {
+  padding-right: 10px;
+  width: 295px;
+  height: 55px;
+  line-height: 1.28;
+  text-align: start;
+  margin-bottom: 40px;
+}
+.modal-product-card-purchase-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.modal-product-card-purchase-price {
+  color: #010101;
+  font-family: Neue Montreal;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.modal-product-card-purchase-btn {
+  padding: 12px 24px;
+  border-radius: 30px;
+  background: #6d8434;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+
+  color: #e8e8e2;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.28;
+  border: none;
+}
+.modal-product-card-purchase-btn:hover,
+.modal-product-card-purchase-btn:focus {
+  background: #586f1f;
+}
+.modal-product-card-purchase-btn:disabled {
+  background: #586f1f;
+  cursor: default;
+}
+.modal-product-card-purchase-btn-img {
+  fill: #e8e8e2;
+}
+
+@media only screen and (min-width: 768px) {
+  .modal-product-card-container {
+    padding: 40px;
+    width: 600px;
+    height: 380px;
+  }
+  .modal-product-card-content-wrapper {
+    display: flex;
+    margin-bottom: 48px;
+  }
+  .modal-product-card-img-container {
+    width: 240px;
+    height: 212px;
+    margin-bottom: 0;
+    margin-right: 24px;
+  }
+  .modal-product-card-title {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .modal-product-card-descr {
+    font-size: 16px;
+    width: 256px;
+    height: 120px;
+    margin-bottom: 0;
+  }
+  .modal-product-card-purchase-btn {
+    padding: 10px 28px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+  .modal-product-card-purchase-price {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+}
+
+/* --------------- /Modal Product Card ----------*/
+
+/* ---------------Modal Thanks for Sub----------*/
+.modal-thanks-card-container {
+  display: none;
+  padding-top: 100px;
+}
+.modal-thanks-card-title {
+  color: #010101;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Neue Montreal;
+  font-weight: 500;
+  width: 245px;
+  margin-bottom: 14px;
+}
+.modal-thanks-card-title-span {
+  color: #6d8434;
+}
+.modal-thanks-card-descr {
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  margin: 0 auto;
+  font-weight: 400;
+  width: 248px;
+  height: 72px;
+  margin-bottom: 22px;
+}
+.modal-thanks-card-img-wrap {
+  display: flex;
+  align-items: flex-end;
+}
+
+@media only screen and (min-width: 768px) {
+  .modal-thanks-card-container {
+    width: 490px;
+  }
+  .modal-thanks-card-title {
+    margin-bottom: 20px;
+  }
+  .modal-thanks-card-descr {
+    width: 328px;
+    height: 80px;
+  }
+  .modal-thanks-card-img {
+    height: 159px;
+    width: 100%;
+  }
+}
+/* -------------/Modal Thanks for Sub------------*/
+
+/* ---------------Modal Email Sub --------------*/
+.modal-sub-card-container {
+  display: none;
+  padding: 80px 0;
+  height: 276px;
+}
+.modal-sub-card-title {
+  margin: 0 auto;
+  margin-bottom: 14px;
+  width: 245px;
+}
+.modal-sub-card-descr {
+  width: 248px;
+}
+@media only screen and (min-width: 768px) {
+  .modal-sub-card-container {
+    padding: 100px 0;
+    width: 469px;
+    height: 308px;
+  }
+  .modal-sub-card-title {
+    margin-bottom: 20px;
+  }
+  .modal-sub-card-descr {
+    width: 349px;
+  }
+}
+/* ---------------/Modal Email Sub --------------*/
+
+/* -----------Modal Success -------*/
+.modal-success-card-container {
+  display: none;
+  padding: 40px 0 60px 0;
+  height: 428px;
+}
+.modal-success-icon {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  fill: rgba(1, 1, 1, 0.1);
+  filter: blur(10px);
+}
+.modal-success-card-img {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+.modal-success-card-title {
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: var(--black);
+}
+.modal-success-card-descr {
+  width: 295px;
+}
+@media only screen and (min-width: 768px) {
+  .modal-success-card-container {
+    padding: 80px 0;
+    width: 560px;
+    height: 509px;
+  }
+  .modal-success-card-title {
+    font-size: 32px;
+  }
+  .modal-success-icon {
+    top: 189px;
+  }
+  .modal-success-card-img {
+    margin-bottom: 37px;
+  }
+  .modal-success-card-descr {
+    width: 480px;
+    height: 120px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  .modal-error-card-descr {
+    width: 350px;
+  }
+}
+
+/* -----------/Modal Success -------*/
