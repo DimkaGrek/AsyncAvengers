@@ -47,6 +47,20 @@ function takeParamsFromStorage() {
     const params = JSON.parse(localStorage.getItem('searchKey'));
     refs.ftInput.value = params.keyword;
     params.category ? (refs.ftBtn.innerHTML = params.category) : 'Categories';
+
+    if ('byABC' in params) {
+      refs.dropdownBtn.textContent =
+        params.byABC === 'true' ? 'A to Z' : 'Z to A';
+    }
+    if ('byPrice' in params) {
+      refs.dropdownBtn.textContent =
+        params.byPrice === 'true' ? 'Cheap' : 'Expensive';
+    }
+    if ('byPopularity' in params) {
+      refs.dropdownBtn.textContent =
+        params.byPopularity === 'true' ? 'Not popular' : 'Popular';
+    }
+
     return params;
   }
 }

@@ -13,7 +13,7 @@ export const refsCart = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
   emptyCart: document.querySelector('.js-empty-cart'),
-  quantityHeaderSpan: document.querySelector('.js-cart-quantity'),
+  quantityHeaderSpan: document.querySelectorAll('.js-cart-quantity'),
   quantityTitle: document.querySelector('.js-quantity-span'),
   deleteAllButton: document.querySelector('.js-delete-all-btn'),
   totalSpan: document.querySelector('.js-total-price'),
@@ -74,7 +74,9 @@ function onClickDeleteButton(event) {
   }, 0);
 
   refsCart.quantityTitle.textContent = `${filteredProducts.length}`;
-  refsCart.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
+  refsCart.quantityHeaderSpan.forEach(
+    elem => (elem.textContent = `${filteredProducts.length}`)
+  );
   refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
 
   saveToLS('CART', filteredProducts);
@@ -172,7 +174,9 @@ async function getProducts(cartList) {
     refsCart.itemsList.innerHTML = markup;
     refsCart.quantityTitle.textContent = `${productItems.length}`;
     refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-    refsCart.quantityHeaderSpan.textContent = `${productItems.length}`;
+    refsCart.quantityHeaderSpan.forEach(
+      elem => (elem.textContent = `${productItems.length}`)
+    );
     new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
     refsCart.fullCart.classList.add('is-hidden');
@@ -267,7 +271,7 @@ function isEmpty(items) {
   if (!items?.length) {
     refsCart.fullCart.classList.add('is-hidden');
     refsCart.emptyCart.classList.remove('is-hidden');
-    refsCart.quantityHeaderSpan.textContent = '0';
+    refsCart.quantityHeaderSpan.forEach(elem => (elem.textContent = '0'));
     return true;
   } else {
     refsCart.emptyCart.classList.add('is-hidden');
