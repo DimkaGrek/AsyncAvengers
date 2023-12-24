@@ -9,7 +9,18 @@
   height: 100%;
   background-color: rgba(1, 1, 1, 0.4);
 }
-
+.simplebar-scrollbar::before {
+  width: 5px;
+  height: 50px;
+  border-radius: 20px;
+  background: rgba(1, 1, 1, 0.08);
+}
+@media only screen and (min-width: 768px) {
+  .simplebar-scrollbar:before {
+    width: 9px;
+    height: 50px;
+  }
+}
 .modal-container {
   position: relative;
   width: 335px;
@@ -70,7 +81,6 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.28;
-  overflow: scroll;
 }
 @media only screen and (min-width: 768px) {
   .modal-card-descr {
@@ -132,11 +142,13 @@
   margin-right: 8px;
 }
 .modal-product-card-descr {
+  padding-right: 10px;
   width: 295px;
   height: 55px;
   line-height: 1.28;
   text-align: start;
   margin-bottom: 40px;
+  overflow-y: scroll;
 }
 .modal-product-card-purchase-wrapper {
   display: flex;
