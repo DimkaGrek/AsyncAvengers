@@ -151,7 +151,7 @@
 }
 .cart-product-discount-icon {
   position: absolute;
-  top: -15px;
+  top: -10px;
   right: -15px;
 }
 @media only screen and (min-width: 1440px) {
