@@ -18,10 +18,12 @@ const { backdrop, modalProduct, modalThanks, modalSuccess, modalSub } =
 function showModal(element) {
   backdrop.style.display = 'flex';
   element.style.display = 'block';
+  document.body.style.overflow = 'hidden';
 }
 function hideModal(element) {
   backdrop.style.display = 'none';
   element.style.display = 'none';
+  document.body.style.overflow = 'auto';
 }
 function activateCloseButton(ref, data) {
   const closeBtn = document.querySelector(`[data-modal="${data}"]`);

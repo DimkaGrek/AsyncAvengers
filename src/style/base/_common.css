@@ -7,7 +7,15 @@ body {
   font-style: normal;
   background-color: var(--gainsboro);
   padding-top: 128px;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
+main {
+  flex-grow: 1;
+}
+
 @media only screen and (min-width: 768px) {
   body {
     padding-top: 188px;
