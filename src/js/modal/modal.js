@@ -10,12 +10,10 @@ import { putProductListItemInCart, switchSameBtn } from '../tools.js';
 import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
-// import { showModal, hideModal, activateCloseButton } from './modalCommon.js';
-
 let isModalOpen = false;
 import { refsModal } from './modalRefs.js';
-const { backdrop, modalProduct, modalThanks, modalSuccess } = refsModal;
-console.log('backdrop: ', backdrop);
+const { backdrop, modalProduct, modalThanks, modalSuccess, modalSub } =
+  refsModal;
 
 function showModal(element) {
   backdrop.style.display = 'flex';
@@ -26,11 +24,8 @@ function hideModal(element) {
   element.style.display = 'none';
 }
 function activateCloseButton(ref, data) {
-  console.log('my ref: ', ref);
   const closeBtn = document.querySelector(`[data-modal="${data}"]`);
-  console.log('closeBtn before', closeBtn);
   if (closeBtn) {
-    console.log('closeBtn', closeBtn);
     closeBtn.addEventListener('click', ref);
   }
 }
@@ -50,7 +45,6 @@ function activateAddToCartButton() {
 
       switchSameBtn(elemId);
 
-      console.log('elemId: ', elemId);
       putProductListItemInCart(elemId);
       changeAddToCartBtn(addToCartBtn);
     });
@@ -89,22 +83,21 @@ function closeModalEmailSub() {
 }
 
 function openModalEmailSubError() {
-  showModal(modalThanks);
+  showModal(modalSub);
   modalEmailSubErrorMarkup();
   activateCloseButton(closeModalEmailSubError, 'email-sub');
   isModalOpen = true;
   addEventListenerToEscape();
 }
 function closeModalEmailSubError() {
-  console.log('closeModalEmailSubError');
-  hideModal(modalThanks);
+  hideModal(modalSub);
   isModalOpen = false;
   removeEventListenerFromEscape();
 }
 
-function openModalError() {
+function openModalError(title, message) {
   showModal(modalThanks);
-  modalErrorMarkup();
+  modalErrorMarkup(title, message);
   activateCloseButton(closeModalError, 'error');
   isModalOpen = true;
   addEventListenerToEscape();
@@ -138,7 +131,7 @@ function openModalSuccess() {
 }
 
 function closeModalSuccess() {
-  hideModal(modalThanks);
+  hideModal(modalSuccess);
   isModalOpen = false;
   removeEventListenerFromEscape();
 }

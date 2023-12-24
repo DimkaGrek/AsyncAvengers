@@ -1,7 +1,5 @@
 import { throttle } from 'lodash';
 
-console.log('Hello from header');
-
 const headerContainer = document.querySelector('.header-content');
 
 window.addEventListener(

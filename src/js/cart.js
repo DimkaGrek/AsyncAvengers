@@ -1,4 +1,5 @@
 import throttle from 'lodash.throttle';
+import './header';
 import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
 import iziToast from 'izitoast';
@@ -139,15 +140,15 @@ async function handleSubmit(event) {
     isEmpty(products);
   } catch (error) {
     if (error.response.status === 400) {
-      iziToast.warning({
-        title: 'Error',
-        message: 'The email must be in format: johnsmith125@gmail.com.',
-        backgroundColor: '#ff4400b9',
-      });
-      console.log(error);
+      openModalError(
+        'Incorrect email',
+        'The email must be in format: johnsmith125@gmail.com'
+      );
     } else {
-      openModalError();
-      console.log(error);
+      openModalError(
+        'Server Issue',
+        `We're sorry, but it seems there's an issue with our server. Please try again later.`
+      );
     }
   } finally {
     spinnerStop();
@@ -176,7 +177,10 @@ async function getProducts(cartList) {
   } catch (error) {
     refsCart.fullCart.classList.add('is-hidden');
     refsCart.emptyCart.classList.remove('is-hidden');
-    openModalError();
+    openModalError(
+      'Server Issue',
+      `We're sorry, but it seems there's an issue with our server. Please try again later.`
+    );
   } finally {
     spinnerStop();
   }

@@ -1,10 +1,9 @@
 import icons from '../img/icons.svg';
 import foodApi from './FoodApi';
-import { openModalProductCard } from './modal/modal';
+import { openModalProductCard, openModalError } from './modal/modal';
 import { switchSameBtn, putProductListItemInCart } from './tools';
 
 const popularList = document.querySelector('.popular-list');
-const cartQuantity = document.querySelector('.js-cart-quantity');
 
 renderPopularList();
 
@@ -66,30 +65,15 @@ async function onProductClick(event) {
   } else {
     try {
       const data = await foodApi.getProductById(li.dataset.id);
-      console.log(data);
       openModalProductCard(data);
     } catch (error) {
-      console.log(error);
+      openModalError(
+        'Server Issue',
+        `We're sorry, but it seems there's an issue with our server. Please try again later.`
+      );
     }
   }
 }
-
-// function putProductListItemInCart(id) {
-//   const newCART = JSON.parse(localStorage.getItem('CART'));
-//   const foundItem = newCART.find(cartItem => cartItem.productId === id);
-//   if (foundItem !== undefined) return;
-
-//   newCART.push({ productId: id, amount: 1 });
-//   localStorage.setItem('CART', JSON.stringify(newCART));
-//   const value = +cartQuantity.textContent;
-//   cartQuantity.textContent = value + 1;
-// }
-
-// function isCheckedCart(ref) {
-//   ref.firstElementChild.classList.add('is-hidden');
-//   ref.lastElementChild.classList.remove('is-hidden');
-//   ref.disabled = true;
-// }
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');

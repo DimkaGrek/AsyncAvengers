@@ -74,7 +74,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 250ms ease-in;
+  transition: all var(--delay) var(--trnz);
 }
 .popular-buy-btn:not([disabled]):hover,
 .popular-buy-btn:not([disabled]):focus {

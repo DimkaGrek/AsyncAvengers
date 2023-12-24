@@ -1,6 +1,6 @@
 export const refs = {
   productList: document.querySelector('.js-product-list'),
-  cartQuantity: document.querySelector('.js-cart-quantity'),
+  cartQuantity: document.querySelectorAll('.js-cart-quantity'),
   pagiList: document.querySelector('.js-pagi-pages'),
   pagiContainer: document.querySelector('.js-pagi-container'),
   pagiBtnLeftDuble: document.querySelector('[data-button-left="dubleArrow"]'),

@@ -7,11 +7,47 @@ import modalThanksCardImg from '~/src/img/modal/modal-thanks-card-img.png';
 import modalThanksCardImg2x from '~/src/img/modal/modal-thanks-card-img-@2x.png';
 import modalErrorImg from '~/src/img/attention-for-food.png';
 
-import { productCardMarkup } from './markUp/productCardMarkup.js';
-// import { emailSubMarkup } from './markUp/EmailSubMarkup.js';
-
 function modalProductCardMarkup(data) {
-  refsModal.modalProduct.innerHTML = productCardMarkup(data);
+  const markup = `
+  <button class="modal-close-btn" data-modal="product">
+	  <svg class="modal-close-btn-img" width="13" height="13">
+		<use href="${icons}#icon-close"></use>
+	  </svg>
+	</button>
+  <div class="modal-product-card-content-wrapper">
+	  <div class="modal-product-card-img-container">
+		  <img
+			  class="modal-product-card-img"
+			  src="${data.img}"
+			  alt="${data.name}"
+		  />
+	  </div>
+	  <div class="modal-product-card-description wrapper">
+		  <h2 class="modal-product-card-title modal-card-title">${data.name}</h2>
+		  <div class="modal-product-card-text-wrapper">
+			  <p class="modal-product-card-category">Category:</p>
+			  <p class="modal-product-card-category-descr">${data.category}</p>
+			  <p class="modal-product-card-category">Size:</p>
+			  <p class="modal-product-card-category-descr relocate">${data.size}</p>
+			  
+		  </div>
+		  
+		  <div class="modal-product-card-popularity-wrap">
+		  <p class="modal-product-card-category relocate">Popularity:</p>
+			  <p class="modal-product-card-category-descr">${data.popularity}</p>
+		  </div>
+		  
+		  <p class="modal-product-card-descr modal-card-descr">
+			  ${data.desc}
+		  </p>
+	  </div>
+  </div>
+
+  <div class="modal-product-card-purchase-wrapper">
+	  <p class="modal-product-card-purchase-price">$${data.price}</p>
+	  ${renderAddToButtonForModalProductCard(data._id)}
+  </div>`;
+  refsModal.modalProduct.innerHTML = markup;
 }
 
 function modalEmailSubMarkup() {
@@ -61,7 +97,7 @@ function modalEmailSubErrorMarkup() {
 	You have already subscribed to our new products. Watch for offers at the
 	mailing address.
 </p>`;
-  refsModal.modalThanks.innerHTML = markupSubError;
+  refsModal.modalSub.innerHTML = markupSubError;
 }
 
 function modalSuccessMarkup() {
@@ -90,7 +126,7 @@ function modalSuccessMarkup() {
 </p>`;
   refsModal.modalSuccess.innerHTML = successMarkup;
 }
-function modalErrorMarkup() {
+function modalErrorMarkup(title, message) {
   const errorMarkup = `<button class="modal-close-btn" data-modal="error">
 	<svg class="modal-close-btn-img" width="13" height="13">
 		<use href="${icons}#icon-close"></use>
@@ -103,9 +139,9 @@ function modalErrorMarkup() {
 	width="160"
 	height="160"
 />
-<h2 class="modal-success-card-title modal-card-title">Server Issue</h2>
+<h2 class="modal-success-card-title modal-card-title">${title}</h2>
 <p class="modal-success-card-descr modal-card-descr modal-error-card-descr">
-We're sorry, but it seems there's an issue with our server. Please try again later.
+${message}
 </p>`;
   refsModal.modalThanks.innerHTML = errorMarkup;
 }
@@ -135,9 +171,7 @@ export function renderAddToButtonForModalProductCard(id) {
 }
 
 function changeAddToCartBtn(target) {
-  //   console.log('target.dataset: ', target.dataset.remove);
   if (target.dataset.remove === 'remove') {
-    console.log('change button');
     target.innerHTML = `Add to<svg
 		class="modal-product-card-purchase-btn-img"
 		width="18"
