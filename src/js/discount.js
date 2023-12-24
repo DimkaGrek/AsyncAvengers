@@ -87,7 +87,7 @@ async function onListCartClick(event) {
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="button-discount" data-id="${id}" disabled>
+  const cheked = `<button class="button-discount" data-id="${id}" aria-label="added to cart" disabled>
           <svg class="pbutton-svg-discount is-hidden" width="18" height="18">
             <use href="${icons}#icon-shopping-cart" class="icon"></use>
           </svg>
@@ -95,7 +95,7 @@ function renderButtonForProductList(id) {
             <use href="${icons}#icon-check" class="icon"></use>
           </svg>
         </button>`;
-  const uncheked = `<button class="button-discount" data-id="${id}">
+  const uncheked = `<button class="button-discount" data-id="${id}" aria-label="button add to cart">
           <svg class="button-svg-discount" width="18" height="18">
             <use href="${icons}#icon-shopping-cart" class="icon"></use>
           </svg>

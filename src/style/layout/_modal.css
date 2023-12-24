@@ -148,7 +148,6 @@
   line-height: 1.28;
   text-align: start;
   margin-bottom: 40px;
-  overflow-y: scroll;
 }
 .modal-product-card-purchase-wrapper {
   display: flex;

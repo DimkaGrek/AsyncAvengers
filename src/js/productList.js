@@ -222,7 +222,7 @@ function renderProductListMarcup({ results }) {
         <img src="${img}" alt="${name}" width="140" />    
         ${renderDiscountForProductList(is10PercentOff)}
       </div>
-      <h3 class="product-name">${name}</h3>
+      <h2 class="product-name">${name}</h2>
       <p class="product-description">
         <span>
           Category:
@@ -258,7 +258,7 @@ function renderDiscountForProductList(isDiscount) {
 // child function
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="product-button-cart" data-id="${id}" disabled>
+  const cheked = `<button class="product-button-cart" data-id="${id}"  aria-label="button add to cart" disabled>
           <svg class="product-icon-cart is-hidden" width="18" height="18">
             <use href="${icons}#icon-shopping-cart"></use>
           </svg>
@@ -266,7 +266,7 @@ function renderButtonForProductList(id) {
             <use href="${icons}#icon-check"></use>
           </svg>
         </button>`;
-  const uncheked = `<button class="product-button-cart" data-id="${id}">
+  const uncheked = `<button class="product-button-cart" data-id="${id}" aria-label="added to cart">
           <svg class="product-icon-cart" width="18" height="18">
             <use href="${icons}#icon-shopping-cart"></use>
           </svg>
