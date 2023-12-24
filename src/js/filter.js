@@ -61,10 +61,10 @@ function takeParamsFromStorage() {
   }
 }
 
-async function getProductsByFilter(params) {
-  const products = await FoodApi.getProductsByFilter(params);
-  getProductList(products);
-}
+// async function getProductsByFilter(params) {
+//   const products = await FoodApi.getProductsByFilter(params);
+//   getProductList(products);
+// }
 
 checkClientWidth();
 getProductsByFilter(params);
