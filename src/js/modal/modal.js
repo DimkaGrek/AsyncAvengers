@@ -13,7 +13,7 @@ import { putProductListItemInCart, switchSameBtn } from '../tools.js';
 
 let isModalOpen = false;
 import { refsModal } from './modalRefs.js';
-const { backdrop, modalProduct, modalThanks } = refsModal;
+const { backdrop, modalProduct, modalThanks, modalSuccess } = refsModal;
 console.log('backdrop: ', backdrop);
 
 function showModal(element) {
@@ -127,7 +127,7 @@ backdrop.addEventListener('click', e => {
 });
 
 function openModalSuccess() {
-  showModal(modalThanks);
+  showModal(modalSuccess);
   modalSuccessMarkup();
   activateCloseButton(closeModalSuccess, 'order');
   isModalOpen = true;

@@ -78,7 +78,7 @@ function modalSuccessMarkup() {
 	height="140"
 />
 <svg class="modal-success-icon" width="185" height="68">
-	<use href="./img/icons.svg#icon-success-icon"></use>
+	<use href="${icons}#icon-success-icon"></use>
 </svg>
 <h2 class="modal-success-card-title modal-card-title">Order success</h2>
 <p class="modal-success-card-descr modal-card-descr">
@@ -87,7 +87,7 @@ function modalSuccessMarkup() {
 	in nourishing goodness, delivered right to your doorstep. We're
 	thrilled to be part of your journey to better health and happiness.
 </p>`;
-  refsModal.modalThanks.innerHTML = successMarkup;
+  refsModal.modalSuccess.innerHTML = successMarkup;
 }
 function modalErrorMarkup() {
   const errorMarkup = `<button class="modal-close-btn">
