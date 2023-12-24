@@ -7,6 +7,7 @@ import {
   modalErrorMarkup,
 } from './modalMarkup.js';
 import { putProductListItemInCart, switchSameBtn } from '../tools.js';
+// import { refsCart } from '../cart.js';
 
 // import { showModal, hideModal, activateCloseButton } from './modalCommon.js';
 
@@ -126,7 +127,7 @@ backdrop.addEventListener('click', e => {
 });
 
 function openModalSuccess() {
-  showModal(refs.modalThanks);
+  showModal(modalThanks);
   modalSuccessMarkup();
   activateCloseButton(closeModalSuccess, 'order');
   isModalOpen = true;
@@ -134,9 +135,7 @@ function openModalSuccess() {
 }
 
 function closeModalSuccess() {
-  refs.form.reset();
-  isEmpty(products?.length);
-  hideModal(refs.modalThanks);
+  hideModal(modalThanks);
   isModalOpen = false;
   removeEventListenerFromEscape();
 }
