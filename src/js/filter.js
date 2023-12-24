@@ -65,7 +65,7 @@ async function getProductsByFilter(params) {
   const products = await FoodApi.getProductsByFilter(params);
   getProductList(products);
 }
-console.log(params);
+
 checkClientWidth();
 getProductsByFilter(params);
 // =======================Create-Categories========================
@@ -112,7 +112,6 @@ async function choiceCategories(li) {
 // =======================Create-Search-Input========================
 const getSearch = async event => {
   const searchValue = event.target.value;
-  console.log(searchValue);
   params.keyword = searchValue;
   localStorage.setItem('searchKey', JSON.stringify(params));
   getProductsByFilter(params);
