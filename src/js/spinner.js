@@ -10,7 +10,7 @@ var opts = {
   length: 22, // The length of each line
   width: 16, // The line thickness
   radius: 47, // The radius of the inner circle
-  scale: 1.25, // Scales overall size of the spinner
+  scale: 0.6, // Scales overall size of the spinner
   corners: 1, // Corner roundness (0..1)
   speed: 1, // Rounds per second
   rotate: 0, // The rotation offset

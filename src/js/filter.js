@@ -156,8 +156,8 @@ refs.dropdownList.addEventListener('click', event => {
   if (event.target.nodeName !== 'LI') return;
   const element = event.target.closest('.dropdown_list-item');
   refs.dropdownBtn.textContent = element.textContent;
-  elementValue = event.target.dataset.value;
-  elementKey = event.target.dataset.key;
+  const elementValue = event.target.dataset.value;
+  const elementKey = event.target.dataset.key;
   delFromParams();
   if (elementKey !== 'showAll') params[elementKey] = elementValue;
   localStorage.setItem(`searchKey`, JSON.stringify(params));
