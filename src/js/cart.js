@@ -58,29 +58,29 @@ function onClickDeleteButton(event) {
 
   const filteredProducts = updateProducts.filter(elem => elem.productId !== id);
 
-  item.remove();
-
-  let totalPrice = 0;
-  refsCart.allPricesofProducts = document.querySelectorAll(
-    '.js-cart-product-price'
-  );
-  refsCart.allAmountOfProducts = document.querySelectorAll('.js-amount-span');
-  totalPrice = filteredProducts.reduce((total, elem, i) => {
-    return (
-      total +
-      Number(refsCart.allPricesofProducts[i].textContent.replace('$', '')) *
-        Number(refsCart.allAmountOfProducts[i].textContent)
+  item.classList.add('slide-top');
+  setTimeout(() => {
+    item.remove();
+    let totalPrice = 0;
+    refsCart.allPricesofProducts = document.querySelectorAll(
+      '.js-cart-product-price'
     );
-  }, 0);
+    refsCart.allAmountOfProducts = document.querySelectorAll('.js-amount-span');
+    totalPrice = filteredProducts.reduce((total, elem, i) => {
+      return (
+        total +
+        Number(refsCart.allPricesofProducts[i].textContent.replace('$', '')) *
+          Number(refsCart.allAmountOfProducts[i].textContent)
+      );
+    }, 0);
 
-  refsCart.quantityTitle.textContent = `${filteredProducts.length}`;
-  refsCart.quantityHeaderSpan.forEach(
-    elem => (elem.textContent = `${filteredProducts.length}`)
-  );
-  refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+    refsCart.quantityTitle.textContent = `${filteredProducts.length}`;
+    refsCart.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
+    refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
 
-  saveToLS('CART', filteredProducts);
-  isEmpty(filteredProducts);
+    saveToLS('CART', filteredProducts);
+    isEmpty(filteredProducts);
+  }, 500);
 }
 
 function onChangeAmountProducts(event, action) {
