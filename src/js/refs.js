@@ -7,4 +7,7 @@ export const refs = {
   pagiBtnLeft: document.querySelector('[data-button-left="arrow"]'),
   pagiBtnRight: document.querySelector('[data-button-right="arrow"]'),
   pagiBtnRightDuble: document.querySelector('[data-button-right="dubleArrow"]'),
+  productMessageContainer: document.querySelector(
+    '.js-product-message-container'
+  ),
 };
