@@ -65,6 +65,7 @@ async function getProductList(products = {}) {
   try {
     if (Object.keys(products).length === 0) {
       // const params = JSON.parce(localStorage.getItem('searchKey'));
+      console.log('kukuukukukk');
       spinnerPlay();
       products = await FoodApi.getProductsByFilter(params);
     }

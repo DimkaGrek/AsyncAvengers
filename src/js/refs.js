@@ -10,4 +10,12 @@ export const refs = {
   productMessageContainer: document.querySelector(
     '.js-product-message-container'
   ),
+  ftInput: document.querySelector('.filters-input'),
+  inputBtn: document.querySelector('.filters-btn'),
+  ftSelect: document.querySelector('.select_list'),
+  ftBtn: document.querySelector('.select-btn'),
+  dropdownBtn: document.querySelector('.dropdown_button'),
+  dropdownList: document.querySelector('.dropdown_list'),
+  dropdownListItem: document.querySelectorAll('.dropdown_list-item'),
+  resetBtn: document.querySelector('.reset_btn'),
 };

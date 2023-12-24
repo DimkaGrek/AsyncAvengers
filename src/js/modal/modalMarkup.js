@@ -5,6 +5,7 @@ import modalSuccessCardImg from '../../img/modal/modal-success-card-img.png';
 import modalSuccessCardImg2x from '../../img/modal/modal-success-card-img@2x.png';
 import modalThanksCardImg from '~/src/img/modal/modal-thanks-card-img.png';
 import modalThanksCardImg2x from '~/src/img/modal/modal-thanks-card-img-@2x.png';
+import modalErrorImg from '~/src/img/attention-for-food.png';
 
 import { productCardMarkup } from './markUp/productCardMarkup.js';
 // import { emailSubMarkup } from './markUp/EmailSubMarkup.js';
@@ -90,13 +91,20 @@ function modalSuccessMarkup() {
   refsModal.modalSuccess.innerHTML = successMarkup;
 }
 function modalErrorMarkup() {
-  const errorMarkup = `<button class="modal-close-btn">
+  const errorMarkup = `<button class="modal-close-btn" data-modal="error">
 	<svg class="modal-close-btn-img" width="13" height="13">
 		<use href="${icons}#icon-close"></use>
 	</svg>
 </button>
+<img
+	class="modal-success-card-img"
+	src="${modalErrorImg}"
+	alt="attention"
+	width="160"
+	height="160"
+/>
 <h2 class="modal-success-card-title modal-card-title">Server Issue</h2>
-<p class="modal-success-card-descr modal-card-descr">
+<p class="modal-success-card-descr modal-card-descr modal-error-card-descr">
 We're sorry, but it seems there's an issue with our server. Please try again later.
 </p>`;
   refsModal.modalThanks.innerHTML = errorMarkup;

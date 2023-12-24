@@ -58,6 +58,7 @@
   padding-left: 16px;
   padding-right: 16px;
   width: 335px;
+  cursor: pointer;
 }
 @media screen and (min-width: 768px) {
   .item-discount {

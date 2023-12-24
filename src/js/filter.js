@@ -2,18 +2,8 @@ import FoodApi from './FoodApi';
 import { throttle } from 'lodash';
 import { getProductList } from './productList';
 import { spinnerPlay, spinnerStop } from './spinner';
-
-const refs = {
-  ftInput: document.querySelector('.filters-input'),
-  inputBtn: document.querySelector('.filters-btn'),
-  ftSelect: document.querySelector('.select_list'),
-  ftBtn: document.querySelector('.select-btn'),
-  dropdownBtn: document.querySelector('.dropdown_button'),
-  dropdownList: document.querySelector('.dropdown_list'),
-  dropdownListItem: document.querySelectorAll('.dropdown_list-item'),
-  productsList: document.querySelectorAll('.js-product-list'),
-  resetBtn: document.querySelector('.reset_btn'),
-};
+import { openModalError } from './modal/modal';
+import { refs } from './refs';
 
 export let params = takeParamsFromStorage();
 
@@ -187,7 +177,8 @@ async function getProductsByFilter(params) {
     const products = await FoodApi.getProductsByFilter(params);
     getProductList(products);
   } catch (error) {
-    console.log(error);
+    refs.pagiContainer.classList.add('is-hidden');
+    openModalError();
   } finally {
     spinnerStop();
   }

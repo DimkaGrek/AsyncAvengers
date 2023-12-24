@@ -105,7 +105,7 @@ function closeModalEmailSubError() {
 function openModalError() {
   showModal(modalThanks);
   modalErrorMarkup();
-  activateCloseButton();
+  activateCloseButton(closeModalError, 'error');
   isModalOpen = true;
   addEventListenerToEscape();
 }

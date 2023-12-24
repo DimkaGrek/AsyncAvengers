@@ -1,5 +1,9 @@
 import FoodApi from './FoodApi';
-import { openModalEmailSub, openModalEmailSubError } from './modal/modal';
+import {
+  openModalEmailSub,
+  openModalEmailSubError,
+  openModalError,
+} from './modal/modal';
 import iziToast from 'izitoast';
 import { refsModal } from './modal/modal';
 
@@ -25,7 +29,7 @@ const onFormSubmit = async event => {
         backgroundColor: '#ff4400b9',
       });
     } else {
-      console.log(error);
+      openModalError();
     }
   }
   event.target.reset();

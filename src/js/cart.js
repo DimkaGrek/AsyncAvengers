@@ -174,7 +174,9 @@ async function getProducts(cartList) {
     refsCart.quantityHeaderSpan.textContent = `${productItems.length}`;
     new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
-    console.log(error);
+    refsCart.fullCart.classList.add('is-hidden');
+    refsCart.emptyCart.classList.remove('is-hidden');
+    openModalError();
   } finally {
     spinnerStop();
   }
