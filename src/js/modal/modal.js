@@ -7,7 +7,8 @@ import {
   modalErrorMarkup,
 } from './modalMarkup.js';
 import { putProductListItemInCart, switchSameBtn } from '../tools.js';
-// import { refsCart } from '../cart.js';
+import SimpleBar from 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
 // import { showModal, hideModal, activateCloseButton } from './modalCommon.js';
 
@@ -65,6 +66,8 @@ function removeEventListenerFromEscape() {
 function openModalProductCard(data) {
   showModal(modalProduct);
   modalProductCardMarkup(data);
+  const cardProductDescr = document.querySelector('.modal-product-card-descr');
+  new SimpleBar(cardProductDescr, { autoHide: false });
   activateCloseButton(closeModalProductCard, 'product');
   activateAddToCartButton();
   isModalOpen = true;
