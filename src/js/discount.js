@@ -1,12 +1,10 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-import { openModalProductCard } from './modal/modal';
+import { openModalProductCard, openModalError } from './modal/modal';
 import { switchSameBtn, putProductListItemInCart } from './tools';
 
 const discountList = document.querySelector('.js-product-discount');
 const cardQuantity = document.querySelector('.js-cart-quantity');
-
-// discountList.addEventListener('click', onListCartClick);
 
 function getRandomProducts(items, numb = 2) {
   const result = [...items].sort(() => 0.5 - Math.random());
@@ -14,16 +12,23 @@ function getRandomProducts(items, numb = 2) {
 }
 
 const getDiscountProductList = async () => {
-  const products = await FoodApi.getDiscountProducts();
-  let toRandomObject = [];
-  if (products.length > 2) {
-    toRandomObject = getRandomProducts(products);
+  try {
+    const products = await FoodApi.getDiscountProducts();
+    let toRandomObject = [];
+    if (products.length > 2) {
+      toRandomObject = getRandomProducts(products);
+    }
+    renderDiscountList(toRandomObject);
+  } catch (error) {
+    openModalError(
+      'Server Issue',
+      `We're sorry, but it seems there's an issue with our server. Please try again later.`
+    );
   }
-  renderDiscountList(toRandomObject);
 };
 getDiscountProductList();
 
-async function renderDiscountList(toRandomObject) {
+function renderDiscountList(toRandomObject) {
   const markup = toRandomObject
     .map(
       ({
@@ -64,26 +69,18 @@ async function onListCartClick(event) {
     return;
   }
   const item = event.target.closest('.item-discount');
-  console.log(item);
   if (item !== null) {
     try {
       const data = await FoodApi.getProductById(item.dataset.id);
       openModalProductCard(data);
     } catch (error) {
-      console.log(error);
+      openModalError(
+        'Server Issue',
+        `We're sorry, but it seems there's an issue with our server. Please try again later.`
+      );
     }
   }
 }
-// function putProductListItemInCart(id) {
-//   const newCART = JSON.parse(localStorage.getItem('CART'));
-//   const foundItem = newCART.find(cartItem => cartItem.productId === id);
-//   if (foundItem !== undefined) return;
-
-//   newCART.push({ productId: id, amount: 1 });
-//   localStorage.setItem('CART', JSON.stringify(newCART));
-//   const value = cardQuantity.textContent;
-//   cardQuantity.textContent = Number(value) + 1;
-// }
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');

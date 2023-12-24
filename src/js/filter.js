@@ -51,23 +51,25 @@ function takeParamsFromStorage() {
   }
 }
 
-// async function getProductsByFilter(params) {
-//   const products = await FoodApi.getProductsByFilter(params);
-//   getProductList(products);
-// }
-
 checkClientWidth();
 getProductsByFilter(params);
 // =======================Create-Categories========================
 
 const getProductsCategories = async () => {
-  const categories = await FoodApi.getProductsCategories();
+  try {
+    const categories = await FoodApi.getProductsCategories();
 
-  const createOptions = categories.map(el => {
-    return `<li class="select-li">${el}</li>`;
-  });
-  createOptions.push(`<li class="select-li">Show all</li>`);
-  refs.ftSelect.insertAdjacentHTML('beforeend', createOptions.join('\n'));
+    const createOptions = categories.map(el => {
+      return `<li class="select-li">${el}</li>`;
+    });
+    createOptions.push(`<li class="select-li">Show all</li>`);
+    refs.ftSelect.insertAdjacentHTML('beforeend', createOptions.join('\n'));
+  } catch (error) {
+    openModalError(
+      'Server Issue',
+      `We're sorry, but it seems there's an issue with our server. Please try again later.`
+    );
+  }
 };
 getProductsCategories();
 
@@ -82,7 +84,7 @@ refs.ftSelect.addEventListener('mouseleave', () => {
   refs.ftSelect.classList.remove('is-open');
 });
 
-async function choiceCategories(li) {
+function choiceCategories(li) {
   if (li.target.nodeName !== 'LI') return;
   const liValue = li.target.closest('.select-li');
   refs.ftBtn.innerHTML = liValue.textContent;
@@ -95,18 +97,15 @@ async function choiceCategories(li) {
 
   localStorage.setItem('searchKey', JSON.stringify(params));
   getProductsByFilter(params);
-  // const productResoult = await FoodApi.getProductsByFilter(params);
-  // getProductList(productResoult);
 }
 
 // =======================Create-Search-Input========================
-const getSearch = async event => {
+const getSearch = event => {
   const searchValue = event.target.value;
   params.keyword = searchValue;
   localStorage.setItem('searchKey', JSON.stringify(params));
   getProductsByFilter(params);
 };
-// refs.inputBtn.addEventListener('', getSearch);
 refs.ftInput.addEventListener('input', getSearch);
 
 refs.dropdownBtn.addEventListener('click', function () {
@@ -128,7 +127,9 @@ refs.dropdownList.addEventListener('mouseleave', () => {
 document.addEventListener('click', function (e) {
   if (e.target !== refs.dropdownBtn) {
     refs.dropdownList.classList.remove('dropdown_list-visible');
-    refs.dropdownList.classList.remove('dropdown_list-visible');
+  }
+  if (e.target !== refs.ftBtn) {
+    refs.ftSelect.classList.remove('is-open');
   }
 });
 
@@ -139,10 +140,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-let elementValue = '';
 refs.dropdownList.addEventListener('click', event => {
-  // event.preventDefault();
-  // const list = event.target.closest('.dropdown_list');
   if (event.target.nodeName !== 'LI') return;
   const element = event.target.closest('.dropdown_list-item');
   refs.dropdownBtn.textContent = element.textContent;
@@ -178,16 +176,11 @@ async function getProductsByFilter(params) {
     getProductList(products);
   } catch (error) {
     refs.pagiContainer.classList.add('is-hidden');
-    openModalError();
+    openModalError(
+      'Server Issue',
+      `We're sorry, but it seems there's an issue with our server. Please try again later.`
+    );
   } finally {
     spinnerStop();
   }
 }
-
-// function addParamsToFilter() {
-//   const sort = JSON.parse(localStorage.getItem('sort'));
-//   getProductsByFilter(sort);
-//   if (sort === 'showAll') {
-//     localStorage.clear();
-//   }
-// }

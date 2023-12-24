@@ -229,7 +229,7 @@
 /* ---------------Modal Thanks for Sub----------*/
 .modal-thanks-card-container {
   display: none;
-  padding: 100px 0;
+  padding-top: 100px;
 }
 .modal-thanks-card-title {
   color: #010101;

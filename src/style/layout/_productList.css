@@ -29,6 +29,7 @@
   width: 335px;
 
   background: var(--white);
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {

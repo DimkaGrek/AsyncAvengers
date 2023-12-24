@@ -1,7 +1,7 @@
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalError, openModalProductCard } from './modal/modal';
-import { spinnerStop, spinnerPlay, spinerContainer } from './spinner';
+import { spinnerStop, spinnerPlay } from './spinner';
 import { params } from './filter';
 import { refs } from './refs';
 import { putProductListItemInCart, switchSameBtn } from './tools';
@@ -26,7 +26,10 @@ async function onListCartClick(event) {
       const data = await FoodApi.getProductById(item.dataset.id);
       openModalProductCard(data);
     } catch (error) {
-      console.log(error);
+      openModalError(
+        'Server Issue',
+        `We're sorry, but it seems there's an issue with our server. Please try again later.`
+      );
     } finally {
       spinnerStop();
     }
@@ -64,8 +67,6 @@ function onPagiBtnClick(event) {
 async function getProductList(products = {}) {
   try {
     if (Object.keys(products).length === 0) {
-      // const params = JSON.parce(localStorage.getItem('searchKey'));
-      console.log('kukuukukukk');
       spinnerPlay();
       products = await FoodApi.getProductsByFilter(params);
     }
@@ -78,8 +79,10 @@ async function getProductList(products = {}) {
     toggleMessageContainer(totalPages);
   } catch (error) {
     refs.pagiContainer.classList.add('is-hidden');
-    openModalError();
-    console.log(error);
+    openModalError(
+      'Server Issue',
+      `We're sorry, but it seems there's an issue with our server. Please try again later.`
+    );
   } finally {
     spinnerStop();
   }
@@ -207,7 +210,7 @@ function renderProductListPagi(page, totalPage) {
 function checkCartContents() {
   if (localStorage.getItem('CART')) {
     const cartContent = JSON.parse(localStorage.getItem('CART'));
-    refs.cartQuantity.textContent = cartContent.length;
+    refs.cartQuantity.forEach(elem => (elem.textContent = cartContent.length));
     return;
   }
   localStorage.setItem('CART', JSON.stringify([]));
@@ -276,8 +279,6 @@ function renderButtonForProductList(id) {
         </button>`;
   return cart.includes(id) ? cheked : uncheked;
 }
-
-// Switch same Button in every container
 
 export {
   onListCartClick,

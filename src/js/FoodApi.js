@@ -43,16 +43,6 @@ class FoodAPI {
     const res = await axios.get('/products', { params });
     return res.data;
   }
-  // async getProductsByFilter(keyword = '', category = '', page = 1, limit = 6) {
-  //   const params = {
-  //     keyword,
-  //     category,
-  //     page,
-  //     limit,
-  //   };
-  //   const res = await axios.get('/products', { params });
-  //   return res.data;
-  // }
 }
 
 export default new FoodAPI();

@@ -4,8 +4,6 @@ import {
   openModalEmailSubError,
   openModalError,
 } from './modal/modal';
-import iziToast from 'izitoast';
-import { refsModal } from './modal/modal';
 
 const refs = {
   form: document.querySelector('.js-footer-form'),
@@ -23,13 +21,15 @@ const onFormSubmit = async event => {
     if (error.response.status === 409) {
       openModalEmailSubError();
     } else if (error.response.status === 400) {
-      iziToast.warning({
-        title: 'Error',
-        message: 'The email must be in format: johnsmith125@gmail.com.',
-        backgroundColor: '#ff4400b9',
-      });
+      openModalError(
+        'Incorrect email',
+        'The email must be in format: johnsmith125@gmail.com'
+      );
     } else {
-      openModalError();
+      openModalError(
+        'Server Issue',
+        `We're sorry, but it seems there's an issue with our server. Please try again later.`
+      );
     }
   }
   event.target.reset();
