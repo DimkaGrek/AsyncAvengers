@@ -1,6 +1,7 @@
 import throttle from 'lodash.throttle';
 import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
+import iziToast from 'izitoast';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import './footer';
@@ -33,12 +34,9 @@ if (!isEmpty(products)) {
     if (event.target.dataset.action === 'delete') {
       onClickDeleteButton(event);
     }
-
-    if (
-      event.target.dataset.action === 'increment' ||
-      event.target.dataset.action === 'decrement'
-    ) {
-      onChangeAmountProducts(event, event.target.dataset.action);
+    const action = event.target.dataset.action;
+    if (action === 'increment' || action === 'decrement') {
+      onChangeAmountProducts(event, action);
     }
   });
 
@@ -140,8 +138,17 @@ async function handleSubmit(event) {
     refsCart.form.reset();
     isEmpty(products);
   } catch (error) {
-    openModalError();
-    console.log(error);
+    if (error.response.status === 400) {
+      iziToast.warning({
+        title: 'Error',
+        message: 'The email must be in format: johnsmith125@gmail.com.',
+        backgroundColor: '#ff4400b9',
+      });
+      console.log(error);
+    } else {
+      openModalError();
+      console.log(error);
+    }
   } finally {
     spinnerStop();
   }
