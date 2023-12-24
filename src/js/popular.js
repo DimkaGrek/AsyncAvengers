@@ -21,7 +21,7 @@ async function renderPopularList() {
                             <img src="${img}" alt="${name}" class="popular-img"/>
                         </div>
                         <div class="popular-content">
-                            <h5 class="popular-item-name">${name}</h5>
+                            <h3 class="popular-item-name">${name}</h3>
                             <p class="popular-item-title">
                                 Category: <span class="popular-item-title-name">${category.replace(
                                   '_',
@@ -93,7 +93,7 @@ async function onProductClick(event) {
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="popular-buy-btn" data-id="${id}" disabled>
+  const cheked = `<button class="popular-buy-btn" data-id="${id}" aria-label="added to cart" disabled>
             <svg class="popular-buy-btn-icon is-hidden" width="12" height="12">
               <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
             </svg>
@@ -101,7 +101,7 @@ function renderButtonForProductList(id) {
               <use href="${icons}#icon-check" class="icon"></use>
             </svg>
           </button>`;
-  const uncheked = `<button class="popular-buy-btn" data-id="${id}">
+  const uncheked = `<button class="popular-buy-btn" data-id="${id}" aria-label="button add to cart">
             <svg class="popular-buy-btn-icon" width="12" height="12">
                 <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
             </svg>

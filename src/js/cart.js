@@ -222,7 +222,7 @@ function createMarkup(items, amountItems) {
                       type="button"
                       data-action="decrement"
                     >
-                      <svg class="cart-icon-minus" width="10" height="10" data-action="decrement">
+                      <svg class="cart-icon-minus" width="10" height="10" data-action="decrement" aria-label="decrease by one item">
                         <use href="${icons}#icon-minus" data-action="decrement"></use>
                       </svg></button
                     ><span class="js-amount-span">${
@@ -231,7 +231,7 @@ function createMarkup(items, amountItems) {
                     <button
                       class="quantity-span-btn"
                       type="button"
-                      data-action="increment"
+                      data-action="increment" aria-label="increase by one item"
                     >
                       <svg class="cart-icon-plus" width="14" height="14" data-action="increment">
                         <use href="${icons}#icon-plus" data-action="increment"></use>
@@ -242,7 +242,7 @@ function createMarkup(items, amountItems) {
               </div>
             </div>
 
-            <button class="delete-btn" type="button" data-action="delete">
+            <button class="delete-btn" type="button" data-action="delete" aria-label="button delete item">
               <svg class="cart-icon-delete" width="10" height="10" data-action="delete">
                 <use href="${icons}#icon-close" class="icon" data-action="delete"></use>
               </svg>
