@@ -285,3 +285,57 @@ li.pagi-item.is-active {
     cursor: pointer;
   }
 }
+
+.product-message-container {
+  width: 279px;
+  padding-top: 60px;
+  margin-inline: auto;
+  margin-block-end: 100px;
+}
+
+@media screen and (min-width: 768px) {
+  .product-message-container {
+    width: 371px;
+    padding-top: 110px;
+    margin-block-end: 200px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .product-message-container {
+    padding-top: 140px;
+    width: 371px;
+  }
+}
+
+.product-message-title {
+  color: var(--black);
+
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11; /* 111.111% */
+}
+.product-message-title-accent {
+  color: var(--olive);
+}
+.product-message-texp {
+  margin-top: 14px;
+
+  color: var(--black_80);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28; /* 128.571% */
+}
+
+@media screen and (min-width: 768px) {
+  .product-message-title {
+    font-size: 20px;
+    line-height: 1.2; /* 120% */
+  }
+
+  .product-message-texp {
+    font-size: 18px;
+    line-height: 1.33; /* 133.333% */
+  }
+}

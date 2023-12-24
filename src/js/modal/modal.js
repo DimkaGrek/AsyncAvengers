@@ -130,7 +130,7 @@ backdrop.addEventListener('click', e => {
 });
 
 function openModalSuccess() {
-  showModal(refs.modalThanks);
+  showModal(modalThanks);
   modalSuccessMarkup();
   activateCloseButton(closeModalSuccess, 'order');
   isModalOpen = true;
@@ -138,9 +138,7 @@ function openModalSuccess() {
 }
 
 function closeModalSuccess() {
-  refs.form.reset();
-  isEmpty(products?.length);
-  hideModal(refs.modalThanks);
+  hideModal(modalThanks);
   isModalOpen = false;
   removeEventListenerFromEscape();
 }

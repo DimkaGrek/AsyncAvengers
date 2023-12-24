@@ -1,13 +1,14 @@
 import throttle from 'lodash.throttle';
 import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
+import iziToast from 'izitoast';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
-// import * as modalCart from './modal/modalCart';
 import './footer';
 import { spinnerPlay, spinnerStop } from './spinner';
-import { openModalSuccess } from './modal/modal';
-const refs = {
+import { openModalError, openModalSuccess } from './modal/modal';
+
+export const refsCart = {
   itemsList: document.querySelector('.js-items-list'),
   fullCart: document.querySelector('.js-container'),
   emptyCart: document.querySelector('.js-empty-cart'),
@@ -16,115 +17,108 @@ const refs = {
   deleteAllButton: document.querySelector('.js-delete-all-btn'),
   totalSpan: document.querySelector('.js-total-price'),
   form: document.querySelector('.js-form-checkout'),
-  // backdrop: document.querySelector('.modal-backdrop'),
-  // modalThanks: document.querySelector('.modal-thanks-card-container'),
 };
 
-export let products = [];
-spinnerPlay();
+let products = [];
 
 products = loadFromLS('CART');
 
-if (!isEmpty(products?.length)) {
+if (!isEmpty(products)) {
   getProducts(products);
 
-  refs.deleteAllButton.addEventListener('click', () => {
-    localStorage.removeItem('CART');
-    products = [];
-    isEmpty(products?.length);
-    spinnerStop();
-  });
+  refsCart.deleteAllButton.addEventListener('click', onClickDeleteAllButton);
 
-  refs.itemsList.addEventListener('click', async event => {
+  refsCart.itemsList.addEventListener('click', async event => {
     if (event.target.nodeName === 'UL') return;
 
     if (event.target.dataset.action === 'delete') {
-      const item = event.target.closest('LI');
-      const id = item.dataset.id;
-
-      const updateProducts = loadFromLS('CART');
-
-      const filteredProducts = updateProducts.filter(
-        elem => elem.productId !== id
-      );
-
-      item.remove();
-
-      let totalPrice = 0;
-      refs.allPricesofProducts = document.querySelectorAll(
-        '.js-cart-product-price'
-      );
-      refs.allAmountOfProducts = document.querySelectorAll('.js-amount-span');
-      totalPrice = filteredProducts.reduce((total, elem, i) => {
-        return (
-          total +
-          Number(refs.allPricesofProducts[i].textContent.replace('$', '')) *
-            Number(refs.allAmountOfProducts[i].textContent)
-        );
-      }, 0);
-
-      refs.quantityTitle.textContent = `${filteredProducts.length}`;
-      refs.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
-      refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-
-      saveToLS('CART', filteredProducts);
-      isEmpty(filteredProducts?.length);
+      onClickDeleteButton(event);
     }
-
-    if (event.target.dataset.action === 'decrement') {
-      const productPrice = Number(
-        event.target
-          .closest('.js-border-container')
-          .previousElementSibling.lastElementChild.textContent.replace('$', '')
-      );
-      const quantityElement =
-        event.target.closest('SPAN').firstElementChild.nextElementSibling;
-      let value = Number(quantityElement.textContent);
-      const id = event.target.closest('LI').dataset.id;
-      if (value === 1) return;
-      value -= 1;
-      refs.totalSpan.textContent =
-        '$' +
-        (
-          Number(refs.totalSpan.textContent.replace('$', '')) - productPrice
-        ).toFixed(2);
-      quantityElement.textContent = value;
-      const productsList = loadFromLS('CART');
-      const index = productsList.findIndex(elem => {
-        return elem.productId === id;
-      });
-      productsList[index].amount = value;
-      saveToLS('CART', productsList);
-    }
-
-    if (event.target.dataset.action === 'increment') {
-      const productPrice = Number(
-        event.target
-          .closest('.js-border-container')
-          .previousElementSibling.lastElementChild.textContent.replace('$', '')
-      );
-      const quantityElement =
-        event.target.closest('SPAN').firstElementChild.nextElementSibling;
-      const id = event.target.closest('LI').dataset.id;
-      let value = Number(quantityElement.textContent);
-      value += 1;
-      refs.totalSpan.textContent =
-        '$' +
-        (
-          Number(refs.totalSpan.textContent.replace('$', '')) + productPrice
-        ).toFixed(2);
-      quantityElement.textContent = value;
-      const productsList = loadFromLS('CART');
-      const index = productsList.findIndex(elem => {
-        return elem.productId === id;
-      });
-      productsList[index].amount = value;
-      saveToLS('CART', productsList);
+    const action = event.target.dataset.action;
+    if (action === 'increment' || action === 'decrement') {
+      onChangeAmountProducts(event, action);
     }
   });
+
+  refsCart.form.addEventListener('submit', handleSubmit);
 }
 
-refs.form.addEventListener('submit', async event => {
+function onClickDeleteAllButton() {
+  localStorage.removeItem('CART');
+  products = [];
+  isEmpty(products);
+  spinnerStop();
+}
+
+function onClickDeleteButton(event) {
+  const item = event.target.closest('LI');
+  const id = item.dataset.id;
+  const updateProducts = loadFromLS('CART');
+
+  const filteredProducts = updateProducts.filter(elem => elem.productId !== id);
+
+  item.remove();
+
+  let totalPrice = 0;
+  refsCart.allPricesofProducts = document.querySelectorAll(
+    '.js-cart-product-price'
+  );
+  refsCart.allAmountOfProducts = document.querySelectorAll('.js-amount-span');
+  totalPrice = filteredProducts.reduce((total, elem, i) => {
+    return (
+      total +
+      Number(refsCart.allPricesofProducts[i].textContent.replace('$', '')) *
+        Number(refsCart.allAmountOfProducts[i].textContent)
+    );
+  }, 0);
+
+  refsCart.quantityTitle.textContent = `${filteredProducts.length}`;
+  refsCart.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
+  refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+
+  saveToLS('CART', filteredProducts);
+  isEmpty(filteredProducts);
+}
+
+function onChangeAmountProducts(event, action) {
+  const productPrice = Number(
+    event.target
+      .closest('.js-border-container')
+      .previousElementSibling.lastElementChild.textContent.replace('$', '')
+  );
+  const quantityElement =
+    event.target.closest('SPAN').firstElementChild.nextElementSibling;
+  let value = Number(quantityElement.textContent);
+  const id = event.target.closest('LI').dataset.id;
+
+  if (action === 'decrement') {
+    if (value === 1) return;
+    value -= 1;
+    refsCart.totalSpan.textContent =
+      '$' +
+      (
+        Number(refsCart.totalSpan.textContent.replace('$', '')) - productPrice
+      ).toFixed(2);
+  }
+  if (action === 'increment') {
+    value += 1;
+    refsCart.totalSpan.textContent =
+      '$' +
+      (
+        Number(refsCart.totalSpan.textContent.replace('$', '')) + productPrice
+      ).toFixed(2);
+  }
+
+  quantityElement.textContent = value;
+  const productsList = loadFromLS('CART');
+  const index = productsList.findIndex(elem => {
+    return elem.productId === id;
+  });
+  productsList[index].amount = value;
+  saveToLS('CART', productsList);
+}
+
+async function handleSubmit(event) {
   event.preventDefault();
   spinnerPlay();
   let email = '';
@@ -135,24 +129,35 @@ refs.form.addEventListener('submit', async event => {
   const order = {};
   order.products = loadFromLS('CART');
   order.email = email;
-  // saveToLS('CART', order);
   try {
-    const { message } = await FoodApi.createOrder(order);
-    spinnerStop();
+    const response = await FoodApi.createOrder(order);
+    openModalSuccess();
 
     saveToLS('CART', []);
     products = [];
-    openModalSuccess();
+    refsCart.form.reset();
+    isEmpty(products);
   } catch (error) {
-    alert('Something went wrong. Please try later');
-    console.log(error);
+    if (error.response.status === 400) {
+      iziToast.warning({
+        title: 'Error',
+        message: 'The email must be in format: johnsmith125@gmail.com.',
+        backgroundColor: '#ff4400b9',
+      });
+      console.log(error);
+    } else {
+      openModalError();
+      console.log(error);
+    }
   } finally {
     spinnerStop();
   }
-});
+}
 
 async function getProducts(cartList) {
+  spinnerPlay();
   try {
+    if (!products) return;
     let totalPrice = 0;
     const productsList = cartList.map(async elem => {
       const response = await FoodApi.getProductById(elem.productId);
@@ -163,11 +168,11 @@ async function getProducts(cartList) {
       return total + elem.price;
     }, 0);
     const markup = createMarkup(productItems, cartList);
-    refs.itemsList.innerHTML = markup;
-    refs.quantityTitle.textContent = `${productItems.length}`;
-    refs.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-    refs.quantityHeaderSpan.textContent = `${productItems.length}`;
-    new SimpleBar(refs.itemsList, { autoHide: false });
+    refsCart.itemsList.innerHTML = markup;
+    refsCart.quantityTitle.textContent = `${productItems.length}`;
+    refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+    refsCart.quantityHeaderSpan.textContent = `${productItems.length}`;
+    new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
     console.log(error);
   } finally {
@@ -187,7 +192,7 @@ function createMarkup(items, amountItems) {
                 width="64"
                 height="64"
               />
-       ${renderDiscountForProductList(is10PercentOff)}
+       ${createMarkupDiscountProduct(is10PercentOff)}
             </div>
             <div class="cart-product-container">
               <h3 class="cart-product-name">${name}</h3>
@@ -236,7 +241,7 @@ function createMarkup(items, amountItems) {
             </div>
 
             <button class="delete-btn" type="button" data-action="delete">
-              <svg class="product-icon-cart" width="10" height="10" data-action="delete">
+              <svg class="cart-icon-delete" width="10" height="10" data-action="delete">
                 <use href="${icons}#icon-close" class="icon" data-action="delete"></use>
               </svg>
             </button>
@@ -245,21 +250,23 @@ function createMarkup(items, amountItems) {
     .join('');
 }
 
-function renderDiscountForProductList(isDiscount) {
-  const markup = `<svg class="cart-product-discount-icon" width="30" height="30">
+function createMarkupDiscountProduct(isDiscount) {
+  const markup = `<svg class="cart-product-discount-icon" width="35" height="35">
           <use href="${icons}#icon-discount"></use>
         </svg> `;
   return isDiscount ? markup : '';
 }
 
-export function isEmpty(items) {
-  if (!items) {
-    refs.fullCart.classList.add('is-hidden');
-    refs.emptyCart.classList.remove('is-hidden');
-    refs.quantityHeaderSpan.textContent = '0';
+function isEmpty(items) {
+  if (!items?.length) {
+    refsCart.fullCart.classList.add('is-hidden');
+    refsCart.emptyCart.classList.remove('is-hidden');
+    refsCart.quantityHeaderSpan.textContent = '0';
+    return true;
   } else {
-    refs.emptyCart.classList.add('is-hidden');
-    refs.fullCart.classList.remove('is-hidden');
+    refsCart.emptyCart.classList.add('is-hidden');
+    refsCart.fullCart.classList.remove('is-hidden');
+    return false;
   }
 }
 // Save to local storage
@@ -281,7 +288,6 @@ function loadFromLS(key) {
   }
 }
 
-// ------------------------------------------------------
 // -----------------ScrollUp Button----------------------
 const scrollUpButton = document.querySelector('.js-scroll-up-btn');
 document.addEventListener(

@@ -1,4 +1,3 @@
-import { throttle } from 'lodash';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import { openModalError, openModalProductCard } from './modal/modal';
@@ -7,18 +6,7 @@ import { params } from './filter';
 import { refs } from './refs';
 import { putProductListItemInCart, switchSameBtn } from './tools';
 
-// const params = {
-//   limit: 5,
-//   page: 1,
-//   keyword: null,
-//   category: null,
-// };
-
-let currentPage = null;
-
 checkCartContents();
-// checkClientWidth();
-// getProductList();
 
 refs.productList.addEventListener('click', onListCartClick);
 refs.pagiList.addEventListener('click', onPagiListClick);
@@ -81,12 +69,12 @@ async function getProductList(products = {}) {
       products = await FoodApi.getProductsByFilter(params);
     }
     const { page, totalPages } = products;
-    currentPage = page;
     refs.productList.innerHTML = renderProductListMarcup(products);
     if (isMoreThenOnePage(totalPages)) {
       refs.pagiList.innerHTML = renderProductListPagi(page, totalPages);
     }
     togglePagiBtn(page, totalPages);
+    toggleMessageContainer(totalPages);
   } catch (error) {
     refs.pagiContainer.classList.add('is-hidden');
     openModalError();
@@ -96,6 +84,13 @@ async function getProductList(products = {}) {
   }
 }
 
+function toggleMessageContainer(totalPages) {
+  if (totalPages === 0) {
+    refs.productMessageContainer.classList.remove('is-hidden');
+  } else {
+    refs.productMessageContainer.classList.add('is-hidden');
+  }
+}
 /* =====================================================
 =============Pagination logics
 ========================================================*/

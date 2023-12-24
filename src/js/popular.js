@@ -1,7 +1,7 @@
 import icons from '../img/icons.svg';
 import foodApi from './FoodApi';
 import { openModalProductCard } from './modal/modal';
-import { switchSameBtn } from './tools';
+import { switchSameBtn, putProductListItemInCart } from './tools';
 
 const popularList = document.querySelector('.popular-list');
 const cartQuantity = document.querySelector('.js-cart-quantity');
@@ -74,26 +74,26 @@ async function onProductClick(event) {
   }
 }
 
-function putProductListItemInCart(id) {
-  const newCART = JSON.parse(localStorage.getItem('CART'));
-  const foundItem = newCART.find(cartItem => cartItem.productId === id);
-  if (foundItem !== undefined) return;
+// function putProductListItemInCart(id) {
+//   const newCART = JSON.parse(localStorage.getItem('CART'));
+//   const foundItem = newCART.find(cartItem => cartItem.productId === id);
+//   if (foundItem !== undefined) return;
 
-  newCART.push({ productId: id, amount: 1 });
-  localStorage.setItem('CART', JSON.stringify(newCART));
-  const value = +cartQuantity.textContent;
-  cartQuantity.textContent = value + 1;
-}
+//   newCART.push({ productId: id, amount: 1 });
+//   localStorage.setItem('CART', JSON.stringify(newCART));
+//   const value = +cartQuantity.textContent;
+//   cartQuantity.textContent = value + 1;
+// }
 
-function isCheckedCart(ref) {
-  ref.firstElementChild.classList.add('is-hidden');
-  ref.lastElementChild.classList.remove('is-hidden');
-  ref.disabled = true;
-}
+// function isCheckedCart(ref) {
+//   ref.firstElementChild.classList.add('is-hidden');
+//   ref.lastElementChild.classList.remove('is-hidden');
+//   ref.disabled = true;
+// }
 
 function renderButtonForProductList(id) {
   const cart = localStorage.getItem('CART');
-  const cheked = `<button class="popular-buy-btn" data-id="${id} disabled">
+  const cheked = `<button class="popular-buy-btn" data-id="${id}" disabled>
             <svg class="popular-buy-btn-icon is-hidden" width="12" height="12">
               <use href="${icons}#icon-popular-shopping-cart" class="icon"></use>
             </svg>
