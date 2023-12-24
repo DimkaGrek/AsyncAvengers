@@ -29,7 +29,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 60px;
 }
+
+@media only screen and (min-width: 768px) {
+  .header-logo-link-home-page {
+    margin-right: 262px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .header-logo-link-home-page {
+    margin-right: 792px;
+  }
+}
+
 .header-logo-icon {
   fill: var(--gainsboro);
 }
@@ -45,20 +59,14 @@
   font-size: 18px;
   line-height: 1.11;
   letter-spacing: -0.02em;
-  margin-right: 60px;
 }
 @media only screen and (min-width: 768px) {
   .header-text {
     font-size: 24px;
     line-height: 1;
-    margin-right: 262px;
   }
 }
-@media only screen and (min-width: 1440px) {
-  .header-text {
-    margin-right: 792px;
-  }
-}
+
 .logo-container {
   color: var(--gainsboro);
   background-color: var(--olive);
