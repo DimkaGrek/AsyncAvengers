@@ -2,7 +2,6 @@ import throttle from 'lodash.throttle';
 import './header';
 import SimpleBar from 'simplebar';
 import 'simplebar/dist/simplebar.css';
-import iziToast from 'izitoast';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import './footer';
@@ -78,7 +77,9 @@ function onClickDeleteButton(event) {
     }, 0);
 
     refsCart.quantityTitle.textContent = `${filteredProducts.length}`;
-    refsCart.quantityHeaderSpan.textContent = `${filteredProducts.length}`;
+    refsCart.quantityHeaderSpan.forEach(
+      elem => (elem.textContent = `${filteredProducts.length}`)
+    );
     refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
 
     saveToLS('CART', filteredProducts);
