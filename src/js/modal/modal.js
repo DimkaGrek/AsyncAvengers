@@ -87,7 +87,7 @@ function closeModalEmailSub() {
 function openModalEmailSubError() {
   showModal(modalSub);
   modalEmailSubErrorMarkup();
-  activateCloseButton(closeModalEmailSubError, 'email-sub');
+  activateCloseButton(closeModalEmailSubError, 'email-sub-error');
   isModalOpen = true;
   addEventListenerToEscape();
 }
@@ -114,6 +114,8 @@ function handleEscapeKey(event) {
   if (event.key === 'Escape' && isModalOpen) {
     closeModalProductCard();
     closeModalEmailSub();
+    closeModalEmailSubError();
+    closeModalSuccess();
   }
 }
 
@@ -121,6 +123,8 @@ backdrop.addEventListener('click', e => {
   if (e.target === backdrop) {
     closeModalProductCard();
     closeModalEmailSub();
+    closeModalEmailSubError();
+    closeModalSuccess();
   }
 });
 

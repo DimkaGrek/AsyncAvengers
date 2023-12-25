@@ -82,8 +82,7 @@ function modalEmailSubMarkup() {
 }
 
 function modalEmailSubErrorMarkup() {
-  // refsModal.modalThanks.style.paddingTop = '80px';
-  const markupSubError = `<button class="modal-close-btn" data-modal="email-sub">
+  const markupSubError = `<button class="modal-close-btn" data-modal="email-sub-error">
 	<svg class="modal-close-btn-img" width="13" height="13">
 	<use href="${icons}#icon-close"></use>
 	</svg>
