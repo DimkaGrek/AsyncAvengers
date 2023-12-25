@@ -16,6 +16,7 @@
   background-color: var(--white);
   border-radius: 10px;
 }
+
 .popular-link {
   position: relative;
   display: flex;

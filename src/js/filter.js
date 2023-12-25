@@ -103,6 +103,7 @@ function choiceCategories(li) {
   const liValue = li.target.closest('.select-li');
   refs.ftBtn.innerHTML = liValue.textContent;
   refs.ftSelect.classList.remove('is-open');
+  params.page = 1;
   params.category = liValue.textContent;
 
   if (liValue.textContent === 'Show all') {
@@ -116,6 +117,7 @@ function choiceCategories(li) {
 // =======================Create-Search-Input========================
 const getSearch = event => {
   const searchValue = event.target.value;
+  params.page = 1;
   params.keyword = searchValue;
   localStorage.setItem('searchKey', JSON.stringify(params));
   getProductsByFilter(params);

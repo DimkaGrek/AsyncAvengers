@@ -45,10 +45,13 @@ if (!isEmpty(products)) {
 }
 
 function onClickDeleteAllButton() {
-  localStorage.removeItem('CART');
-  products = [];
-  isEmpty(products);
-  spinnerStop();
+  refsCart.itemsList.classList.add('scale-down-center');
+  setTimeout(() => {
+    saveToLS('CART', []);
+    products = [];
+    isEmpty(products);
+    spinnerStop();
+  }, 500);
 }
 
 function onClickDeleteButton(event) {
