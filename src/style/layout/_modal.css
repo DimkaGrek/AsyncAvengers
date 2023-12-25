@@ -174,10 +174,11 @@
   font-weight: 500;
   line-height: 1.28;
   border: none;
+  transition: background-color var(--delay) var(--trnz);
 }
 .modal-product-card-purchase-btn:hover,
 .modal-product-card-purchase-btn:focus {
-  background: #586f1f;
+  background-color: #586f1f;
 }
 .modal-product-card-purchase-btn:disabled {
   background: #586f1f;

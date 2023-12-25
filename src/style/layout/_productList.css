@@ -30,6 +30,11 @@
 
   background: var(--white);
   cursor: pointer;
+  transition: transform var(--delay) var(--trnz);
+}
+.product-card:hover,
+.product-card:focus {
+  transform: scale(1.05);
 }
 
 @media screen and (min-width: 768px) {
