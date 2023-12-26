@@ -171,6 +171,7 @@ refs.dropdownList.addEventListener('click', event => {
 function onResetBtn() {
   localStorage.removeItem('searchKey');
   params = takeParamsFromStorage();
+  checkClientWidth();
   refs.ftInput.value = '';
   refs.ftBtn.innerHTML = 'Categories';
   refs.dropdownBtn.innerHTML = 'A to Z';
