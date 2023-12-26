@@ -24,6 +24,10 @@ let products = [];
 products = loadFromLS('CART');
 
 if (!isEmpty(products)) {
+  refsCart.quantityTitle.textContent = `${products.length}`;
+  refsCart.quantityHeaderSpan.forEach(
+    elem => (elem.textContent = `${products.length}`)
+  );
   getProducts(products);
 
   refsCart.deleteAllButton.addEventListener('click', onClickDeleteAllButton);
@@ -176,11 +180,9 @@ async function getProducts(cartList) {
     }, 0);
     const markup = createMarkup(productItems, cartList);
     refsCart.itemsList.innerHTML = markup;
-    refsCart.quantityTitle.textContent = `${productItems.length}`;
+
     refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
-    refsCart.quantityHeaderSpan.forEach(
-      elem => (elem.textContent = `${productItems.length}`)
-    );
+
     new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
     refsCart.fullCart.classList.add('is-hidden');
@@ -275,6 +277,7 @@ function isEmpty(items) {
   if (!items?.length) {
     refsCart.fullCart.classList.add('is-hidden');
     refsCart.emptyCart.classList.remove('is-hidden');
+    refsCart.quantityTitle.textContent = '0';
     refsCart.quantityHeaderSpan.forEach(elem => (elem.textContent = '0'));
     return true;
   } else {
