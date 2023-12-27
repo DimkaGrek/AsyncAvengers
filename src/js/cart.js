@@ -28,6 +28,7 @@ if (!isEmpty(products)) {
   refsCart.quantityHeaderSpan.forEach(
     elem => (elem.textContent = `${products.length}`)
   );
+
   getProducts(products);
 
   refsCart.deleteAllButton.addEventListener('click', onClickDeleteAllButton);
@@ -92,6 +93,7 @@ function onClickDeleteButton(event) {
 }
 
 function onChangeAmountProducts(event, action) {
+  if (isEmpty(loadFromLS('CART'))) return;
   const productPrice = Number(
     event.target
       .closest('.js-border-container')
@@ -131,6 +133,9 @@ function onChangeAmountProducts(event, action) {
 
 async function handleSubmit(event) {
   event.preventDefault();
+
+  if (isEmpty(loadFromLS('CART'))) return;
+
   spinnerPlay();
   let email = '';
   const formData = new FormData(event.target);
@@ -279,6 +284,10 @@ function isEmpty(items) {
     refsCart.emptyCart.classList.remove('is-hidden');
     refsCart.quantityTitle.textContent = '0';
     refsCart.quantityHeaderSpan.forEach(elem => (elem.textContent = '0'));
+    window.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
     return true;
   } else {
     refsCart.emptyCart.classList.add('is-hidden');

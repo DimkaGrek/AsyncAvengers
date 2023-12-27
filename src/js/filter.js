@@ -1,5 +1,5 @@
 import FoodApi from './FoodApi';
-import { throttle } from 'lodash';
+import { throttle, debounce } from 'lodash';
 import { getProductList } from './productList';
 import { spinnerPlay, spinnerStop } from './spinner';
 import { openModalError } from './modal/modal';
@@ -88,15 +88,20 @@ const getProductsCategories = async () => {
 getProductsCategories();
 
 refs.ftBtn.addEventListener('click', openCategories);
+
+refs.ftBtn.addEventListener('mouseenter', () => {
+  refs.ftSelect.classList.add('is-open');
+
+  refs.ftSelect.addEventListener('mouseleave', () => {
+    refs.ftSelect.classList.remove('is-open');
+  });
+});
+
 refs.ftSelect.addEventListener('click', choiceCategories);
 
 function openCategories() {
   refs.ftSelect.classList.toggle('is-open');
 }
-
-refs.ftSelect.addEventListener('mouseleave', () => {
-  refs.ftSelect.classList.remove('is-open');
-});
 
 function choiceCategories(li) {
   if (li.target.nodeName !== 'LI') return;
@@ -122,7 +127,7 @@ const getSearch = event => {
   localStorage.setItem('searchKey', JSON.stringify(params));
   getProductsByFilter(params);
 };
-refs.ftInput.addEventListener('input', getSearch);
+refs.ftInput.addEventListener('input', debounce(getSearch, 700));
 
 refs.dropdownBtn.addEventListener('click', function () {
   refs.dropdownList.classList.toggle('dropdown_list-visible');

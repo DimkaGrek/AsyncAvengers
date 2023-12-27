@@ -114,6 +114,7 @@
   height: 38px;
   margin-right: 6px;
   border-radius: 30px;
+  transition: background-color var(--delay) var(--trnz);
 }
 @media only screen and (min-width: 768px) {
   .header-link-home-page {
@@ -127,12 +128,10 @@
 .header-link-home-page:hover,
 .header-link-home-page:focus {
   background-color: var(--olive_dark);
-  transition: background-color var(--delay) var(--trnz);
 }
 .header-container-cart-page:hover,
 .header-container-cart-page:focus {
   background-color: var(--olive_dark);
-  transition: background-color var(--delay) var(--trnz);
 }
 .header-container-cart-page {
   display: flex;
@@ -144,6 +143,7 @@
   height: 38px;
   border-radius: 30px;
   text-decoration: none;
+  transition: background-color var(--delay) var(--trnz);
 }
 @media only screen and (min-width: 768px) {
   .header-container-cart-page {

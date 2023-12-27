@@ -32,6 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5px;
   width: 22px;
   height: 22px;
   top: 14px;
@@ -41,6 +42,8 @@
   cursor: pointer;
 }
 .modal-close-btn-img {
+  fill: var(--black);
+  stroke: var(--black);
   width: 12.4px;
   height: 12.4px;
 }
