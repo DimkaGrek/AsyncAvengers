@@ -174,19 +174,19 @@ async function getProducts(cartList) {
   spinnerPlay();
   try {
     if (!products) return;
-    let totalPrice = 0;
+
     const productsList = cartList.map(async elem => {
       const response = await FoodApi.getProductById(elem.productId);
       return response;
     });
     const productItems = await Promise.all(productsList);
-    totalPrice = productItems.reduce((total, elem) => {
-      return total + elem.price;
-    }, 0);
+
     const markup = createMarkup(productItems, cartList);
     refsCart.itemsList.innerHTML = markup;
 
-    refsCart.totalSpan.textContent = `$${totalPrice.toFixed(2)}`;
+    const totalPrice = calculateTotalPrice(productItems, cartList);
+
+    refsCart.totalSpan.textContent = `$${totalPrice}`;
 
     new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
@@ -199,6 +199,20 @@ async function getProducts(cartList) {
   } finally {
     spinnerStop();
   }
+}
+
+function calculateTotalPrice(productItems, cartList) {
+  return cartList
+    .reduce((total, cartItem) => {
+      const product = productItems.find(
+        item => item._id === cartItem.productId
+      );
+      if (product) {
+        return total + product.price * cartItem.amount;
+      }
+      return total;
+    }, 0)
+    .toFixed(2);
 }
 
 function createMarkup(items, amountItems) {
