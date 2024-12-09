@@ -22,7 +22,7 @@ function modalProductCardMarkup(data) {
 			  alt="${data.name}"
 		  />
 	  </div>
-	  <div class="modal-product-card-description wrapper">
+	  <div class="modal-product-card-description wrapper scrollbar">
 		  <h2 class="modal-product-card-title modal-card-title">${data.name}</h2>
 		  <div class="modal-product-card-text-wrapper">
 			  <p class="modal-product-card-category">Category:</p>

@@ -100,7 +100,6 @@
   padding-top: 10px;
   padding-right: 10px;
   max-height: 460px;
-  overflow: auto;
 }
 @media only screen and (min-width: 768px) {
   .items-list {
@@ -314,20 +313,7 @@
   height: 1px;
   background-color: rgba(1, 1, 1, 0.1);
 }
-/* -------------ScrollBar------------------ */
-.simplebar-scrollbar::before {
-  width: 5px;
-  height: 117px;
-  border-radius: 20px;
-  background: rgba(1, 1, 1, 0.08);
-}
-@media only screen and (min-width: 768px) {
-  .simplebar-scrollbar::before {
-    width: 9px;
-    height: 190px;
-  }
-}
-/* ============================================= */
+
 /* --------------Your order---------------- */
 @media only screen and (min-width: 768px) {
   .cart-order-container {

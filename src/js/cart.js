@@ -1,7 +1,5 @@
 import throttle from 'lodash.throttle';
 import './header';
-import SimpleBar from 'simplebar';
-import 'simplebar/dist/simplebar.css';
 import FoodApi from './FoodApi';
 import icons from '../img/icons.svg';
 import './footer';
@@ -188,7 +186,7 @@ async function getProducts(cartList) {
 
     refsCart.totalSpan.textContent = `$${totalPrice}`;
 
-    new SimpleBar(refsCart.itemsList, { autoHide: false });
+    // new SimpleBar(refsCart.itemsList, { autoHide: false });
   } catch (error) {
     refsCart.fullCart.classList.add('is-hidden');
     refsCart.emptyCart.classList.remove('is-hidden');

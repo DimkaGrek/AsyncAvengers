@@ -1,5 +1,6 @@
 import FoodApi from './FoodApi';
-import { throttle, debounce } from 'lodash';
+import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
 import { getProductList } from './productList';
 import { spinnerPlay, spinnerStop } from './spinner';
 import { openModalError } from './modal/modal';

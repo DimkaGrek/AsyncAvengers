@@ -9,18 +9,6 @@
   height: 100%;
   background-color: rgba(1, 1, 1, 0.4);
 }
-.simplebar-scrollbar::before {
-  width: 5px;
-  height: 50px;
-  border-radius: 20px;
-  background: rgba(1, 1, 1, 0.08);
-}
-@media only screen and (min-width: 768px) {
-  .simplebar-scrollbar:before {
-    width: 9px;
-    height: 50px;
-  }
-}
 .modal-container {
   position: relative;
   width: 335px;
@@ -147,7 +135,7 @@
 .modal-product-card-descr {
   padding-right: 10px;
   width: 295px;
-  height: 55px;
+  max-height: 55px;
   line-height: 1.28;
   text-align: start;
   margin-bottom: 40px;
@@ -214,7 +202,7 @@
   .modal-product-card-descr {
     font-size: 16px;
     width: 256px;
-    height: 120px;
+    max-height: 120px;
     margin-bottom: 0;
   }
   .modal-product-card-purchase-btn {
